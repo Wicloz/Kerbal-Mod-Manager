@@ -15,19 +15,15 @@ namespace KSP_Mod_Manager
     {
         public static Main acces;
 
-        public CurrentInstance install = new CurrentInstance();
+        public CurrentKspInstance kspInfo = new CurrentKspInstance();
+        public CurrentModInstance modInfo = new CurrentModInstance();
         private InstallMod im = new InstallMod();
         private DeinstallMod dm = new DeinstallMod();
         private UpdateMod um = new UpdateMod();
         private UpdateCheck uc = new UpdateCheck();
 
         private string settingFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\KMM\\settings";
-        public string modsPath = "";
-
-        public List<ModInfo> modList;
-        private List<SiteInfo> siteList;
-
-        private List<InstallInstance> instanceList;
+        private List<InstallInstance> instanceList = new List<InstallInstance>();
         private int selectedInstance = 0;
 
         public Main()
@@ -39,174 +35,48 @@ namespace KSP_Mod_Manager
         private void Main_Load(object sender, EventArgs e)
         {
             Directory.CreateDirectory(settingFolder);
+            string savedModsPath = "";
 
             if(File.Exists(settingFolder + "\\settings.txt"))
             {
                 Settings settings = SaveLoad.LoadFileXml<Settings>(settingFolder + "\\settings.txt");
-                modsPath = settings.modsPath;
+
                 instanceList = settings.instances;
                 selectedInstance = settings.selectedInstance;
+                savedModsPath = settings.modsPath;
 
-                modFolderBox.Text = modsPath;
+                if (string.IsNullOrEmpty(savedModsPath))
+                {
+                    savedModsPath = "";
+                }
             }
-            else
-            {
-                instanceList = new List<InstallInstance>();
-            }
 
-            // Handle instance list here
+            ChangeModFolder(savedModsPath);
+            kspInfo.LoadInstance(@"D:\KerbalSpaceProgram\Testing\KSP_win");
 
-            install.LoadInstance(@"D:\KerbalSpaceProgram\Testing\KSP_win");
-            OnModFolderChange();
+            SaveFiles();
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SetupModFolder();
             SaveFiles();
-            install.UnloadInstance();
+            modInfo.UnloadInstance();
+            kspInfo.UnloadInstance();
         }
 
         private void SaveFiles()
         {
-            SaveLoad.SaveFileXml(new Settings(modsPath, instanceList, selectedInstance), settingFolder + "\\settings.txt");
-            if (modsPath != "")
-            {
-                SaveLoad.SaveFileXml(modList, modsPath + "\\ModList.txt");
-                SaveLoad.SaveFileXml(siteList, modsPath + "\\SiteList.txt");
-            }
+            SaveLoad.SaveFileXml(new Settings(modInfo.modsPath, instanceList, selectedInstance), settingFolder + "\\settings.txt");
         }
 
-        private void SetupModFolder()
+        private void ChangeModFolder(string newPath)
         {
-            Directory.CreateDirectory(modsPath + "\\Overrides");
+            modFolderBox.Text = newPath;
 
-            if (Directory.Exists(modsPath + "\\ModDownloads"))
-            {
-                Directory.Delete(modsPath + "\\ModDownloads", true);
-            }
-
-            if (Directory.Exists(modsPath + "\\SiteDownload"))
-            {
-                Directory.Delete(modsPath + "\\SiteDownload", true);
-            }
-        }
-
-        private void OnModFolderChange()
-        {
-            if (File.Exists(modsPath + "\\ModList.txt"))
-            {
-                modList = SaveLoad.LoadFileXml<List<ModInfo>>(modsPath + "\\ModList.txt");
-            }
-            else
-            {
-                modList = new List<ModInfo>();
-            }
-
-            if (File.Exists(modsPath + "\\SiteList.txt"))
-            {
-                siteList = SaveLoad.LoadFileXml<List<SiteInfo>>(modsPath + "\\SiteList.txt");
-            }
-            else
-            {
-                siteList = new List<SiteInfo>();
-            }
-
-            if (modsPath != "")
-            {
-                SetupModFolder();
-                ManageModLists();
-            }
-            SaveFiles();
+            modInfo.UnloadInstance();
+            modInfo.LoadInstance(newPath);
 
             // Handle mod list here
-        }
-
-        private void ManageModLists()
-        {
-            // Handle extra zip files
-            foreach (string file in Directory.GetFiles(modsPath, "*.zip", SearchOption.AllDirectories))
-            {
-                if (!file.Contains("ModDownloads"))
-                {
-                    bool exists = false;
-
-                    foreach (ModInfo info in modList)
-                    {
-                        if (info.zipfile == file.Replace(modsPath + "\\", ""))
-                        {
-                            exists = true;
-                            break;
-                        }
-                    }
-
-                    if (!exists)
-                    {
-                        string zipName = file.Replace(modsPath + "\\", "");
-                        modList.Add(new ModInfo(zipName));
-                    }
-                }
-            }
-
-            // Handle missing zip files
-            for (int i = 0; i < modList.Count; i++)
-            {
-                if (!modList[i].zipfile.Contains("Overrides"))
-                {
-                    if (!File.Exists(modsPath + "\\" + modList[i].zipfile))
-                    {
-                        modList[i].zipfile = "none";
-                    }
-                }
-
-                if (modList[i].zipfile.Contains("Overrides"))
-                {
-                    if (!File.Exists(modsPath + "\\" + modList[i].zipfile))
-                    {
-                        modList.RemoveAt(i);
-                        i--;
-                    }
-                }
-            }
-
-            // Manage Site List
-            foreach (ModInfo mod in modList)
-            {
-                if (!mod.zipfile.Contains("Overrides"))
-                {
-                    bool exists = false;
-
-                    if (mod.zipfile == "none" && (mod.key == "none" || mod.key == "" || mod.key == null))
-                    {
-                        mod.key = Functions.CleanName(mod.name);
-                    }
-                    else if (mod.key == "none" || mod.key == "" || mod.key == null)
-                    {
-                        mod.key = Functions.CleanName(mod.zipfile);
-                    }
-
-                    foreach (SiteInfo site in siteList)
-                    {
-                        if (site.key == mod.key)
-                        {
-                            exists = true;
-
-                            if (site.website.Contains("http://kerbal.curseforge.com"))
-                            {
-                                site.dlSite = site.website + "/files/latest";
-                            }
-
-                            mod.websites = site;
-                            break;
-                        }
-                    }
-
-                    if (!exists)
-                    {
-                        siteList.Add(new SiteInfo(mod.key, "NONE"));
-                    }
-                }
-            }
         }
 
         public void Reinstall(string installedModName, ModInfo info)
@@ -217,8 +87,8 @@ namespace KSP_Mod_Manager
 
         public void SortLists()
         {
-            install.installedModList.Sort();
-            modList.Sort();
+            kspInfo.installedModList.Sort();
+            modInfo.modList.Sort();
         }
 
         public void LogMessage(string message)
@@ -230,9 +100,7 @@ namespace KSP_Mod_Manager
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             if (fbd.ShowDialog() == DialogResult.OK)
             {
-                modFolderBox.Text = fbd.SelectedPath;
-                modsPath = fbd.SelectedPath;
-                OnModFolderChange();
+                ChangeModFolder(fbd.SelectedPath);
             }
         }
     }

@@ -15,7 +15,7 @@ namespace KSP_Mod_Manager
             Main.acces.SortLists();
 
             string modFolder = "\\ModDownloads\\" + modInfo.name.Replace(" ", "_");
-            string downloadFolder = Main.acces.modsPath + modFolder;
+            string downloadFolder = Main.acces.modInfo.modsPath + modFolder;
             Directory.CreateDirectory(downloadFolder);
 
             if (modInfo.websites.dlSite != "NONE")
@@ -60,10 +60,10 @@ namespace KSP_Mod_Manager
 
             string newModLocation = newModFile.Replace(modFolder, "");
             File.Delete(newModLocation);
-            File.Delete(Main.acces.modsPath + "\\" + modInfo.zipfile);
+            File.Delete(Main.acces.modInfo.modsPath + "\\" + modInfo.zipfile);
 
             File.Move(newModFile, newModLocation);
-            modInfo.zipfile = newModLocation.Replace(Main.acces.modsPath + "\\", "");
+            modInfo.zipfile = newModLocation.Replace(Main.acces.modInfo.modsPath + "\\", "");
 
             if (isInstalled)
             {
@@ -75,7 +75,7 @@ namespace KSP_Mod_Manager
             try
             {
                 Directory.Delete(downloadFolder, true);
-                Functions.ProcessDirectory(Main.acces.modsPath + "\\ModDownloads", true);
+                Functions.ProcessDirectory(Main.acces.modInfo.modsPath + "\\ModDownloads", true);
             }
             catch
             { }

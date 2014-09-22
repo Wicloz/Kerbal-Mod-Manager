@@ -9,12 +9,12 @@ namespace KSP_Mod_Manager
 {
     class UpdateCheck
     {
-        public void CheckForUpdates()
+        public void CheckForUpdate()
         {
             Main.acces.LogMessage("Checking for updates ...");
             Main.acces.SortLists();
 
-            foreach (ModInfo modInfo in Main.acces.modList)
+            foreach (ModInfo modInfo in Main.acces.modInfo.modList)
             {
                 if (!modInfo.zipfile.Contains("Overrides"))
                 {
@@ -32,8 +32,8 @@ namespace KSP_Mod_Manager
                             mode = "forum";
                         }
 
-                        Directory.CreateDirectory(Main.acces.modsPath + "\\SiteDownload");
-                        string siteFile = Main.acces.modsPath + "\\SiteDownload\\" + "download.html";
+                        Directory.CreateDirectory(Main.acces.modInfo.modsPath + "\\SiteDownload");
+                        string siteFile = Main.acces.modInfo.modsPath + "\\SiteDownload\\" + "download.html";
 
                         Functions.DownloadSite(site, siteFile);
 
@@ -78,7 +78,7 @@ namespace KSP_Mod_Manager
                             continue;
                         }
 
-                        Directory.Delete(Main.acces.modsPath + "\\SiteDownload", true);
+                        Directory.Delete(Main.acces.modInfo.modsPath + "\\SiteDownload", true);
                     }
                 }
             }

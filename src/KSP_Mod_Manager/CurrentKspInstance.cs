@@ -7,7 +7,7 @@ using System.IO;
 
 namespace KSP_Mod_Manager
 {
-    public class CurrentInstance
+    public class CurrentKspInstance
     {
         public string kspFolder;
 
@@ -18,7 +18,6 @@ namespace KSP_Mod_Manager
         public void LoadInstance(string path)
         {
             kspFolder = path;
-            SetupKspFolder(kspFolder);
 
             if (File.Exists(path + "\\KMM\\Favorites.txt"))
             {
@@ -47,7 +46,8 @@ namespace KSP_Mod_Manager
                 installedModList = new List<InstallInfo>();
             }
 
-            ManageFileList();
+            SetupKspFolder(kspFolder);
+            ManageFileList(kspFolder);
             ManageFavoriteList();
             SaveFiles(kspFolder);
         }
@@ -55,7 +55,11 @@ namespace KSP_Mod_Manager
         public void UnloadInstance()
         {
             SetupKspFolder(kspFolder);
+            ManageFileList(kspFolder);
+            ManageFavoriteList();
             SaveFiles(kspFolder);
+
+            kspFolder = "";
         }
 
         private void SetupKspFolder(string path)
@@ -75,29 +79,15 @@ namespace KSP_Mod_Manager
             SaveLoad.SaveFileXml(installedModList, path + "\\KMM\\ModList.txt");
         }
 
-        public void AddToFileList(FileInfo fileInfo)
+        public void ManageFileList(string path)
         {
-            for (int i = 0; i < installedFileList.Count; i++)
-            {
-                if (installedFileList[i].path == fileInfo.path)
-                {
-                    installedFileList[i] = fileInfo;
-                    return;
-                }
-            }
-
-            installedFileList.Add(fileInfo);
-        }
-
-        public void ManageFileList()
-        {
-            string fileFolder = kspFolder + "\\GameData";
+            string fileFolder = path + "\\GameData";
             string[] files = Directory.GetFiles (fileFolder, "*.*", SearchOption.AllDirectories);
 
 			// Add to file list
 			for (int i = 0; i < files.Length; i++)
 			{
-                string file1 = files[i].Replace(kspFolder, "");
+                string file1 = files[i].Replace(path, "");
                 bool exists = false;
 
                 foreach (FileInfo file2 in installedFileList)
@@ -118,7 +108,7 @@ namespace KSP_Mod_Manager
             // Remove from file list
             for (int i = 0; i < installedFileList.Count; i++)
             {
-                if (!File.Exists(kspFolder + installedFileList[i].path))
+                if (!File.Exists(path + installedFileList[i].path))
                 {
                     installedFileList.RemoveAt(i);
                     i--;
@@ -129,7 +119,7 @@ namespace KSP_Mod_Manager
         public void ManageFavoriteList()
         {
             // Manage Favorite List
-            foreach (ModInfo mod in Main.acces.modList)
+            foreach (ModInfo mod in Main.acces.modInfo.modList)
             {
                 if (!mod.zipfile.Contains("Overrides"))
                 {
@@ -150,6 +140,20 @@ namespace KSP_Mod_Manager
                     }
                 }
             }
+        }
+
+        public void AddToFileList(FileInfo fileInfo)
+        {
+            for (int i = 0; i < installedFileList.Count; i++)
+            {
+                if (installedFileList[i].path == fileInfo.path)
+                {
+                    installedFileList[i] = fileInfo;
+                    return;
+                }
+            }
+
+            installedFileList.Add(fileInfo);
         }
     }
 }

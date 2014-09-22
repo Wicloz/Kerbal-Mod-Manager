@@ -46,7 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContainerClasses.cs" />
-    <Compile Include="CurrentInstance.cs" />
+    <Compile Include="CurrentKspInstance.cs" />
+    <Compile Include="CurrentModInstance.cs" />
     <Compile Include="DeinstallMod.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="InstallMod.cs" />

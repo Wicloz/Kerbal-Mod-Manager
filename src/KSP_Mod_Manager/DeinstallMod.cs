@@ -16,9 +16,9 @@ namespace KSP_Mod_Manager
         public void Deinstall(string modName)
         {
             // Check for overrides
-            for (int i = 0; i < Main.acces.install.installedModList.Count; i++)
+            for (int i = 0; i < Main.acces.kspInfo.installedModList.Count; i++)
             {
-                string name = Main.acces.install.installedModList[i].codeName;
+                string name = Main.acces.kspInfo.installedModList[i].codeName;
 
                 if (Functions.CleanName(name) == Functions.CleanName("Overrides\\" + modName.Replace(" ", "")))
                 {
@@ -28,7 +28,7 @@ namespace KSP_Mod_Manager
 
             // Start
             Main.acces.LogMessage("Deinstalling '" + modName + "'.");
-            string overrideFolder = Main.acces.install.kspFolder + "\\KMM\\overrides\\" + modName.Replace("\\", "()");
+            string overrideFolder = Main.acces.kspInfo.kspFolder + "\\KMM\\overrides\\" + modName.Replace("\\", "()");
 
             // Restore overridden files
             if (Directory.Exists(overrideFolder))
@@ -38,7 +38,7 @@ namespace KSP_Mod_Manager
                     foreach (string file in Directory.GetFiles(folder, "*.*", SearchOption.AllDirectories))
                     {
                         string oldFileName = file;
-                        string newFileName = Main.acces.install.kspFolder + file.Replace(folder, "");
+                        string newFileName = Main.acces.kspInfo.kspFolder + file.Replace(folder, "");
 
                         if (File.Exists(newFileName))
                         {
@@ -47,7 +47,7 @@ namespace KSP_Mod_Manager
                             File.Delete(newFileName);
                             File.Move(oldFileName, newFileName);
 
-                            Main.acces.install.AddToFileList(new FileInfo(newFileName.Replace(Main.acces.install.kspFolder, ""), folder.Replace(overrideFolder + "\\", "").Replace("()", "\\")));
+                            Main.acces.kspInfo.AddToFileList(new FileInfo(newFileName.Replace(Main.acces.kspInfo.kspFolder, ""), folder.Replace(overrideFolder + "\\", "").Replace("()", "\\")));
                         }
                     }
                 }
@@ -61,7 +61,7 @@ namespace KSP_Mod_Manager
             { }
 
             // Delete all override folders
-            foreach (string folder1 in Directory.GetDirectories(Main.acces.install.kspFolder + "\\KMM\\overrides"))
+            foreach (string folder1 in Directory.GetDirectories(Main.acces.kspInfo.kspFolder + "\\KMM\\overrides"))
             {
                 foreach (string folder2 in Directory.GetDirectories(folder1))
                 {
@@ -73,16 +73,16 @@ namespace KSP_Mod_Manager
             }
 
             // Delete files in the list
-            for (int i = 0; i < Main.acces.install.installedFileList.Count; i++)
+            for (int i = 0; i < Main.acces.kspInfo.installedFileList.Count; i++)
             {
-                string fileName = Main.acces.install.kspFolder + Main.acces.install.installedFileList[i].path;
+                string fileName = Main.acces.kspInfo.kspFolder + Main.acces.kspInfo.installedFileList[i].path;
 
-                if (Main.acces.install.installedFileList[i].modName == modName)
+                if (Main.acces.kspInfo.installedFileList[i].modName == modName)
                 {
                     try
                     {
                         File.Delete(fileName);
-                        Main.acces.install.installedFileList.RemoveAt(i);
+                        Main.acces.kspInfo.installedFileList.RemoveAt(i);
                         i--;
                     }
                     catch
@@ -93,18 +93,18 @@ namespace KSP_Mod_Manager
             }
 
             // Remove entry from installed list
-            for (int i = 0; i < Main.acces.install.installedModList.Count; i++)
+            for (int i = 0; i < Main.acces.kspInfo.installedModList.Count; i++)
             {
-                if (modName == Main.acces.install.installedModList[i].codeName)
+                if (modName == Main.acces.kspInfo.installedModList[i].codeName)
                 {
-                    Main.acces.install.installedModList.RemoveAt(i);
+                    Main.acces.kspInfo.installedModList.RemoveAt(i);
                     break;
                 }
             }
 
             // Finalise
-            Functions.ProcessDirectory(Main.acces.install.kspFolder + "\\GameData", false);
-            Functions.ProcessDirectory(Main.acces.install.kspFolder + "\\KMM\\overrides", false);
+            Functions.ProcessDirectory(Main.acces.kspInfo.kspFolder + "\\GameData", false);
+            Functions.ProcessDirectory(Main.acces.kspInfo.kspFolder + "\\KMM\\overrides", false);
 
             Main.acces.SortLists();
         }
