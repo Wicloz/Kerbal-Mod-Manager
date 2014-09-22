@@ -12,8 +12,6 @@ namespace KSP_Mod_Manager
     {
         public void Update(ModInfo modInfo, bool isInstalled, string installedMod)
         {
-            Main.acces.SortLists();
-
             string modFolder = "\\ModDownloads\\" + modInfo.name.Replace(" ", "_");
             string downloadFolder = Main.acces.modInfo.modsPath + modFolder;
             Directory.CreateDirectory(downloadFolder);

@@ -103,5 +103,10 @@ namespace KSP_Mod_Manager
                 ChangeModFolder(fbd.SelectedPath);
             }
         }
+
+        private void updateModFolderButton_Click(object sender, EventArgs e)
+        {
+            ChangeModFolder(modFolderBox.Text);
+        }
     }
 }
