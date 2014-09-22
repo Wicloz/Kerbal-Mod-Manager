@@ -1,0 +1,218 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Win32;
+using System.Xml.Serialization;
+using System.Net;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO.Compression;
+
+namespace KSP_Mod_Manager
+{
+    class InstallMod
+    {
+        public void Install(ModInfo modInfo)
+        {
+            Install(modInfo, "");
+        }
+
+        public void Install(ModInfo modInfo, string originalName)
+        {
+            try
+            {
+                Directory.Delete(Main.acces.install.kspFolder + "\\KMM\\temp", true);
+            }
+            catch
+            { }
+
+            // Start
+            string modName = modInfo.zipfile.Replace(".zip", "");
+            Main.acces.LogMessage("Installing '" + modName + ".zip'.");
+
+            string tempExtractLocation = Main.acces.install.kspFolder + "\\KMM\\temp";
+            Directory.CreateDirectory(tempExtractLocation);
+
+            // Extract
+            ZipFile.ExtractToDirectory(Main.acces.modsPath + "\\" + modName + ".zip", tempExtractLocation);
+
+            List<string> dirListTop = new List<string>();
+            foreach (string directory in Directory.GetDirectories(tempExtractLocation, "*.*", SearchOption.TopDirectoryOnly))
+            {
+                dirListTop.Add(directory);
+            }
+
+            List<string> dirListAll = new List<string>();
+            foreach (string directory in Directory.GetDirectories(tempExtractLocation, "*.*", SearchOption.AllDirectories))
+            {
+                dirListAll.Add(directory);
+            }
+
+            string mode = "noGameData";
+
+            foreach (string entry in dirListTop)
+            {
+                if (entry.Contains("GameData") || entry.Contains("Gamedata"))
+                {
+                    mode = "";
+                    break;
+                }
+            }
+
+            if (mode == "noGameData")
+            {
+                foreach (string entry in dirListAll)
+                {
+                    if (entry.Contains("GameData") || entry.Contains("Gamedata"))
+                    {
+                        mode = "embeddedGameData";
+
+                        foreach (string file in Directory.GetFiles(tempExtractLocation))
+                        {
+                            File.Delete(file);
+                        }
+
+                        break;
+                    }
+                }
+            }
+
+            // Create file list
+            List<string> oldFilePaths = new List<string>();
+            List<FileInfo> fileList = new List<FileInfo>();
+
+            foreach (string file in Directory.GetFiles(tempExtractLocation, "*.*", SearchOption.AllDirectories))
+            {
+                oldFilePaths.Add(file);
+
+                if (mode == "")
+                {
+                    fileList.Add(new FileInfo(file.Replace(tempExtractLocation, ""), modName));
+                }
+
+                else if (mode == "noGameData")
+                {
+                    fileList.Add(new FileInfo("\\GameData" + file.Replace(tempExtractLocation, ""), modName));
+                }
+
+                else if (mode == "embeddedGameData")
+                {
+                    fileList.Add(new FileInfo(file.Replace(Directory.GetDirectories(tempExtractLocation)[0], ""), modName));
+                }
+            }
+
+            // Cleanup file list
+            for (int i = 0; i < fileList.Count; i++)
+            {
+                fileList[i].path.Replace("Gamedata", "GameData");
+                fileList[i].path.Replace("gamedata", "GameData");
+
+                if (!Path.GetDirectoryName(fileList[i].path).StartsWith("\\GameData") && !Path.GetDirectoryName(fileList[i].path).StartsWith("\\KSP_Data") && !Path.GetDirectoryName(fileList[i].path).StartsWith("\\KSP_x64_Data") && Path.GetExtension(fileList[i].path) != ".exe")
+                {
+                    oldFilePaths.RemoveAt(i);
+                    fileList.RemoveAt(i);
+                    i--;
+                }
+
+                else if (Path.GetDirectoryName(fileList[i].path).Replace("\\", "") == "GameData" && Path.GetExtension(fileList[i].path) != ".dll" && Path.GetExtension(fileList[i].path) != ".cfg")
+                {
+                    oldFilePaths.RemoveAt(i);
+                    fileList.RemoveAt(i);
+                    i--;
+                }
+            }
+
+            // Removing extra MM.dll's
+            if (modName.Contains("ModuleManager") && !modName.Contains("Override"))
+            {
+                for (int i = 0; i < Main.acces.install.installedFileList.Count; i++)
+                {
+                    if (Main.acces.install.installedFileList[i].path.Contains("ModuleManager"))
+                    {
+                        Main.acces.LogMessage("Overriding file '" + Main.acces.install.installedFileList[i].path + "'.");
+
+                        string newPath = Main.acces.install.kspFolder + "\\KMM\\overrides\\" + modName.Replace("\\", "()") + "\\" + Main.acces.install.installedFileList[i].modName.Replace("\\", "()") + Main.acces.install.installedFileList[i].path;
+
+                        Directory.CreateDirectory(Path.GetDirectoryName(newPath));
+                        File.Move(Main.acces.install.kspFolder + Main.acces.install.installedFileList[i].path, newPath);
+
+                        Main.acces.install.installedFileList.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
+
+            for (int i = 0; i < fileList.Count; i++)
+            {
+                string oldFilePath = oldFilePaths[i];
+                string newFilePath = Main.acces.install.kspFolder + fileList[i].path;
+
+                // Backup overridden files
+                if (!modInfo.name.Contains("Override") && File.Exists(newFilePath))
+                {
+                    FileInfo overriddenFile = new FileInfo();
+                    foreach (FileInfo file in Main.acces.install.installedFileList)
+                    {
+                        if (file.path == fileList[i].path)
+                        {
+                            overriddenFile = file;
+                            break;
+                        }
+                    }
+
+                    Main.acces.LogMessage("Overriding file '" + fileList[i].path + "'.");
+
+                    string newPath = Main.acces.install.kspFolder + "\\KMM\\overrides\\" + modName + "\\" + overriddenFile.modName.Replace("\\", "()") + fileList[i].path;
+                    Directory.CreateDirectory(Path.GetDirectoryName(newPath));
+                    File.Move(newFilePath, newPath);
+                }
+
+                // Move files
+                try
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(newFilePath));
+                    File.Delete(newFilePath);
+                    File.Move(oldFilePath, newFilePath);
+                    Main.acces.install.AddToFileList(fileList[i]);
+                }
+                catch
+                {
+                    Main.acces.LogMessage("Cannot move file '" + newFilePath + "', skipping ...");
+                }
+            }
+
+            // Add entry to installed list
+            Main.acces.install.installedModList.Add(new InstallInfo(modInfo.name, modInfo.category, modName, modInfo.version));
+
+            // Finalise
+            if (modInfo.name.Contains("DMP"))
+            {
+                System.Diagnostics.Process dmpUpdater = new System.Diagnostics.Process();
+                try
+                {
+                    dmpUpdater.StartInfo.FileName = Directory.GetFiles(Main.acces.install.kspFolder, "DMPUpdater.exe", SearchOption.TopDirectoryOnly)[0];
+                    dmpUpdater.StartInfo.Arguments = "--batch";
+                    dmpUpdater.Start();
+                }
+                catch
+                { }
+            }
+
+            Directory.Delete(tempExtractLocation, true);
+            Functions.ProcessDirectory(Main.acces.install.kspFolder + "\\KMM\\overrides", false);
+
+            Main.acces.SortLists();
+
+            // Check for overrides
+            for (int i = 0; i < Main.acces.modList.Count; i++)
+            {
+                if (Functions.CleanName(modInfo.name + "\\Override") == Functions.CleanName(Main.acces.modList[i].name))
+                {
+                    Install(Main.acces.modList[i], modInfo.zipfile.Replace(".zip", ""));
+                }
+            }
+        }
+    }
+}

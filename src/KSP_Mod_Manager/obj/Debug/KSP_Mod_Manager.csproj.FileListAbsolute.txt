@@ -1,0 +1,9 @@
+D:\Projects\KSP_Mod_Manager\KSP_Mod_Manager\bin\Debug\KSP_Mod_Manager.exe.config
+D:\Projects\KSP_Mod_Manager\KSP_Mod_Manager\obj\Debug\KSP_Mod_Manager.csprojResolveAssemblyReference.cache
+D:\Projects\KSP_Mod_Manager\KSP_Mod_Manager\obj\Debug\KSP_Mod_Manager.Main.resources
+D:\Projects\KSP_Mod_Manager\KSP_Mod_Manager\obj\Debug\KSP_Mod_Manager.Properties.Resources.resources
+D:\Projects\KSP_Mod_Manager\KSP_Mod_Manager\obj\Debug\KSP_Mod_Manager.csproj.GenerateResource.Cache
+D:\Projects\KSP_Mod_Manager\KSP_Mod_Manager\bin\Debug\KSP_Mod_Manager.exe
+D:\Projects\KSP_Mod_Manager\KSP_Mod_Manager\bin\Debug\KSP_Mod_Manager.pdb
+D:\Projects\KSP_Mod_Manager\KSP_Mod_Manager\obj\Debug\KSP_Mod_Manager.exe
+D:\Projects\KSP_Mod_Manager\KSP_Mod_Manager\obj\Debug\KSP_Mod_Manager.pdb
