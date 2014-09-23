@@ -261,6 +261,7 @@
             this.topButton1.TabIndex = 21;
             this.topButton1.Text = "Deinstall all mods";
             this.topButton1.UseVisualStyleBackColor = true;
+            this.topButton1.Click += new System.EventHandler(this.topButton1_Click);
             // 
             // topButton2
             // 

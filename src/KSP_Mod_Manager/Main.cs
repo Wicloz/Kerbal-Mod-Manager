@@ -25,6 +25,10 @@ namespace KSP_Mod_Manager
         private string settingFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\KMM\\settings";
         public List<InstallInstance> instanceList = new List<InstallInstance>();
 
+        ModInfo selectedMod = new ModInfo();
+        InstallInfo selectedInstalledMod = new InstallInfo();
+        FavInfo selectedFav = new FavInfo();
+
         public Main()
         {
             InitializeComponent();
@@ -93,11 +97,11 @@ namespace KSP_Mod_Manager
             im.Install(info);
         }
 
-        public bool IsModInstalled(string zipName)
+        public bool IsModInstalled(string version)
         {
             foreach (InstallInfo installedMod in kspInfo.installedModList)
             {
-                if (installedMod.codeName == zipName.Replace(".zip", ""))
+                if (installedMod.version == version)
                 {
                     return true;
                 }
@@ -134,7 +138,10 @@ namespace KSP_Mod_Manager
             modBox.Items.Clear();
             SortLists();
 
-            modBox.Items.Add("Installed Mods");
+            if (kspInfo.installedModList.Count > 0)
+            {
+                modBox.Items.Add("Installed Mods");
+            }
 
             foreach (InstallInfo installedMod in kspInfo.installedModList)
             {
@@ -158,11 +165,14 @@ namespace KSP_Mod_Manager
                 modBox.Items.Add(installedMod.modName + addedString);
             }
 
-            modBox.Items.Add("Downloaded Mods");
+            if (modInfo.modList.Count > 0)
+            {
+                modBox.Items.Add("Downloaded Mods");
+            }
 
             foreach (ModInfo mod in modInfo.modList)
             {
-                if (!mod.zipfile.Contains("Overrides") && !IsModInstalled(mod.zipfile))
+                if (!mod.zipfile.Contains("Overrides") && !IsModInstalled(mod.version))
                 {
                     string addedString = "";
 
@@ -270,32 +280,51 @@ namespace KSP_Mod_Manager
             InstallDeinstallSelected();
         }
 
-        // Functions that use the mods
+        private void topButton1_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < kspInfo.installedModList.Count; i++)
+            {
+                dm.Deinstall(kspInfo.installedModList[i].codeName);
+                i--;
+            }
+
+            UpdateModList(selectedMod.name);
+        }
+
+        // Functions for the buttons
         private void InstallDeinstallSelected()
         {
-            bool isInstalled = IsModInstalled(selectedMod.zipfile);
+            bool isInstalled = IsModInstalled(selectedMod.version);
 
-            if (isInstalled)
+            if (!isInstalled)
             {
                 im.Install(selectedMod);
             }
-            else if (!isInstalled)
+            else if (isInstalled)
             {
-                dm.Deinstall(modBox.SelectedItem as string);
+                dm.Deinstall(selectedInstalledMod.codeName);
             }
             
             UpdateModList(selectedMod.name);
         }
 
         // ModInfo editing stuff
-        ModInfo selectedMod = new ModInfo("");
-        FavInfo selectedFav = new FavInfo("none");
-        private bool canReloadList = true;
-
+        private bool isChangingSelection = true;
         private void modBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            canReloadList = false;
+            isChangingSelection = false;
             bool modExists = false;
+
+            for (int i = 0; i < kspInfo.installedModList.Count; i++)
+            {
+                string itemName = (string)modBox.SelectedItem;
+
+                if (kspInfo.installedModList[i].modName == itemName.Replace(" - Update Available", ""))
+                {
+                    selectedInstalledMod = kspInfo.installedModList[i];
+                    break;
+                }
+            }
 
             for (int i = 0; i < modInfo.modList.Count; i++)
             {
@@ -327,82 +356,111 @@ namespace KSP_Mod_Manager
 
                 opIsFavoriteBox.Checked = selectedFav.isFav;
                 opCanDownloadBox.Checked = selectedMod.canUpdate;
+
+                UnlockSettingEditor();
             }
             else
             {
+                opNameBox.Text = "";
+                opCategoryBox.Text = "";
+                opSiteBox.Text = "";
+                opDlSiteBox.Text = "";
+
+                opIsFavoriteBox.Checked = false;
+                opCanDownloadBox.Checked = false;
+
                 BlockSettingEditor();
             }
 
-            canReloadList = true;
+            isChangingSelection = true;
         }
 
         private void BlockSettingEditor()
         {
-            opNameBox.Text = "";
-            opCategoryBox.Text = "";
-            opSiteBox.Text = "";
-            opDlSiteBox.Text = "";
+            opNameBox.Enabled = false;
+            opCategoryBox.Enabled = false;
+            opSiteBox.Enabled = false;
+            opDlSiteBox.Enabled = false;
 
-            opIsFavoriteBox.Checked = false;
-            opCanDownloadBox.Checked = false;
+            opIsFavoriteBox.Enabled = false;
+            opCanDownloadBox.Enabled = false;
+
+            opInstallButton.Enabled = false;
+            opCheckUpdateButton.Enabled = false;
+            opDownloadButton.Enabled = false;
+
+            groupBox1.Enabled = false;
+            groupBox2.Enabled = false;
+        }
+
+        private void UnlockSettingEditor()
+        {
+            opNameBox.Enabled = true;
+            opCategoryBox.Enabled = true;
+            opSiteBox.Enabled = true;
+            opDlSiteBox.Enabled = true;
+
+            opIsFavoriteBox.Enabled = true;
+            opCanDownloadBox.Enabled = true;
+
+            opInstallButton.Enabled = true;
+            opCheckUpdateButton.Enabled = true;
+            opDownloadButton.Enabled = true;
+
+            groupBox1.Enabled = true;
+            groupBox2.Enabled = true;
         }
 
         private void opNameBox_TextChanged(object sender, EventArgs e)
         {
-            selectedMod.name = opNameBox.Text;
-
-            if (canReloadList)
+            if (isChangingSelection)
             {
+                selectedMod.name = opNameBox.Text;
                 UpdateModList(selectedMod.name);
             }
         }
 
         private void opCategoryBox_TextChanged(object sender, EventArgs e)
         {
-            selectedMod.category = opCategoryBox.Text;
-
-            if (canReloadList)
+            if (isChangingSelection)
             {
+                selectedMod.category = opCategoryBox.Text;
                 UpdateModList(selectedMod.name);
             }
         }
 
         private void opSiteBox_TextChanged(object sender, EventArgs e)
         {
-            selectedMod.websites.website = opSiteBox.Text;
-
-            if (canReloadList)
+            if (isChangingSelection)
             {
+                selectedMod.websites.website = opSiteBox.Text;
                 UpdateModList(selectedMod.name);
             }
         }
 
         private void opDlSiteBox_TextChanged(object sender, EventArgs e)
         {
-            selectedMod.websites.dlSite = opDlSiteBox.Text;
-
-            if (canReloadList)
+            if (isChangingSelection)
             {
+                selectedMod.websites.dlSite = opDlSiteBox.Text;
                 UpdateModList(selectedMod.name);
             }
         }
 
         private void opIsFavoriteBox_CheckedChanged(object sender, EventArgs e)
         {
-            selectedFav.isFav = opIsFavoriteBox.Checked;
-
-            if (canReloadList)
+            if (isChangingSelection)
             {
+                selectedFav.isFav = opIsFavoriteBox.Checked;
                 UpdateModList(selectedMod.name);
             }
         }
 
         private void opCanDownloadBox_CheckedChanged(object sender, EventArgs e)
         {
-            selectedMod.canUpdate = opCanDownloadBox.Checked;
-
-            if (canReloadList)
+            if (isChangingSelection)
             {
+                selectedMod.canUpdate = opCanDownloadBox.Checked;
                 UpdateModList(selectedMod.name);
             }
         }
