@@ -137,7 +137,7 @@ namespace KSP_Mod_Manager
         {
             modBox.Items.Clear();
             SortLists();
-
+            
             if (kspInfo.installedModList.Count > 0)
             {
                 modBox.Items.Add("Installed Mods");
@@ -189,7 +189,7 @@ namespace KSP_Mod_Manager
             {
                 for (int i = 0; i < modInfo.modList.Count; i++)
                 {
-                    if (modInfo.modList[i].name == modName)
+                    if ((string)modBox.Items[i] == modName)
                     {
                         modBox.SelectedIndex = i;
                         break;
@@ -328,7 +328,7 @@ namespace KSP_Mod_Manager
 
             for (int i = 0; i < modInfo.modList.Count; i++)
             {
-                string itemName = (string) modBox.SelectedItem;
+                string itemName = (string)modBox.SelectedItem;
 
                 if (modInfo.modList[i].name == itemName.Replace(" - Update Available", ""))
                 {
