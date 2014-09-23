@@ -9,11 +9,13 @@ namespace KSP_Mod_Manager
 {
     public class CurrentKspInstance
     {
-        public string kspFolder;
+        public string kspFolder = "";
 
         public List<InstallInfo> installedModList;
         public List<FileInfo> installedFileList;
         public List<FavInfo> favoritesList;
+
+        private bool loaded = false;
 
         public void LoadInstance(string path)
         {
@@ -46,18 +48,26 @@ namespace KSP_Mod_Manager
                 installedModList = new List<InstallInfo>();
             }
 
-            SetupKspFolder(kspFolder);
-            ManageFileList(kspFolder);
-            ManageFavoriteList();
-            SaveFiles(kspFolder);
+            if (kspFolder != "")
+            {
+                SetupKspFolder(kspFolder);
+                ManageFileList(kspFolder);
+                ManageFavoriteList();
+                SaveFiles(kspFolder);
+            }
+
+            loaded = true;
         }
 
         public void UnloadInstance()
         {
-            SetupKspFolder(kspFolder);
-            ManageFileList(kspFolder);
-            ManageFavoriteList();
-            SaveFiles(kspFolder);
+            if (kspFolder != "" && loaded)
+            {
+                SetupKspFolder(kspFolder);
+                ManageFileList(kspFolder);
+                ManageFavoriteList();
+                SaveFiles(kspFolder);
+            }
 
             kspFolder = "";
         }

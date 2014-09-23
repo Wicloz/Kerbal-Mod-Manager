@@ -14,6 +14,8 @@ namespace KSP_Mod_Manager
         public List<ModInfo> modList;
         private List<SiteInfo> siteList;
 
+        private bool loaded = false;
+
         public void LoadInstance(string path)
         {
             modsPath = path;
@@ -42,11 +44,13 @@ namespace KSP_Mod_Manager
                 ManageModLists(modsPath);
                 SaveFiles(modsPath);
             }
+
+            loaded = true;
         }
 
         public void UnloadInstance()
         {
-            if (modsPath != "")
+            if (modsPath != "" && loaded)
             {
                 SetupModFolder(modsPath);
                 ManageModLists(modsPath);

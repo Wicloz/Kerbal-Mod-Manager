@@ -45,13 +45,15 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.opIsFavoriteBox = new System.Windows.Forms.CheckBox();
             this.updateModFolderButton = new System.Windows.Forms.Button();
+            this.checkUpdateButton = new System.Windows.Forms.Button();
             this.topButton1 = new System.Windows.Forms.Button();
             this.topButton2 = new System.Windows.Forms.Button();
-            this.topButton3 = new System.Windows.Forms.Button();
-            this.opIsFavoriteBox = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.opCheckUpdateButton = new System.Windows.Forms.Button();
+            this.addInstanceButton = new System.Windows.Forms.Button();
+            this.removeInstanceButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -61,8 +63,10 @@
             this.installationBox.FormattingEnabled = true;
             this.installationBox.Location = new System.Drawing.Point(15, 38);
             this.installationBox.Name = "installationBox";
-            this.installationBox.Size = new System.Drawing.Size(94, 537);
+            this.installationBox.Size = new System.Drawing.Size(94, 459);
             this.installationBox.TabIndex = 0;
+            this.installationBox.Click += new System.EventHandler(this.installationBox_Click);
+            this.installationBox.DoubleClick += new System.EventHandler(this.installationBox_DoubleClick);
             // 
             // modFolderBox
             // 
@@ -98,6 +102,8 @@
             this.modBox.Name = "modBox";
             this.modBox.Size = new System.Drawing.Size(333, 498);
             this.modBox.TabIndex = 5;
+            this.modBox.SelectedIndexChanged += new System.EventHandler(this.modBox_SelectedIndexChanged);
+            this.modBox.DoubleClick += new System.EventHandler(this.modBox_DoubleClick);
             // 
             // opNameBox
             // 
@@ -105,6 +111,7 @@
             this.opNameBox.Name = "opNameBox";
             this.opNameBox.Size = new System.Drawing.Size(324, 20);
             this.opNameBox.TabIndex = 6;
+            this.opNameBox.TextChanged += new System.EventHandler(this.opNameBox_TextChanged);
             // 
             // opSiteBox
             // 
@@ -112,6 +119,7 @@
             this.opSiteBox.Name = "opSiteBox";
             this.opSiteBox.Size = new System.Drawing.Size(324, 20);
             this.opSiteBox.TabIndex = 8;
+            this.opSiteBox.TextChanged += new System.EventHandler(this.opSiteBox_TextChanged);
             // 
             // opDlSiteBox
             // 
@@ -119,6 +127,7 @@
             this.opDlSiteBox.Name = "opDlSiteBox";
             this.opDlSiteBox.Size = new System.Drawing.Size(324, 20);
             this.opDlSiteBox.TabIndex = 9;
+            this.opDlSiteBox.TextChanged += new System.EventHandler(this.opDlSiteBox_TextChanged);
             // 
             // opInstallButton
             // 
@@ -128,6 +137,7 @@
             this.opInstallButton.TabIndex = 10;
             this.opInstallButton.Text = "Install Mod / Deinstall Mod";
             this.opInstallButton.UseVisualStyleBackColor = true;
+            this.opInstallButton.Click += new System.EventHandler(this.opInstallButton_Click);
             // 
             // opCanDownloadBox
             // 
@@ -138,6 +148,7 @@
             this.opCanDownloadBox.TabIndex = 11;
             this.opCanDownloadBox.Text = "Update Available";
             this.opCanDownloadBox.UseVisualStyleBackColor = true;
+            this.opCanDownloadBox.CheckedChanged += new System.EventHandler(this.opCanDownloadBox_CheckedChanged);
             // 
             // opDownloadButton
             // 
@@ -155,6 +166,7 @@
             this.opCategoryBox.Name = "opCategoryBox";
             this.opCategoryBox.Size = new System.Drawing.Size(324, 21);
             this.opCategoryBox.TabIndex = 13;
+            this.opCategoryBox.TextChanged += new System.EventHandler(this.opCategoryBox_TextChanged);
             // 
             // label2
             // 
@@ -210,6 +222,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings for Mod";
             // 
+            // opIsFavoriteBox
+            // 
+            this.opIsFavoriteBox.AutoSize = true;
+            this.opIsFavoriteBox.Location = new System.Drawing.Point(107, 124);
+            this.opIsFavoriteBox.Name = "opIsFavoriteBox";
+            this.opIsFavoriteBox.Size = new System.Drawing.Size(75, 17);
+            this.opIsFavoriteBox.TabIndex = 18;
+            this.opIsFavoriteBox.Text = "Is Favorite";
+            this.opIsFavoriteBox.UseVisualStyleBackColor = true;
+            this.opIsFavoriteBox.CheckedChanged += new System.EventHandler(this.opIsFavoriteBox_CheckedChanged);
+            // 
             // updateModFolderButton
             // 
             this.updateModFolderButton.Location = new System.Drawing.Point(719, 12);
@@ -220,42 +243,33 @@
             this.updateModFolderButton.UseVisualStyleBackColor = true;
             this.updateModFolderButton.Click += new System.EventHandler(this.updateModFolderButton_Click);
             // 
+            // checkUpdateButton
+            // 
+            this.checkUpdateButton.Location = new System.Drawing.Point(455, 521);
+            this.checkUpdateButton.Name = "checkUpdateButton";
+            this.checkUpdateButton.Size = new System.Drawing.Size(437, 54);
+            this.checkUpdateButton.TabIndex = 20;
+            this.checkUpdateButton.Text = "Check for updates";
+            this.checkUpdateButton.UseVisualStyleBackColor = true;
+            this.checkUpdateButton.Click += new System.EventHandler(this.checkUpdateButton_Click);
+            // 
             // topButton1
             // 
-            this.topButton1.Location = new System.Drawing.Point(455, 521);
+            this.topButton1.Location = new System.Drawing.Point(116, 38);
             this.topButton1.Name = "topButton1";
-            this.topButton1.Size = new System.Drawing.Size(437, 54);
-            this.topButton1.TabIndex = 20;
-            this.topButton1.Text = "Check for updates";
+            this.topButton1.Size = new System.Drawing.Size(166, 33);
+            this.topButton1.TabIndex = 21;
+            this.topButton1.Text = "Deinstall all mods";
             this.topButton1.UseVisualStyleBackColor = true;
             // 
             // topButton2
             // 
-            this.topButton2.Location = new System.Drawing.Point(116, 38);
+            this.topButton2.Location = new System.Drawing.Point(288, 38);
             this.topButton2.Name = "topButton2";
-            this.topButton2.Size = new System.Drawing.Size(166, 33);
-            this.topButton2.TabIndex = 21;
-            this.topButton2.Text = "Deinstall all mods";
+            this.topButton2.Size = new System.Drawing.Size(161, 33);
+            this.topButton2.TabIndex = 22;
+            this.topButton2.Text = "Install all Favorites";
             this.topButton2.UseVisualStyleBackColor = true;
-            // 
-            // topButton3
-            // 
-            this.topButton3.Location = new System.Drawing.Point(288, 38);
-            this.topButton3.Name = "topButton3";
-            this.topButton3.Size = new System.Drawing.Size(161, 33);
-            this.topButton3.TabIndex = 22;
-            this.topButton3.Text = "Install all Favorites";
-            this.topButton3.UseVisualStyleBackColor = true;
-            // 
-            // opIsFavoriteBox
-            // 
-            this.opIsFavoriteBox.AutoSize = true;
-            this.opIsFavoriteBox.Location = new System.Drawing.Point(107, 124);
-            this.opIsFavoriteBox.Name = "opIsFavoriteBox";
-            this.opIsFavoriteBox.Size = new System.Drawing.Size(75, 17);
-            this.opIsFavoriteBox.TabIndex = 18;
-            this.opIsFavoriteBox.Text = "Is Favorite";
-            this.opIsFavoriteBox.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
@@ -278,15 +292,37 @@
             this.opCheckUpdateButton.Text = "Check For Update";
             this.opCheckUpdateButton.UseVisualStyleBackColor = true;
             // 
+            // addInstanceButton
+            // 
+            this.addInstanceButton.Location = new System.Drawing.Point(15, 542);
+            this.addInstanceButton.Name = "addInstanceButton";
+            this.addInstanceButton.Size = new System.Drawing.Size(94, 32);
+            this.addInstanceButton.TabIndex = 24;
+            this.addInstanceButton.Text = "Add Instance";
+            this.addInstanceButton.UseVisualStyleBackColor = true;
+            this.addInstanceButton.Click += new System.EventHandler(this.addInstanceButton_Click);
+            // 
+            // removeInstanceButton
+            // 
+            this.removeInstanceButton.Location = new System.Drawing.Point(15, 503);
+            this.removeInstanceButton.Name = "removeInstanceButton";
+            this.removeInstanceButton.Size = new System.Drawing.Size(94, 33);
+            this.removeInstanceButton.TabIndex = 25;
+            this.removeInstanceButton.Text = "Delete Instance";
+            this.removeInstanceButton.UseVisualStyleBackColor = true;
+            this.removeInstanceButton.Click += new System.EventHandler(this.removeInstanceButton_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 586);
+            this.Controls.Add(this.removeInstanceButton);
+            this.Controls.Add(this.addInstanceButton);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.topButton3);
             this.Controls.Add(this.topButton2);
             this.Controls.Add(this.topButton1);
+            this.Controls.Add(this.checkUpdateButton);
             this.Controls.Add(this.updateModFolderButton);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.opInstallButton);
@@ -330,12 +366,14 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button updateModFolderButton;
+        private System.Windows.Forms.Button checkUpdateButton;
         private System.Windows.Forms.Button topButton1;
         private System.Windows.Forms.Button topButton2;
-        private System.Windows.Forms.Button topButton3;
         private System.Windows.Forms.CheckBox opIsFavoriteBox;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button opCheckUpdateButton;
+        private System.Windows.Forms.Button addInstanceButton;
+        private System.Windows.Forms.Button removeInstanceButton;
     }
 }
 

@@ -12,7 +12,6 @@ namespace KSP_Mod_Manager
         public void CheckForUpdate()
         {
             Main.acces.LogMessage("Checking for updates ...");
-            Main.acces.SortLists();
 
             foreach (ModInfo modInfo in Main.acces.modInfo.modList)
             {
