@@ -184,7 +184,7 @@ namespace KSP_Mod_Manager
             }
 
             // Add entry to installed list
-            Main.acces.kspInfo.installedModList.Add(new InstallInfo(modInfo.name, modInfo.category, zipName, modInfo.version));
+            Main.acces.kspInfo.installedModList.Add(new InstalledInfo(modInfo.name, modInfo.category, zipName, modInfo.version));
 
             // Finalise
             if (modInfo.name.Contains("DMP"))

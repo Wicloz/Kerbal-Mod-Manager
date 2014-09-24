@@ -104,6 +104,7 @@
             this.modBox.TabIndex = 5;
             this.modBox.SelectedIndexChanged += new System.EventHandler(this.modBox_SelectedIndexChanged);
             this.modBox.DoubleClick += new System.EventHandler(this.modBox_DoubleClick);
+            this.modBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.modBox_KeyPress);
             // 
             // opNameBox
             // 
@@ -271,6 +272,7 @@
             this.topButton2.TabIndex = 22;
             this.topButton2.Text = "Install all Favorites";
             this.topButton2.UseVisualStyleBackColor = true;
+            this.topButton2.Click += new System.EventHandler(this.topButton2_Click);
             // 
             // groupBox2
             // 

@@ -77,17 +77,17 @@ namespace KSP_Mod_Manager
     }
 
     [Serializable]
-    public class InstallInfo : System.IComparable<InstallInfo>
+    public class InstalledInfo : System.IComparable<InstalledInfo>
     {
         public string modName;
         public string category;
         public string codeName;
         public string version;
 
-        public InstallInfo()
+        public InstalledInfo()
         { }
 
-        public InstallInfo(string ModName, string Category, string CodeName, string Version)
+        public InstalledInfo(string ModName, string Category, string CodeName, string Version)
         {
             modName = ModName;
             category = Category;
@@ -95,7 +95,7 @@ namespace KSP_Mod_Manager
             version = Version;
         }
 
-        public int CompareTo(InstallInfo other)
+        public int CompareTo(InstalledInfo other)
         {
             if (other == null)
             {

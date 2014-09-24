@@ -17,8 +17,6 @@ namespace KSP_Mod_Manager
 
         public CurrentKspInstance kspInfo = new CurrentKspInstance();
         public CurrentModInstance modInfo = new CurrentModInstance();
-        private InstallMod im = new InstallMod();
-        private DeinstallMod dm = new DeinstallMod();
         private UpdateMod um = new UpdateMod();
         private UpdateCheck uc = new UpdateCheck();
 
@@ -26,7 +24,7 @@ namespace KSP_Mod_Manager
         public List<InstallInstance> instanceList = new List<InstallInstance>();
 
         ModInfo selectedMod = new ModInfo();
-        InstallInfo selectedInstalledMod = new InstallInfo();
+        InstalledInfo selectedInstalledMod = new InstalledInfo();
         FavInfo selectedFav = new FavInfo();
 
         public Main()
@@ -93,13 +91,11 @@ namespace KSP_Mod_Manager
 
         public void Reinstall(string installedModName, ModInfo info)
         {
-            dm.Deinstall(installedModName);
-            im.Install(info);
         }
 
         public bool IsModInstalled(string version)
         {
-            foreach (InstallInfo installedMod in kspInfo.installedModList)
+            foreach (InstalledInfo installedMod in kspInfo.installedModList)
             {
                 if (installedMod.version == version)
                 {
@@ -140,10 +136,10 @@ namespace KSP_Mod_Manager
             
             if (kspInfo.installedModList.Count > 0)
             {
-                modBox.Items.Add("Installed Mods");
+                modBox.Items.Add("INSTALLED MODS");
             }
 
-            foreach (InstallInfo installedMod in kspInfo.installedModList)
+            foreach (InstalledInfo installedMod in kspInfo.installedModList)
             {
                 ModInfo mod = new ModInfo("none");
                 string addedString = "";
@@ -167,7 +163,23 @@ namespace KSP_Mod_Manager
 
             if (modInfo.modList.Count > 0)
             {
-                modBox.Items.Add("Downloaded Mods");
+                modBox.Items.Add("DOWNLOADED MODS");
+            }
+
+            if (modName != "")
+            {
+                for (int i = 0; i < modBox.Items.Count; i++)
+                {
+                    if ((string)modBox.Items[i] == modName)
+                    {
+                        modBox.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                modBox.SelectedIndex = 0;
             }
 
             foreach (ModInfo mod in modInfo.modList)
@@ -183,22 +195,6 @@ namespace KSP_Mod_Manager
 
                     modBox.Items.Add(mod.name + addedString);
                 }
-            }
-
-            if (modName != "")
-            {
-                for (int i = 0; i < modInfo.modList.Count; i++)
-                {
-                    if ((string)modBox.Items[i] == modName)
-                    {
-                        modBox.SelectedIndex = i;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                modBox.SelectedIndex = 0;
             }
         }
 
@@ -282,13 +278,51 @@ namespace KSP_Mod_Manager
 
         private void topButton1_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < kspInfo.installedModList.Count; i++)
+            if(kspInfo.installedModList.Count > 0)
             {
-                dm.Deinstall(kspInfo.installedModList[i].codeName);
-                i--;
+                List<InstalledInfo> sendList = new List<InstalledInfo>();
+
+                for (int i = 0; i < kspInfo.installedModList.Count; i++)
+                {
+                    sendList.Add(kspInfo.installedModList[i]);
+                }
+
+                InstallDeinstallForm form = new InstallDeinstallForm(sendList);
+                form.ShowDialog();
+
+                UpdateModList(selectedMod.name);
+            }
+        }
+
+        private void topButton2_Click(object sender, EventArgs e)
+        {
+            List<ModInfo> sendList = new List<ModInfo>();
+
+            foreach (FavInfo fav in kspInfo.favoritesList)
+            {
+                if (fav.isFav)
+                {
+                    foreach (ModInfo mod in modInfo.modList)
+                    {
+                        if (fav.key == mod.key)
+                        {
+                            if (!IsModInstalled(mod.version))
+                            {
+                                sendList.Add(mod);
+                            }
+                            break;
+                        }
+                    }
+                }
             }
 
-            UpdateModList(selectedMod.name);
+            if (sendList.Count > 0)
+            {
+                InstallDeinstallForm form = new InstallDeinstallForm(sendList);
+                form.ShowDialog();
+
+                UpdateModList(selectedMod.name);
+            }
         }
 
         // Functions for the buttons
@@ -298,11 +332,19 @@ namespace KSP_Mod_Manager
 
             if (!isInstalled)
             {
-                im.Install(selectedMod);
+                List<ModInfo> sendList = new List<ModInfo>();
+                sendList.Add(selectedMod);
+
+                InstallDeinstallForm form = new InstallDeinstallForm(sendList);
+                form.ShowDialog();
             }
             else if (isInstalled)
             {
-                dm.Deinstall(selectedInstalledMod.codeName);
+                List<InstalledInfo> sendList = new List<InstalledInfo>();
+                sendList.Add(selectedInstalledMod);
+
+                InstallDeinstallForm form = new InstallDeinstallForm(sendList);
+                form.ShowDialog();
             }
             
             UpdateModList(selectedMod.name);
@@ -462,6 +504,15 @@ namespace KSP_Mod_Manager
             {
                 selectedMod.canUpdate = opCanDownloadBox.Checked;
                 UpdateModList(selectedMod.name);
+            }
+        }
+
+        private void modBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar == ' ')
+            {
+                selectedFav.isFav = !selectedFav.isFav;
+                UpdateModList((string)modBox.SelectedItem);
             }
         }
     }

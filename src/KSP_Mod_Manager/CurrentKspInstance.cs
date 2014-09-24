@@ -11,7 +11,7 @@ namespace KSP_Mod_Manager
     {
         public string kspFolder = "";
 
-        public List<InstallInfo> installedModList;
+        public List<InstalledInfo> installedModList;
         public List<FileInfo> installedFileList;
         public List<FavInfo> favoritesList;
 
@@ -41,11 +41,11 @@ namespace KSP_Mod_Manager
 
             if (File.Exists(path + "\\KMM\\ModList.txt"))
             {
-                installedModList = SaveLoad.LoadFileXml<List<InstallInfo>>(path + "\\KMM\\ModList.txt");
+                installedModList = SaveLoad.LoadFileXml<List<InstalledInfo>>(path + "\\KMM\\ModList.txt");
             }
             else
             {
-                installedModList = new List<InstallInfo>();
+                installedModList = new List<InstalledInfo>();
             }
 
             if (kspFolder != "")
