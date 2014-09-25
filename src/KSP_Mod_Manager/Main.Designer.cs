@@ -294,6 +294,7 @@
             this.opCheckUpdateButton.TabIndex = 13;
             this.opCheckUpdateButton.Text = "Check For Update";
             this.opCheckUpdateButton.UseVisualStyleBackColor = true;
+            this.opCheckUpdateButton.Click += new System.EventHandler(this.opCheckUpdateButton_Click);
             // 
             // addInstanceButton
             // 

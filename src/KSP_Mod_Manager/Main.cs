@@ -218,7 +218,21 @@ namespace KSP_Mod_Manager
 
         private void checkUpdateButton_Click(object sender, EventArgs e)
         {
+            List<ModInfo> sendList = new List<ModInfo>();
 
+            foreach (ModInfo mod in modInfo.modList)
+            {
+                if (!mod.name.Contains("Override"))
+                {
+                    sendList.Add(mod);
+                }
+            }
+
+            if (sendList.Count > 0)
+            {
+                InstallDeinstallForm form = new InstallDeinstallForm(sendList, 1);
+                form.ShowDialog();
+            }
         }
 
         private void addInstanceButton_Click(object sender, EventArgs e)
@@ -325,7 +339,7 @@ namespace KSP_Mod_Manager
 
             if (sendList.Count > 0)
             {
-                InstallDeinstallForm form = new InstallDeinstallForm(sendList);
+                InstallDeinstallForm form = new InstallDeinstallForm(sendList, 0);
                 form.ShowDialog();
 
                 UpdateModList(selectedMod.name);
@@ -342,7 +356,7 @@ namespace KSP_Mod_Manager
                 List<ModInfo> sendList = new List<ModInfo>();
                 sendList.Add(selectedMod);
 
-                InstallDeinstallForm form = new InstallDeinstallForm(sendList);
+                InstallDeinstallForm form = new InstallDeinstallForm(sendList, 0);
                 form.ShowDialog();
             }
             else if (isInstalled)
@@ -520,6 +534,25 @@ namespace KSP_Mod_Manager
             {
                 selectedFav.isFav = !selectedFav.isFav;
                 UpdateModList(selectedMod.name);
+            }
+        }
+
+        private void opCheckUpdateButton_Click(object sender, EventArgs e)
+        {
+            List<ModInfo> sendList = new List<ModInfo>();
+
+            foreach (ModInfo mod in modInfo.modList)
+            {
+                if (mod.zipfile == selectedMod.zipfile)
+                {
+                    sendList.Add(mod);
+                }
+            }
+
+            if (sendList.Count > 0)
+            {
+                InstallDeinstallForm form = new InstallDeinstallForm(sendList, 1);
+                form.ShowDialog();
             }
         }
     }

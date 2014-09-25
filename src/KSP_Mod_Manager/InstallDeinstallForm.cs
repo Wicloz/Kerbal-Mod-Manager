@@ -16,9 +16,11 @@ namespace KSP_Mod_Manager
     {
         private InstallMod im = new InstallMod();
         private DeinstallMod dm = new DeinstallMod();
+        private UpdateCheck uc = new UpdateCheck();
 
         private List<ModInfo> installModList = new List<ModInfo>();
         private List<InstalledInfo> deinstallModList = new List<InstalledInfo>();
+        private List<ModInfo> updateModList = new List<ModInfo>();
 
         private float stepSize = 0;
 
@@ -30,18 +32,34 @@ namespace KSP_Mod_Manager
         private bool mustUnzip = false;
 
         private Thread stuff;
-        private Thread preUnzip;
 
         private void EmptyFunction()
         { }
 
-        public InstallDeinstallForm(List<ModInfo> ModList)
+        public InstallDeinstallForm(List<ModInfo> ModList, int Mode)
         {
             InitializeComponent();
 
-            installModList = ModList;
-            mode = "install";
-            this.Text = "Installing Mods ...";
+            if (Mode == 0)
+            {
+                installModList = ModList;
+                mode = "install";
+                this.Text = "Installing Mods ...";
+            }
+
+            else if (Mode == 1)
+            {
+                updateModList = ModList;
+                mode = "checkUpdate";
+                this.Text = "Checking for Updates ...";
+            }
+
+            else if (Mode == 2)
+            {
+                updateModList = ModList;
+                mode = "update";
+                this.Text = "Updating Mods ...";
+            }
         }
 
         public InstallDeinstallForm(List<InstalledInfo> ModList)
@@ -84,8 +102,7 @@ namespace KSP_Mod_Manager
 
             // Initiate values
             stuff = new Thread(EmptyFunction);
-            preUnzip = new Thread(EmptyFunction);
-            stepSize = 1000 / (installModList.Count + deinstallModList.Count);
+            stepSize = 1000 / (installModList.Count + deinstallModList.Count + updateModList.Count);
 
             // Initiate timer
             System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
@@ -122,9 +139,9 @@ namespace KSP_Mod_Manager
             allModProgress.Style = ProgressBarStyle.Continuous;
             allModProgress.Value = Convert.ToInt32(Math.Max(0, stepSize * currentMod));
 
-            progressLabel2.Text = "(" + currentMod + "/" + (installModList.Count + deinstallModList.Count) + ")";
+            progressLabel2.Text = "(" + currentMod + "/" + (installModList.Count + deinstallModList.Count + updateModList.Count) + ")";
 
-            if (currentMod == installModList.Count + deinstallModList.Count)
+            if (currentMod == installModList.Count + deinstallModList.Count + updateModList.Count)
             {
                 progressLabel1.Text = "Done!";
                 formDone = true;
@@ -138,18 +155,30 @@ namespace KSP_Mod_Manager
             else if (mode == "install")
             {
                 progressLabel1.Text = "Installing Mod '" + installModList[currentMod].name + "'";
+
                 Main.acces.LogMessage("Installing '" + installModList[currentMod].zipfile + "'.");
 
-                preUnzip = new Thread(PreUnzip);
-                preUnzip.Start();
+                stuff = new Thread(PreUnzip);
+                stuff.Start();
             }
 
             else if (mode == "deinstall")
             {
                 progressLabel1.Text = "Deinstalling Mod '" + deinstallModList[currentMod].modName + "'";
+
                 Main.acces.LogMessage("Deinstalling '" + deinstallModList[currentMod].codeName + "'.");
 
                 stuff = new Thread(Deinstall);
+                stuff.Start();
+            }
+
+            else if (mode == "checkUpdate")
+            {
+                progressLabel1.Text = "Checking Update For '" + updateModList[currentMod].name + "'";
+
+                Main.acces.LogMessage("Checking Update For '" + updateModList[currentMod].name + "'.");
+
+                stuff = new Thread(CheckUpdate);
                 stuff.Start();
             }
         }
@@ -177,6 +206,12 @@ namespace KSP_Mod_Manager
         private void Deinstall()
         {
             dm.Deinstall(deinstallModList[currentMod].codeName);
+            actionDone = true;
+        }
+
+        private void CheckUpdate()
+        {
+            uc.CheckForUpdate(updateModList[currentMod]);
             actionDone = true;
         }
 
