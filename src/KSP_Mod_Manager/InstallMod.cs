@@ -8,18 +8,12 @@ using System.Xml.Serialization;
 using System.Net;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.IO.Compression;
 
 namespace KSP_Mod_Manager
 {
     class InstallMod
     {
-        public void Install(ModInfo modInfo)
-        {
-            Install(modInfo, "");
-        }
-
-        public void Install(ModInfo modInfo, string originalName)
+        public void PreUnzip()
         {
             try
             {
@@ -27,17 +21,17 @@ namespace KSP_Mod_Manager
             }
             catch
             { }
+        }
 
+        public void PostUnzip(ModInfo modInfo)
+        {
             // Start
             string zipName = modInfo.zipfile.Replace(".zip", "");
-            Main.acces.LogMessage("Installing '" + zipName + ".zip'.");
 
             string tempExtractLocation = Main.acces.kspInfo.kspFolder + "\\KMM\\temp";
             Directory.CreateDirectory(tempExtractLocation);
 
-            // Extract
-            ZipFile.ExtractToDirectory(Main.acces.modInfo.modsPath + "\\" + zipName + ".zip", tempExtractLocation);
-
+            // Checking for GameData mode
             List<string> dirListTop = new List<string>();
             foreach (string directory in Directory.GetDirectories(tempExtractLocation, "*.*", SearchOption.TopDirectoryOnly))
             {
@@ -202,15 +196,6 @@ namespace KSP_Mod_Manager
 
             Directory.Delete(tempExtractLocation, true);
             Functions.ProcessDirectory(Main.acces.kspInfo.kspFolder + "\\KMM\\overrides", false);
-
-            // Check for overrides
-            for (int i = 0; i < Main.acces.modInfo.modList.Count; i++)
-            {
-                if (Functions.CleanName(modInfo.name + "\\Override") == Functions.CleanName(Main.acces.modInfo.modList[i].name))
-                {
-                    Install(Main.acces.modInfo.modList[i], modInfo.zipfile.Replace(".zip", ""));
-                }
-            }
         }
     }
 }

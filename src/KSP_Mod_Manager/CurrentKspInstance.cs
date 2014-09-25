@@ -17,7 +17,7 @@ namespace KSP_Mod_Manager
 
         private bool loaded = false;
 
-        public void LoadInstance(string path)
+        public bool LoadInstance(string path)
         {
             kspFolder = path;
 
@@ -48,20 +48,25 @@ namespace KSP_Mod_Manager
                 installedModList = new List<InstalledInfo>();
             }
 
-            if (kspFolder != "")
+            if (Directory.Exists(kspFolder))
             {
                 SetupKspFolder(kspFolder);
                 ManageFileList(kspFolder);
                 ManageFavoriteList();
                 SaveFiles(kspFolder);
-            }
 
-            loaded = true;
+                loaded = true;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void UnloadInstance()
         {
-            if (kspFolder != "" && loaded)
+            if (loaded)
             {
                 SetupKspFolder(kspFolder);
                 ManageFileList(kspFolder);

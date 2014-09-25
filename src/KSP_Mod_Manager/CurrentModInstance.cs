@@ -38,19 +38,19 @@ namespace KSP_Mod_Manager
                 siteList = new List<SiteInfo>();
             }
 
-            if (modsPath != "")
+            if (modsPath.Contains(":\\"))
             {
                 SetupModFolder(modsPath);
                 ManageModLists(modsPath);
                 SaveFiles(modsPath);
-            }
 
-            loaded = true;
+                loaded = true;
+            }
         }
 
         public void UnloadInstance()
         {
-            if (modsPath != "" && loaded)
+            if (loaded)
             {
                 SetupModFolder(modsPath);
                 ManageModLists(modsPath);

@@ -15,19 +15,7 @@ namespace KSP_Mod_Manager
     {
         public void Deinstall(string zipName)
         {
-            // Check for overrides
-            for (int i = 0; i < Main.acces.kspInfo.installedModList.Count; i++)
-            {
-                string name = Main.acces.kspInfo.installedModList[i].codeName;
-
-                if (Functions.CleanName(name) == Functions.CleanName("Overrides\\" + zipName.Replace(" ", "")))
-                {
-                    Deinstall(name);
-                }
-            }
-
             // Start
-            Main.acces.LogMessage("Deinstalling '" + zipName + "'.");
             string overrideFolder = Main.acces.kspInfo.kspFolder + "\\KMM\\overrides\\" + zipName.Replace("\\", "()");
 
             // Restore overridden files

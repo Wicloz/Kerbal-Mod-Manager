@@ -86,7 +86,7 @@ namespace KSP_Mod_Manager
         private void ChangeKspFolder(string newPath)
         {
             kspInfo.UnloadInstance();
-            kspInfo.LoadInstance(newPath);
+            modBox.Enabled = kspInfo.LoadInstance(newPath);
         }
 
         public void Reinstall(string installedModName, ModInfo info)
@@ -141,24 +141,27 @@ namespace KSP_Mod_Manager
 
             foreach (InstalledInfo installedMod in kspInfo.installedModList)
             {
-                ModInfo mod = new ModInfo("none");
-                string addedString = "";
-
-                for (int i = 0; i < modInfo.modList.Count; i++)
+                if (!installedMod.codeName.Contains("Overrides"))
                 {
-                    if (modInfo.modList[i].name == installedMod.modName)
+                    ModInfo mod = new ModInfo("none");
+                    string addedString = "";
+
+                    for (int i = 0; i < modInfo.modList.Count; i++)
                     {
-                        mod = modInfo.modList[i];
-                        break;
+                        if (modInfo.modList[i].name == installedMod.modName)
+                        {
+                            mod = modInfo.modList[i];
+                            break;
+                        }
                     }
-                }
 
-                if (mod.canUpdate)
-                {
-                    addedString = " - Update Available";
-                }
+                    if (mod.canUpdate)
+                    {
+                        addedString = " - Update Available";
+                    }
 
-                modBox.Items.Add(installedMod.modName + addedString);
+                    modBox.Items.Add(installedMod.modName + addedString);
+                }
             }
 
             if (modInfo.modList.Count > 0)
@@ -264,6 +267,7 @@ namespace KSP_Mod_Manager
             instance.kspPath = editInstanceForm.kspPath;
 
             UpdateInstallInstanceList(installationBox.SelectedIndex);
+            LoadKspInstance();
         }
 
         private void modBox_DoubleClick(object sender, EventArgs e)
@@ -278,18 +282,21 @@ namespace KSP_Mod_Manager
 
         private void topButton1_Click(object sender, EventArgs e)
         {
-            if(kspInfo.installedModList.Count > 0)
-            {
-                List<InstalledInfo> sendList = new List<InstalledInfo>();
+            List<InstalledInfo> sendList = new List<InstalledInfo>();
 
-                for (int i = 0; i < kspInfo.installedModList.Count; i++)
+            for (int i = 0; i < kspInfo.installedModList.Count; i++)
+            {
+                if (!kspInfo.installedModList[i].codeName.Contains("Overrides"))
                 {
                     sendList.Add(kspInfo.installedModList[i]);
                 }
+            }
 
-                InstallDeinstallForm form = new InstallDeinstallForm(sendList);
-                form.ShowDialog();
+            InstallDeinstallForm form = new InstallDeinstallForm(sendList);
+            form.ShowDialog();
 
+            if (sendList.Count > 0)
+            {
                 UpdateModList(selectedMod.name);
             }
         }
@@ -512,7 +519,7 @@ namespace KSP_Mod_Manager
             if(e.KeyChar == ' ')
             {
                 selectedFav.isFav = !selectedFav.isFav;
-                UpdateModList((string)modBox.SelectedItem);
+                UpdateModList(selectedMod.name);
             }
         }
     }
