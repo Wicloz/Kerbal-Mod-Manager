@@ -5,13 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
+using System.Net;
 
 namespace KSP_Mod_Manager
 {
     class UpdateMod
     {
-        public void Update(ModInfo modInfo, bool isInstalled, string installedMod)
+        public int progress = 0;
+        public bool updateDone = false;
+
+        private ModInfo modInfo;
+
+        public void Update(ModInfo ModInfo)
         {
+            modInfo = ModInfo;
+
             string modFolder = "\\ModDownloads\\" + modInfo.name.Replace(" ", "_");
             string downloadFolder = Main.acces.modInfo.modsPath + modFolder;
             Directory.CreateDirectory(downloadFolder);
@@ -19,31 +27,22 @@ namespace KSP_Mod_Manager
             if (modInfo.websites.dlSite != "NONE")
             {
                 Main.acces.LogMessage("Downloading '" + modInfo.name + "'...");
+                progress = 10;
 
-                Functions.DownloadSite(modInfo.websites.dlSite, downloadFolder + "\\" + modInfo.name.Replace(" ", "") + ".zip");
+                WebClient client = new WebClient();
+                client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
+                client.DownloadFileCompleted += new System.ComponentModel.AsyncCompletedEventHandler(client_DownloadFileCompleted);
 
-                Main.acces.LogMessage("'" + modInfo.name + "' has finished downloading.");
+                client.DownloadFileAsync(new Uri(modInfo.websites.dlSite), downloadFolder + "\\" + modInfo.name.Replace(" ", "") + ".zip");
             }
-            else
-            {
-                Process.Start(modInfo.websites.website);
+        }
 
-                bool done = false;
-                while (!done)
-                {
-                    try
-                    {
-                        FileStream fs = File.Open(Directory.GetFiles(downloadFolder, "*.zip")[0], FileMode.Open, FileAccess.ReadWrite);
-                        fs.Close();
-                        done = true;
-                    }
-                    catch
-                    {
-                        done = false;
-                    }
+        private void client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            string modFolder = "\\ModDownloads\\" + modInfo.name.Replace(" ", "_");
+            string downloadFolder = Main.acces.modInfo.modsPath + modFolder;
 
-                }
-            }
+            Main.acces.LogMessage("'" + modInfo.name + "' has finished downloading.");
 
             string newModFile;
             try
@@ -63,11 +62,6 @@ namespace KSP_Mod_Manager
             File.Move(newModFile, newModLocation);
             modInfo.zipfile = newModLocation.Replace(Main.acces.modInfo.modsPath + "\\", "");
 
-            if (isInstalled)
-            {
-                Main.acces.Reinstall(installedMod, modInfo);
-            }
-
             Main.acces.LogMessage("'" + modInfo.name + "' has been updated.");
 
             try
@@ -78,7 +72,14 @@ namespace KSP_Mod_Manager
             catch
             { }
 
+            progress = 100;
             modInfo.canUpdate = false;
+            updateDone = true;
+        }
+
+        private void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            progress = 10 + Convert.ToInt32(e.ProgressPercentage * 0.8);
         }
     }
 }

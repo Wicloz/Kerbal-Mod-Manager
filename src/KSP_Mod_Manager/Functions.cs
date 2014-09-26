@@ -49,10 +49,33 @@ namespace KSP_Mod_Manager
                     .Replace(".", "");
         }
 
-        public static void DownloadSite(string remoteName, string localName)
+        public static bool IsModInstalled(ModInfo mod)
         {
-            WebClient client = new WebClient();
-            client.DownloadFile(remoteName, localName);
+            foreach (InstalledInfo installedMod in Main.acces.kspInfo.installedModList)
+            {
+                if (installedMod.key == mod.key)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static InstalledInfo GetInstalledMod(ModInfo mod)
+        {
+            InstalledInfo returnMod = new InstalledInfo();
+
+            for (int i = 0; i < Main.acces.kspInfo.installedModList.Count; i++)
+            {
+                if (Main.acces.kspInfo.installedModList[i].key == mod.key)
+                {
+                    returnMod = Main.acces.kspInfo.installedModList[i];
+                    break;
+                }
+            }
+
+            return returnMod;
         }
     }
 }

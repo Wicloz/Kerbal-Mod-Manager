@@ -18,3 +18,4 @@ D:\Projects\Kerbal-Mod-Manager\src\KSP_Mod_Manager\bin\Debug\KSP_Mod_Manager.exe
 D:\Projects\Kerbal-Mod-Manager\src\KSP_Mod_Manager\bin\Debug\KSP_Mod_Manager.pdb
 D:\Projects\Kerbal-Mod-Manager\src\KSP_Mod_Manager\obj\Debug\KSP_Mod_Manager.EditInstanceSettings.resources
 D:\Projects\Kerbal-Mod-Manager\src\KSP_Mod_Manager\obj\Debug\KSP_Mod_Manager.InstallDeinstallForm.resources
+D:\Projects\Kerbal-Mod-Manager\src\KSP_Mod_Manager\obj\Debug\KSP_Mod_Manager.LogForm.resources

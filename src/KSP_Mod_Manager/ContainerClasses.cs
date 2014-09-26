@@ -81,16 +81,18 @@ namespace KSP_Mod_Manager
     {
         public string modName;
         public string category;
+        public string key;
         public string codeName;
         public string version;
 
         public InstalledInfo()
         { }
 
-        public InstalledInfo(string ModName, string Category, string CodeName, string Version)
+        public InstalledInfo(string ModName, string Category, string Key, string CodeName, string Version)
         {
             modName = ModName;
             category = Category;
+            key = Key;
             codeName = CodeName;
             version = Version;
         }

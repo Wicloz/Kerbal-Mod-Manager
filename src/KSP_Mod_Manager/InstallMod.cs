@@ -8,12 +8,14 @@ using System.Xml.Serialization;
 using System.Net;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.IO.Compression;
+using System.Diagnostics;
 
 namespace KSP_Mod_Manager
 {
     class InstallMod
     {
-        public void PreUnzip()
+        public void Install(ModInfo modInfo)
         {
             try
             {
@@ -21,15 +23,15 @@ namespace KSP_Mod_Manager
             }
             catch
             { }
-        }
 
-        public void PostUnzip(ModInfo modInfo)
-        {
             // Start
-            string zipName = modInfo.zipfile.Replace(".zip", "");
+            string codeName = modInfo.zipfile.Replace(".zip", "");
 
             string tempExtractLocation = Main.acces.kspInfo.kspFolder + "\\KMM\\temp";
             Directory.CreateDirectory(tempExtractLocation);
+
+            // Extract
+            ZipFile.ExtractToDirectory(Main.acces.modInfo.modsPath + "\\" + modInfo.zipfile, Main.acces.kspInfo.kspFolder + "\\KMM\\temp");
 
             // Checking for GameData mode
             List<string> dirListTop = new List<string>();
@@ -83,17 +85,17 @@ namespace KSP_Mod_Manager
 
                 if (mode == "")
                 {
-                    fileList.Add(new FileInfo(file.Replace(tempExtractLocation, ""), zipName));
+                    fileList.Add(new FileInfo(file.Replace(tempExtractLocation, ""), codeName));
                 }
 
                 else if (mode == "noGameData")
                 {
-                    fileList.Add(new FileInfo("\\GameData" + file.Replace(tempExtractLocation, ""), zipName));
+                    fileList.Add(new FileInfo("\\GameData" + file.Replace(tempExtractLocation, ""), codeName));
                 }
 
                 else if (mode == "embeddedGameData")
                 {
-                    fileList.Add(new FileInfo(file.Replace(Directory.GetDirectories(tempExtractLocation)[0], ""), zipName));
+                    fileList.Add(new FileInfo(file.Replace(Directory.GetDirectories(tempExtractLocation)[0], ""), codeName));
                 }
             }
 
@@ -119,7 +121,7 @@ namespace KSP_Mod_Manager
             }
 
             // Removing extra MM.dll's
-            if (zipName.Contains("ModuleManager") && !zipName.Contains("Override"))
+            if (codeName.Contains("ModuleManager") && !codeName.Contains("Override"))
             {
                 for (int i = 0; i < Main.acces.kspInfo.installedFileList.Count; i++)
                 {
@@ -127,7 +129,7 @@ namespace KSP_Mod_Manager
                     {
                         Main.acces.LogMessage("Overriding file '" + Main.acces.kspInfo.installedFileList[i].path + "'.");
 
-                        string newPath = Main.acces.kspInfo.kspFolder + "\\KMM\\overrides\\" + zipName.Replace("\\", "()") + "\\" + Main.acces.kspInfo.installedFileList[i].modName.Replace("\\", "()") + Main.acces.kspInfo.installedFileList[i].path;
+                        string newPath = Main.acces.kspInfo.kspFolder + "\\KMM\\overrides\\" + codeName.Replace("\\", "()") + "\\" + Main.acces.kspInfo.installedFileList[i].modName.Replace("\\", "()") + Main.acces.kspInfo.installedFileList[i].path;
 
                         Directory.CreateDirectory(Path.GetDirectoryName(newPath));
                         File.Move(Main.acces.kspInfo.kspFolder + Main.acces.kspInfo.installedFileList[i].path, newPath);
@@ -158,7 +160,7 @@ namespace KSP_Mod_Manager
 
                     Main.acces.LogMessage("Overriding file '" + fileList[i].path + "'.");
 
-                    string newPath = Main.acces.kspInfo.kspFolder + "\\KMM\\overrides\\" + zipName + "\\" + overriddenFile.modName.Replace("\\", "()") + fileList[i].path;
+                    string newPath = Main.acces.kspInfo.kspFolder + "\\KMM\\overrides\\" + codeName + "\\" + overriddenFile.modName.Replace("\\", "()") + fileList[i].path;
                     Directory.CreateDirectory(Path.GetDirectoryName(newPath));
                     File.Move(newFilePath, newPath);
                 }
@@ -178,12 +180,12 @@ namespace KSP_Mod_Manager
             }
 
             // Add entry to installed list
-            Main.acces.kspInfo.installedModList.Add(new InstalledInfo(modInfo.name, modInfo.category, zipName, modInfo.version));
+            Main.acces.kspInfo.installedModList.Add(new InstalledInfo(modInfo.name, modInfo.category, modInfo.key, codeName, modInfo.version));
 
             // Finalise
             if (modInfo.name.Contains("DMP"))
             {
-                System.Diagnostics.Process dmpUpdater = new System.Diagnostics.Process();
+                Process dmpUpdater = new System.Diagnostics.Process();
                 try
                 {
                     dmpUpdater.StartInfo.FileName = Directory.GetFiles(Main.acces.kspInfo.kspFolder, "DMPUpdater.exe", SearchOption.TopDirectoryOnly)[0];

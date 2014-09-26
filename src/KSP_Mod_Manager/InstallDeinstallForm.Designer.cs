@@ -48,7 +48,6 @@
             // 
             this.allModProgress.Location = new System.Drawing.Point(12, 111);
             this.allModProgress.MarqueeAnimationSpeed = 50;
-            this.allModProgress.Maximum = 1000;
             this.allModProgress.Name = "allModProgress";
             this.allModProgress.Size = new System.Drawing.Size(799, 36);
             this.allModProgress.Step = 100;
@@ -69,7 +68,6 @@
             // 
             this.thisModProgress.Location = new System.Drawing.Point(12, 31);
             this.thisModProgress.MarqueeAnimationSpeed = 50;
-            this.thisModProgress.Maximum = 1000;
             this.thisModProgress.Name = "thisModProgress";
             this.thisModProgress.Size = new System.Drawing.Size(799, 36);
             this.thisModProgress.Step = 100;
@@ -87,6 +85,7 @@
             this.Controls.Add(this.progressLabel1);
             this.Cursor = System.Windows.Forms.Cursors.No;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "InstallDeinstallForm";
             this.Text = "InstallDeinstall_Form";
             this.Shown += new System.EventHandler(this.InstallDeinstall_Form_Shown);

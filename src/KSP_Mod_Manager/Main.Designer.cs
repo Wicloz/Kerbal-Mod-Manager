@@ -54,6 +54,10 @@
             this.opCheckUpdateButton = new System.Windows.Forms.Button();
             this.addInstanceButton = new System.Windows.Forms.Button();
             this.removeInstanceButton = new System.Windows.Forms.Button();
+            this.downloadModButton = new System.Windows.Forms.Button();
+            this.opOpenSiteButton = new System.Windows.Forms.Button();
+            this.openLogButton = new System.Windows.Forms.Button();
+            this.deleteMod = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -100,7 +104,7 @@
             this.modBox.FormattingEnabled = true;
             this.modBox.Location = new System.Drawing.Point(116, 77);
             this.modBox.Name = "modBox";
-            this.modBox.Size = new System.Drawing.Size(333, 498);
+            this.modBox.Size = new System.Drawing.Size(333, 459);
             this.modBox.TabIndex = 5;
             this.modBox.SelectedIndexChanged += new System.EventHandler(this.modBox_SelectedIndexChanged);
             this.modBox.DoubleClick += new System.EventHandler(this.modBox_DoubleClick);
@@ -118,7 +122,7 @@
             // 
             this.opSiteBox.Location = new System.Drawing.Point(107, 72);
             this.opSiteBox.Name = "opSiteBox";
-            this.opSiteBox.Size = new System.Drawing.Size(324, 20);
+            this.opSiteBox.Size = new System.Drawing.Size(274, 20);
             this.opSiteBox.TabIndex = 8;
             this.opSiteBox.TextChanged += new System.EventHandler(this.opSiteBox_TextChanged);
             // 
@@ -157,8 +161,9 @@
             this.opDownloadButton.Name = "opDownloadButton";
             this.opDownloadButton.Size = new System.Drawing.Size(422, 37);
             this.opDownloadButton.TabIndex = 12;
-            this.opDownloadButton.Text = "Download Mod";
+            this.opDownloadButton.Text = "Update Mod";
             this.opDownloadButton.UseVisualStyleBackColor = true;
+            this.opDownloadButton.Click += new System.EventHandler(this.opDownloadButton_Click);
             // 
             // opCategoryBox
             // 
@@ -207,6 +212,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.opOpenSiteButton);
             this.groupBox1.Controls.Add(this.opIsFavoriteBox);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label5);
@@ -316,11 +322,54 @@
             this.removeInstanceButton.UseVisualStyleBackColor = true;
             this.removeInstanceButton.Click += new System.EventHandler(this.removeInstanceButton_Click);
             // 
+            // downloadModButton
+            // 
+            this.downloadModButton.Location = new System.Drawing.Point(455, 462);
+            this.downloadModButton.Name = "downloadModButton";
+            this.downloadModButton.Size = new System.Drawing.Size(437, 53);
+            this.downloadModButton.TabIndex = 26;
+            this.downloadModButton.Text = "Update All Mods";
+            this.downloadModButton.UseVisualStyleBackColor = true;
+            this.downloadModButton.Click += new System.EventHandler(this.downloadModButton_Click);
+            // 
+            // opOpenSiteButton
+            // 
+            this.opOpenSiteButton.Location = new System.Drawing.Point(387, 72);
+            this.opOpenSiteButton.Name = "opOpenSiteButton";
+            this.opOpenSiteButton.Size = new System.Drawing.Size(44, 20);
+            this.opOpenSiteButton.TabIndex = 19;
+            this.opOpenSiteButton.Text = "Open";
+            this.opOpenSiteButton.UseVisualStyleBackColor = true;
+            this.opOpenSiteButton.Click += new System.EventHandler(this.opOpenSite_Click);
+            // 
+            // openLogButton
+            // 
+            this.openLogButton.Location = new System.Drawing.Point(455, 420);
+            this.openLogButton.Name = "openLogButton";
+            this.openLogButton.Size = new System.Drawing.Size(437, 36);
+            this.openLogButton.TabIndex = 27;
+            this.openLogButton.Text = "Open Log";
+            this.openLogButton.UseVisualStyleBackColor = true;
+            this.openLogButton.Click += new System.EventHandler(this.openLogButton_Click);
+            // 
+            // deleteMod
+            // 
+            this.deleteMod.Location = new System.Drawing.Point(116, 542);
+            this.deleteMod.Name = "deleteMod";
+            this.deleteMod.Size = new System.Drawing.Size(333, 32);
+            this.deleteMod.TabIndex = 28;
+            this.deleteMod.Text = "Delete Mod";
+            this.deleteMod.UseVisualStyleBackColor = true;
+            this.deleteMod.Click += new System.EventHandler(this.deleteMod_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 586);
+            this.Controls.Add(this.deleteMod);
+            this.Controls.Add(this.openLogButton);
+            this.Controls.Add(this.downloadModButton);
             this.Controls.Add(this.removeInstanceButton);
             this.Controls.Add(this.addInstanceButton);
             this.Controls.Add(this.groupBox2);
@@ -378,6 +427,10 @@
         private System.Windows.Forms.Button opCheckUpdateButton;
         private System.Windows.Forms.Button addInstanceButton;
         private System.Windows.Forms.Button removeInstanceButton;
+        private System.Windows.Forms.Button downloadModButton;
+        private System.Windows.Forms.Button opOpenSiteButton;
+        private System.Windows.Forms.Button openLogButton;
+        private System.Windows.Forms.Button deleteMod;
     }
 }
 

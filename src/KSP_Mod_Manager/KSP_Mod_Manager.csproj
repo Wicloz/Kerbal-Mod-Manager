@@ -63,6 +63,12 @@
       <DependentUpon>InstallDeinstallForm.cs</DependentUpon>
     </Compile>
     <Compile Include="InstallMod.cs" />
+    <Compile Include="LogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogForm.Designer.cs">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SaveLoad.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
@@ -79,6 +85,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="InstallDeinstallForm.resx">
       <DependentUpon>InstallDeinstallForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogForm.resx">
+      <DependentUpon>LogForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>

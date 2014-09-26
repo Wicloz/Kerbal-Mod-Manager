@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
-using System.IO.Compression;
 
 namespace KSP_Mod_Manager
 {
@@ -17,6 +16,7 @@ namespace KSP_Mod_Manager
         private InstallMod im = new InstallMod();
         private DeinstallMod dm = new DeinstallMod();
         private UpdateCheck uc = new UpdateCheck();
+        private UpdateMod um = new UpdateMod();
 
         private List<ModInfo> installModList = new List<ModInfo>();
         private List<InstalledInfo> deinstallModList = new List<InstalledInfo>();
@@ -29,7 +29,6 @@ namespace KSP_Mod_Manager
 
         private bool actionDone = true;
         private bool formDone = false;
-        private bool mustUnzip = false;
 
         private Thread stuff;
 
@@ -102,7 +101,7 @@ namespace KSP_Mod_Manager
 
             // Initiate values
             stuff = new Thread(EmptyFunction);
-            stepSize = 1000 / (installModList.Count + deinstallModList.Count + updateModList.Count);
+            stepSize = 100 / (installModList.Count + deinstallModList.Count + updateModList.Count);
 
             // Initiate timer
             System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
@@ -113,15 +112,16 @@ namespace KSP_Mod_Manager
 
         private void timer_Tick(object sender, EventArgs e)
         {
+            thisModProgress.Value = um.progress;
+            if (um.updateDone)
+            {
+                actionDone = true;
+                um.updateDone = false;
+            }
+
             if (actionDone)
             {
                 HandleNextMod();
-            }
-
-            else if(mustUnzip && !formDone)
-            {
-                stuff = new Thread(Unzip);
-                stuff.Start();
             }
         }
 
@@ -136,6 +136,7 @@ namespace KSP_Mod_Manager
                 return;
             }
 
+            thisModProgress.Style = ProgressBarStyle.Marquee;
             allModProgress.Style = ProgressBarStyle.Continuous;
             allModProgress.Value = Convert.ToInt32(Math.Max(0, stepSize * currentMod));
 
@@ -158,7 +159,7 @@ namespace KSP_Mod_Manager
 
                 Main.acces.LogMessage("Installing '" + installModList[currentMod].zipfile + "'.");
 
-                stuff = new Thread(PreUnzip);
+                stuff = new Thread(Install);
                 stuff.Start();
             }
 
@@ -181,25 +182,22 @@ namespace KSP_Mod_Manager
                 stuff = new Thread(CheckUpdate);
                 stuff.Start();
             }
+
+            else if (mode == "update")
+            {
+                progressLabel1.Text = "Updating Mod '" + updateModList[currentMod].name + "'";
+                thisModProgress.Style = ProgressBarStyle.Continuous;
+
+                Main.acces.LogMessage("Updating '" + updateModList[currentMod].name + "'.");
+
+                stuff = new Thread(UpdateMod);
+                stuff.Start();
+            }
         }
 
-        private void PreUnzip()
+        private void Install()
         {
-            im.PreUnzip();
-            mustUnzip = true;
-        }
-
-        private void Unzip()
-        {
-            mustUnzip = false;
-
-            ZipFile.ExtractToDirectory(Main.acces.modInfo.modsPath + "\\" + installModList[currentMod].zipfile, Main.acces.kspInfo.kspFolder + "\\KMM\\temp");
-            PostUnzip();
-        }
-
-        private void PostUnzip()
-        {
-            im.PostUnzip(installModList[currentMod]);
+            im.Install(installModList[currentMod]);
             actionDone = true;
         }
 
@@ -213,6 +211,11 @@ namespace KSP_Mod_Manager
         {
             uc.CheckForUpdate(updateModList[currentMod]);
             actionDone = true;
+        }
+
+        private void UpdateMod()
+        {
+            um.Update(updateModList[currentMod]);
         }
 
         private void DoneWait()
