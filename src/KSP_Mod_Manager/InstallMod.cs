@@ -158,11 +158,14 @@ namespace KSP_Mod_Manager
                         }
                     }
 
-                    Main.acces.LogMessage("Overriding file '" + fileList[i].path + "'.");
+                    if (overriddenFile.modName != null)
+                    {
+                        Main.acces.LogMessage("Overriding file '" + fileList[i].path + "'.");
 
-                    string newPath = Main.acces.kspInfo.kspFolder + "\\KMM\\overrides\\" + codeName + "\\" + overriddenFile.modName.Replace("\\", "()") + fileList[i].path;
-                    Directory.CreateDirectory(Path.GetDirectoryName(newPath));
-                    File.Move(newFilePath, newPath);
+                        string newPath = Main.acces.kspInfo.kspFolder + "\\KMM\\overrides\\" + codeName + "\\" + overriddenFile.modName.Replace("\\", "()") + fileList[i].path;
+                        Directory.CreateDirectory(Path.GetDirectoryName(newPath));
+                        File.Move(newFilePath, newPath);
+                    }
                 }
 
                 // Move files

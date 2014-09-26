@@ -84,6 +84,8 @@ namespace KSP_Mod_Manager
 
             modInfo.UnloadInstance();
             modInfo.LoadInstance(newPath);
+
+            UpdateModList("");
         }
 
         private void ChangeKspFolder(string newPath)
@@ -184,10 +186,6 @@ namespace KSP_Mod_Manager
                         break;
                     }
                 }
-            }
-            else
-            {
-                modBox.SelectedIndex = 0;
             }
 
             foreach (ModInfo mod in modInfo.modList)
