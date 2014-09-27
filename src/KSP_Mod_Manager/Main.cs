@@ -447,20 +447,18 @@ namespace KSP_Mod_Manager
         {
             List<ModInfo> sendList = new List<ModInfo>();
 
-            for (int i = kspInfo.favoritesList.Count - 1; i >= 0; i--)
+            for (int i = modInfo.modList.Count - 1; i >= 0; i--)
             {
-                if (kspInfo.favoritesList[i].isFav)
+                foreach (FavInfo fav in kspInfo.favoritesList)
                 {
-                    foreach (ModInfo mod in modInfo.modList)
+                    if (modInfo.modList[i].key == fav.key)
                     {
-                        if (kspInfo.favoritesList[i].key == mod.key)
+                        if (fav.isFav)
                         {
-                            if (!Functions.IsModInstalled(mod))
-                            {
-                                sendList.Add(mod);
-                            }
-                            break;
+                            sendList.Add(modInfo.modList[i]);
                         }
+
+                        break;
                     }
                 }
             }
