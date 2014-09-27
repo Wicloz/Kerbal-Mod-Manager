@@ -67,7 +67,7 @@ namespace KSP_Mod_Manager
             }
             else
             {
-                Main.acces.LogMessage("Site failed to download, skipping '" + modInfo.name + "'.");
+                Main.acces.LogMessage("Site failed to download, skipping '" + modInfo.name + "'!");
             }
 
             Directory.Delete(Main.acces.modInfo.modsPath + "\\SiteDownload", true);

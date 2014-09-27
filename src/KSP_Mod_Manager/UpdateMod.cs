@@ -23,11 +23,11 @@ namespace KSP_Mod_Manager
             string modFolder = "\\ModDownloads\\" + modInfo.name.Replace(" ", "_");
             string downloadFolder = Main.acces.modInfo.modsPath + modFolder;
             Directory.CreateDirectory(downloadFolder);
+            progress = 10;
 
             if (modInfo.websites.dlSite != "NONE")
             {
-                Main.acces.LogMessage("Downloading '" + modInfo.name + "'...");
-                progress = 10;
+                Main.acces.LogMessage("Downloading '" + modInfo.name + "'.");
 
                 WebClient client = new WebClient();
                 client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
@@ -35,14 +35,18 @@ namespace KSP_Mod_Manager
 
                 client.DownloadFileAsync(new Uri(modInfo.websites.dlSite), downloadFolder + "\\" + modInfo.name.Replace(" ", "") + ".zip");
             }
+            else
+            {
+                PostDownload();
+            }
         }
 
-        private void client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        private void PostDownload()
         {
+            progress = 90;
+
             string modFolder = "\\ModDownloads\\" + modInfo.name.Replace(" ", "_");
             string downloadFolder = Main.acces.modInfo.modsPath + modFolder;
-
-            Main.acces.LogMessage("'" + modInfo.name + "' has finished downloading.");
 
             string newModFile;
             try
@@ -51,7 +55,11 @@ namespace KSP_Mod_Manager
             }
             catch
             {
-                Main.acces.LogMessage("Mod failed to download, aborting updating of '" + modInfo.name + "'...");
+                Main.acces.LogMessage("Mod failed to download, aborting updating of '" + modInfo.name + "'!");
+
+                progress = 100;
+                updateDone = true;
+
                 return;
             }
 
@@ -74,6 +82,12 @@ namespace KSP_Mod_Manager
             progress = 100;
             modInfo.canUpdate = false;
             updateDone = true;
+        }
+
+        private void client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            Main.acces.LogMessage("'" + modInfo.name + "' has finished downloading.");
+            PostDownload();
         }
 
         private void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)

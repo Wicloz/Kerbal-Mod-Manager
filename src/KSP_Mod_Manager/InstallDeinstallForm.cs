@@ -146,7 +146,7 @@ namespace KSP_Mod_Manager
                 progressLabel1.Text = "Checking Update For '" + checkUpdateList[currentIndex].name + "'";
                 this.Text = "Checking for Updates ...";
 
-                Main.acces.LogMessage("Checking Update For '" + checkUpdateList[currentIndex].name + "'.");
+                Main.acces.LogMessage("Checking Update For '" + checkUpdateList[currentIndex].name + "'...");
 
                 stuff = new Thread(CheckUpdate);
                 stuff.Start();
@@ -173,7 +173,7 @@ namespace KSP_Mod_Manager
                 progressLabel1.Text = "Deinstalling Mod '" + deinstallModList[currentIndex].modName + "'";
                 this.Text = "Deinstalling Mods ...";
 
-                Main.acces.LogMessage("Deinstalling '" + deinstallModList[currentIndex].codeName + "'.");
+                Main.acces.LogMessage("Deinstalling '" + deinstallModList[currentIndex].codeName + "'...");
 
                 stuff = new Thread(Deinstall);
                 stuff.Start();
@@ -186,7 +186,7 @@ namespace KSP_Mod_Manager
                 progressLabel1.Text = "Installing Mod '" + installModList[currentIndex].name + "'";
                 this.Text = "Installing Mods ...";
 
-                Main.acces.LogMessage("Installing '" + installModList[currentIndex].zipfile + "'.");
+                Main.acces.LogMessage("Installing '" + installModList[currentIndex].zipfile + "'...");
 
                 stuff = new Thread(Install);
                 stuff.Start();

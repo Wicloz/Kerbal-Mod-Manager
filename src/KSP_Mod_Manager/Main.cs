@@ -236,7 +236,7 @@ namespace KSP_Mod_Manager
             log += "\r\n";
             log += message;
 
-            File.WriteAllText(Environment.CurrentDirectory + "\\KMM_LOG.txt", log);
+            File.WriteAllText(Environment.CurrentDirectory + "\\KMM.log", log);
         }
 
         public string GetLog()
@@ -310,7 +310,7 @@ namespace KSP_Mod_Manager
 
             foreach (ModInfo mod in modInfo.modList)
             {
-                if (mod.canUpdate && !mod.zipfile.Contains("Overrides\\") && mod.websites.dlSite != "NONE")
+                if (mod.canUpdate && !mod.zipfile.Contains("Overrides\\"))
                 {
                     sendList.Add(mod);
                 }
