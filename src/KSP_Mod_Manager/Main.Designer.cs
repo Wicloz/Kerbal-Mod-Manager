@@ -45,6 +45,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.opOpenSiteButton = new System.Windows.Forms.Button();
             this.opIsFavoriteBox = new System.Windows.Forms.CheckBox();
             this.updateModFolderButton = new System.Windows.Forms.Button();
             this.checkUpdateButton = new System.Windows.Forms.Button();
@@ -55,9 +56,8 @@
             this.addInstanceButton = new System.Windows.Forms.Button();
             this.removeInstanceButton = new System.Windows.Forms.Button();
             this.downloadModButton = new System.Windows.Forms.Button();
-            this.opOpenSiteButton = new System.Windows.Forms.Button();
             this.openLogButton = new System.Windows.Forms.Button();
-            this.deleteMod = new System.Windows.Forms.Button();
+            this.deleteModButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -229,6 +229,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings for Mod";
             // 
+            // opOpenSiteButton
+            // 
+            this.opOpenSiteButton.Location = new System.Drawing.Point(387, 72);
+            this.opOpenSiteButton.Name = "opOpenSiteButton";
+            this.opOpenSiteButton.Size = new System.Drawing.Size(44, 20);
+            this.opOpenSiteButton.TabIndex = 19;
+            this.opOpenSiteButton.Text = "Open";
+            this.opOpenSiteButton.UseVisualStyleBackColor = true;
+            this.opOpenSiteButton.Click += new System.EventHandler(this.opOpenSite_Click);
+            // 
             // opIsFavoriteBox
             // 
             this.opIsFavoriteBox.AutoSize = true;
@@ -332,16 +342,6 @@
             this.downloadModButton.UseVisualStyleBackColor = true;
             this.downloadModButton.Click += new System.EventHandler(this.downloadModButton_Click);
             // 
-            // opOpenSiteButton
-            // 
-            this.opOpenSiteButton.Location = new System.Drawing.Point(387, 72);
-            this.opOpenSiteButton.Name = "opOpenSiteButton";
-            this.opOpenSiteButton.Size = new System.Drawing.Size(44, 20);
-            this.opOpenSiteButton.TabIndex = 19;
-            this.opOpenSiteButton.Text = "Open";
-            this.opOpenSiteButton.UseVisualStyleBackColor = true;
-            this.opOpenSiteButton.Click += new System.EventHandler(this.opOpenSite_Click);
-            // 
             // openLogButton
             // 
             this.openLogButton.Location = new System.Drawing.Point(455, 420);
@@ -352,22 +352,22 @@
             this.openLogButton.UseVisualStyleBackColor = true;
             this.openLogButton.Click += new System.EventHandler(this.openLogButton_Click);
             // 
-            // deleteMod
+            // deleteModButton
             // 
-            this.deleteMod.Location = new System.Drawing.Point(116, 542);
-            this.deleteMod.Name = "deleteMod";
-            this.deleteMod.Size = new System.Drawing.Size(333, 32);
-            this.deleteMod.TabIndex = 28;
-            this.deleteMod.Text = "Delete Mod";
-            this.deleteMod.UseVisualStyleBackColor = true;
-            this.deleteMod.Click += new System.EventHandler(this.deleteMod_Click);
+            this.deleteModButton.Location = new System.Drawing.Point(116, 542);
+            this.deleteModButton.Name = "deleteModButton";
+            this.deleteModButton.Size = new System.Drawing.Size(333, 32);
+            this.deleteModButton.TabIndex = 28;
+            this.deleteModButton.Text = "Delete Mod";
+            this.deleteModButton.UseVisualStyleBackColor = true;
+            this.deleteModButton.Click += new System.EventHandler(this.deleteMod_Click);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 586);
-            this.Controls.Add(this.deleteMod);
+            this.Controls.Add(this.deleteModButton);
             this.Controls.Add(this.openLogButton);
             this.Controls.Add(this.downloadModButton);
             this.Controls.Add(this.removeInstanceButton);
@@ -430,7 +430,7 @@
         private System.Windows.Forms.Button downloadModButton;
         private System.Windows.Forms.Button opOpenSiteButton;
         private System.Windows.Forms.Button openLogButton;
-        private System.Windows.Forms.Button deleteMod;
+        private System.Windows.Forms.Button deleteModButton;
     }
 }
 

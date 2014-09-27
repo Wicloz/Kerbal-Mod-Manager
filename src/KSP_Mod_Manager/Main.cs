@@ -50,13 +50,15 @@ namespace KSP_Mod_Manager
                 instanceList = settings.instances;
                 selectedIndex = settings.selectedInstance;
                 savedModsPath = settings.modsPath;
-
-                if (string.IsNullOrEmpty(savedModsPath))
-                {
-                    savedModsPath = "";
-                }
             }
 
+            else
+            {
+                instanceList = new List<InstallInstance>();
+                instanceList.Add(new InstallInstance("New Instance"));
+            }
+
+            ChangeKspFolder("");
             ChangeModFolder(savedModsPath);
             ChangeKspFolder(instanceList[selectedIndex].kspPath);
 
@@ -76,6 +78,7 @@ namespace KSP_Mod_Manager
         private void SaveFiles()
         {
             SaveLoad.SaveFileXml(new Settings(modInfo.modsPath, instanceList, installationBox.SelectedIndex), settingFolder + "\\settings.txt");
+            File.WriteAllText(Environment.CurrentDirectory + "\\KMM_LOG.txt", log);
         }
 
         private void ChangeModFolder(string newPath)
@@ -91,7 +94,17 @@ namespace KSP_Mod_Manager
         private void ChangeKspFolder(string newPath)
         {
             kspInfo.UnloadInstance();
-            modBox.Enabled = kspInfo.LoadInstance(newPath);
+            bool hasLoaded = kspInfo.LoadInstance(newPath);
+            modBox.Enabled = hasLoaded;
+
+            if (hasLoaded)
+            {
+                UnlockSettingEditor();
+            }
+            else
+            {
+                BlockSettingEditor();
+            }
         }
 
         // UI Interaction
@@ -103,7 +116,7 @@ namespace KSP_Mod_Manager
 
         public void LogMessage(string message)
         {
-            log += "\n\n";
+            log += "\n";
             log += message;
         }
 
@@ -358,13 +371,13 @@ namespace KSP_Mod_Manager
         {
             List<ModInfo> sendList = new List<ModInfo>();
 
-            foreach (FavInfo fav in kspInfo.favoritesList)
+            for (int i = kspInfo.favoritesList.Count - 1; i >= 0; i--)
             {
-                if (fav.isFav)
+                if (kspInfo.favoritesList[i].isFav)
                 {
                     foreach (ModInfo mod in modInfo.modList)
                     {
-                        if (fav.key == mod.key)
+                        if (kspInfo.favoritesList[i].key == mod.key)
                         {
                             if (!Functions.IsModInstalled(mod))
                             {
@@ -495,6 +508,8 @@ namespace KSP_Mod_Manager
 
             groupBox1.Enabled = false;
             groupBox2.Enabled = false;
+
+            deleteModButton.Enabled = false;
         }
 
         private void UnlockSettingEditor()
@@ -515,6 +530,8 @@ namespace KSP_Mod_Manager
 
             groupBox1.Enabled = true;
             groupBox2.Enabled = true;
+
+            deleteModButton.Enabled = true;
         }
 
         private void opNameBox_TextChanged(object sender, EventArgs e)
