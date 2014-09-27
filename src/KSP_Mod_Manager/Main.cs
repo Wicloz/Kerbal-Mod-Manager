@@ -58,12 +58,10 @@ namespace KSP_Mod_Manager
                 instanceList.Add(new InstallInstance("New Instance"));
             }
 
-            ChangeKspFolder("");
             ChangeModFolder(savedModsPath);
             ChangeKspFolder(instanceList[selectedIndex].kspPath);
 
             UpdateInstallInstanceList(selectedIndex);
-            UpdateModList("");
 
             SaveFiles();
         }
@@ -79,6 +77,12 @@ namespace KSP_Mod_Manager
         {
             SaveLoad.SaveFileXml(new Settings(modInfo.modsPath, instanceList, installationBox.SelectedIndex), settingFolder + "\\settings.txt");
             File.WriteAllText(Environment.CurrentDirectory + "\\KMM_LOG.txt", log);
+        }
+
+        // Updating Mod and KSP folder
+        private void LoadSelectedKspInstance()
+        {
+            ChangeKspFolder(instanceList[installationBox.SelectedIndex].kspPath);
         }
 
         private void ChangeModFolder(string newPath)
@@ -105,19 +109,8 @@ namespace KSP_Mod_Manager
             {
                 BlockSettingEditor();
             }
-        }
 
-        // UI Interaction
-        public void SortLists()
-        {
-            kspInfo.installedModList.Sort();
-            modInfo.modList.Sort();
-        }
-
-        public void LogMessage(string message)
-        {
-            log += "\n";
-            log += message;
+            UpdateModList("");
         }
 
         private void UpdateInstallInstanceList(int index)
@@ -210,6 +203,43 @@ namespace KSP_Mod_Manager
             }
         }
 
+        // Misc UI functions
+        public void SortLists()
+        {
+            kspInfo.installedModList.Sort();
+            modInfo.modList.Sort();
+        }
+
+        public void LogMessage(string message)
+        {
+            log += "\n";
+            log += message;
+        }
+
+        private void InstallDeinstallSelected()
+        {
+            bool isInstalled = Functions.IsModInstalled(selectedMod);
+
+            if (!isInstalled)
+            {
+                List<ModInfo> sendList = new List<ModInfo>();
+                sendList.Add(selectedMod);
+
+                InstallDeinstallForm form = new InstallDeinstallForm(sendList, 0);
+                form.ShowDialog();
+            }
+            else if (isInstalled)
+            {
+                List<InstalledInfo> sendList = new List<InstalledInfo>();
+                sendList.Add(selectedInstalledMod);
+
+                InstallDeinstallForm form = new InstallDeinstallForm(sendList);
+                form.ShowDialog();
+            }
+
+            UpdateModList(selectedMod.name);
+        }
+
         // Buttons and stuff
         private void selectModFolderButton_Click(object sender, EventArgs e)
         {
@@ -284,20 +314,12 @@ namespace KSP_Mod_Manager
             instanceList.RemoveAt(installationBox.SelectedIndex);
             UpdateInstallInstanceList(installationBox.SelectedIndex - 1);
 
-            LoadKspInstance();
+            LoadSelectedKspInstance();
         }
 
         private void installationBox_Click(object sender, EventArgs e)
         {
-            LoadKspInstance();
-        }
-
-        private void LoadKspInstance()
-        {
-            InstallInstance instance = instanceList[installationBox.SelectedIndex];
-
-            ChangeKspFolder(instance.kspPath);
-            UpdateModList("");
+            LoadSelectedKspInstance();
         }
 
         EditInstanceSettings editInstanceForm;
@@ -319,7 +341,7 @@ namespace KSP_Mod_Manager
             instance.kspPath = editInstanceForm.kspPath;
 
             UpdateInstallInstanceList(installationBox.SelectedIndex);
-            LoadKspInstance();
+            LoadSelectedKspInstance();
         }
 
         private void modBox_DoubleClick(object sender, EventArgs e)
@@ -398,31 +420,6 @@ namespace KSP_Mod_Manager
             }
         }
 
-        // Functions for the buttons
-        private void InstallDeinstallSelected()
-        {
-            bool isInstalled = Functions.IsModInstalled(selectedMod);
-
-            if (!isInstalled)
-            {
-                List<ModInfo> sendList = new List<ModInfo>();
-                sendList.Add(selectedMod);
-
-                InstallDeinstallForm form = new InstallDeinstallForm(sendList, 0);
-                form.ShowDialog();
-            }
-            else if (isInstalled)
-            {
-                List<InstalledInfo> sendList = new List<InstalledInfo>();
-                sendList.Add(selectedInstalledMod);
-
-                InstallDeinstallForm form = new InstallDeinstallForm(sendList);
-                form.ShowDialog();
-            }
-
-            UpdateModList(selectedMod.name);
-        }
-
         // ModInfo editing stuff
         private bool isChangingSelection = true;
         private void modBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -476,6 +473,11 @@ namespace KSP_Mod_Manager
                 opCanDownloadBox.Checked = false;
 
                 BlockSettingEditor();
+            }
+
+            if (modExists)
+            {
+                modInfo.ManageModInfo(selectedMod);
             }
 
             if (modExists && selectedMod.websites.dlSite == "NONE")
@@ -539,6 +541,8 @@ namespace KSP_Mod_Manager
             if (isChangingSelection)
             {
                 selectedMod.name = opNameBox.Text;
+
+                modInfo.ManageModInfo(selectedMod);
                 UpdateModList(selectedMod.name);
             }
         }
@@ -548,6 +552,8 @@ namespace KSP_Mod_Manager
             if (isChangingSelection)
             {
                 selectedMod.category = opCategoryBox.Text;
+
+                modInfo.ManageModInfo(selectedMod);
                 UpdateModList(selectedMod.name);
             }
         }
@@ -557,6 +563,8 @@ namespace KSP_Mod_Manager
             if (isChangingSelection)
             {
                 selectedMod.websites.website = opSiteBox.Text;
+
+                modInfo.ManageModInfo(selectedMod);
                 UpdateModList(selectedMod.name);
             }
         }
@@ -566,6 +574,8 @@ namespace KSP_Mod_Manager
             if (isChangingSelection)
             {
                 selectedMod.websites.dlSite = opDlSiteBox.Text;
+
+                modInfo.ManageModInfo(selectedMod);
                 UpdateModList(selectedMod.name);
             }
         }
@@ -575,6 +585,8 @@ namespace KSP_Mod_Manager
             if (isChangingSelection)
             {
                 selectedFav.isFav = opIsFavoriteBox.Checked;
+
+                modInfo.ManageModInfo(selectedMod);
                 UpdateModList(selectedMod.name);
             }
         }
@@ -584,13 +596,10 @@ namespace KSP_Mod_Manager
             if (isChangingSelection)
             {
                 selectedMod.canUpdate = opCanDownloadBox.Checked;
+
+                modInfo.ManageModInfo(selectedMod);
                 UpdateModList(selectedMod.name);
             }
-        }
-
-        private void opOpenSite_Click(object sender, EventArgs e)
-        {
-            Process.Start(selectedMod.websites.website);
         }
 
         private void modBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -598,8 +607,15 @@ namespace KSP_Mod_Manager
             if (e.KeyChar == ' ')
             {
                 selectedFav.isFav = !selectedFav.isFav;
+
+                modInfo.ManageModInfo(selectedMod);
                 UpdateModList(selectedMod.name);
             }
+        }
+
+        private void opOpenSite_Click(object sender, EventArgs e)
+        {
+            Process.Start(selectedMod.websites.website);
         }
 
         private void opCheckUpdateButton_Click(object sender, EventArgs e)

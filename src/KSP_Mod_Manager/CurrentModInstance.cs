@@ -11,8 +11,8 @@ namespace KSP_Mod_Manager
     {
         public string modsPath = "";
 
-        public List<ModInfo> modList;
-        private List<SiteInfo> siteList;
+        public List<ModInfo> modList = new List<ModInfo>();
+        private List<SiteInfo> siteList = new List<SiteInfo>();
 
         private bool loaded = false;
 
@@ -135,27 +135,13 @@ namespace KSP_Mod_Manager
                 {
                     bool exists = false;
 
-                    if (mod.zipfile == "none" && (mod.key == "none" || mod.key == "" || mod.key == null))
-                    {
-                        mod.key = Functions.CleanName(mod.name);
-                    }
-                    else if (mod.key == "none" || mod.key == "" || mod.key == null)
-                    {
-                        mod.key = Functions.CleanName(mod.zipfile);
-                    }
-
                     foreach (SiteInfo site in siteList)
                     {
                         if (site.key == mod.key)
                         {
                             exists = true;
-
-                            if (site.website.Contains("http://kerbal.curseforge.com"))
-                            {
-                                site.dlSite = site.website + "/files/latest";
-                            }
-
                             mod.websites = site;
+
                             break;
                         }
                     }
@@ -164,6 +150,36 @@ namespace KSP_Mod_Manager
                     {
                         siteList.Add(new SiteInfo(mod.key, "NONE"));
                     }
+                }
+            }
+
+            foreach (ModInfo mod in modList)
+            {
+                ManageModInfo(mod);
+            }
+        }
+
+        public void ManageModInfo(ModInfo mod)
+        {
+            if (mod.zipfile == "none" && (mod.key == "none" || mod.key == "" || mod.key == null))
+            {
+                mod.key = Functions.CleanName(mod.name);
+            }
+            else if (mod.key == "none" || mod.key == "" || mod.key == null)
+            {
+                mod.key = Functions.CleanName(mod.zipfile);
+            }
+
+            foreach (SiteInfo site in siteList)
+            {
+                if (site.key == mod.key)
+                {
+                    if (site.website.Contains("http://kerbal.curseforge.com"))
+                    {
+                        site.dlSite = site.website + "/files/latest";
+                    }
+
+                    break;
                 }
             }
         }

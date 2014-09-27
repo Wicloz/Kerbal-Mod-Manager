@@ -11,9 +11,9 @@ namespace KSP_Mod_Manager
     {
         public string kspFolder = "";
 
-        public List<InstalledInfo> installedModList;
-        public List<FileInfo> installedFileList;
-        public List<FavInfo> favoritesList;
+        public List<InstalledInfo> installedModList = new List<InstalledInfo>();
+        public List<FileInfo> installedFileList = new List<FileInfo>();
+        public List<FavInfo> favoritesList = new List<FavInfo>();
 
         private bool loaded = false;
 

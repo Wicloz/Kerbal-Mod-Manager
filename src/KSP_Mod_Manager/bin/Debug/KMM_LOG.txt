@@ -1,6 +1,1 @@
 Welcome to KMM!
-Deinstalling 'NearFutureConstruction0_2_3'.
-Deinstalling 'NearFutureElectrical0_2_2'.
-Deinstalling 'nearfuturepropulsion0_2_3'.
-Deinstalling 'NearFutureSolar0_2_2'.
-Deinstalling 'NearFutureSpacecraft0_2_1'.
