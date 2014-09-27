@@ -12,15 +12,17 @@ namespace KSP_Mod_Manager
         public string modsPath;
         public List<InstallInstance> instances;
         public int selectedInstance;
+        public List<string> categoryList;
 
         public Settings()
         { }
 
-        public Settings(string ModsPath, List<InstallInstance> Instances, int SelectedInstance)
+        public Settings(string ModsPath, List<InstallInstance> Instances, int SelectedInstance, List<string> CategoryList)
         {
             modsPath = ModsPath;
             instances = Instances;
             selectedInstance = SelectedInstance;
+            categoryList = CategoryList;
         }
     }
 

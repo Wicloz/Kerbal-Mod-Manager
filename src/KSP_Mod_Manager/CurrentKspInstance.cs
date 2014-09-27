@@ -87,11 +87,14 @@ namespace KSP_Mod_Manager
             }
         }
 
-        private void SaveFiles(string path)
+        public void SaveFiles(string path)
         {
-            SaveLoad.SaveFileXml(favoritesList, path + "\\KMM\\Favorites.txt");
-            SaveLoad.SaveFileXml(installedFileList, path + "\\KMM\\FileList.txt");
-            SaveLoad.SaveFileXml(installedModList, path + "\\KMM\\ModList.txt");
+            if (loaded)
+            {
+                SaveLoad.SaveFileXml(favoritesList, path + "\\KMM\\Favorites.txt");
+                SaveLoad.SaveFileXml(installedFileList, path + "\\KMM\\FileList.txt");
+                SaveLoad.SaveFileXml(installedModList, path + "\\KMM\\ModList.txt");
+            }
         }
 
         public void ManageFileList(string path)

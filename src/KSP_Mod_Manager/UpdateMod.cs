@@ -67,7 +67,6 @@ namespace KSP_Mod_Manager
             try
             {
                 Directory.Delete(downloadFolder, true);
-                Functions.ProcessDirectory(Main.acces.modInfo.modsPath + "\\ModDownloads", true);
             }
             catch
             { }

@@ -64,11 +64,6 @@ namespace KSP_Mod_Manager
         {
             Directory.CreateDirectory(path + "\\Overrides");
 
-            if (Directory.Exists(path + "\\ModDownloads"))
-            {
-                Directory.Delete(path + "\\ModDownloads", true);
-            }
-
             if (Directory.Exists(path + "\\SiteDownload"))
             {
                 Directory.Delete(path + "\\SiteDownload", true);

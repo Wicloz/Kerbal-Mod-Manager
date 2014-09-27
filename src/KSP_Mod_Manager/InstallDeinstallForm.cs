@@ -20,12 +20,13 @@ namespace KSP_Mod_Manager
 
         private List<ModInfo> installModList = new List<ModInfo>();
         private List<InstalledInfo> deinstallModList = new List<InstalledInfo>();
+        private List<ModInfo> checkUpdateList = new List<ModInfo>();
         private List<ModInfo> updateModList = new List<ModInfo>();
 
         private float stepSize = 0;
 
-        private string mode;
         private int currentMod = -1;
+        private int currentIndex = -1;
 
         private bool actionDone = true;
         private bool formDone = false;
@@ -35,43 +36,28 @@ namespace KSP_Mod_Manager
         private void EmptyFunction()
         { }
 
-        public InstallDeinstallForm(List<ModInfo> ModList, int Mode)
+        public InstallDeinstallForm(List<ModInfo> CheckUpdateModList, List<ModInfo> UpdateModList,  List<InstalledInfo> DeinstallModList, List<ModInfo> InstallModList)
         {
             InitializeComponent();
 
-            if (Mode == 0)
-            {
-                installModList = ModList;
-                mode = "install";
-                this.Text = "Installing Mods ...";
-            }
-
-            else if (Mode == 1)
-            {
-                updateModList = ModList;
-                mode = "checkUpdate";
-                this.Text = "Checking for Updates ...";
-            }
-
-            else if (Mode == 2)
-            {
-                updateModList = ModList;
-                mode = "update";
-                this.Text = "Updating Mods ...";
-            }
-        }
-
-        public InstallDeinstallForm(List<InstalledInfo> ModList)
-        {
-            InitializeComponent();
-
-            deinstallModList = ModList;
-            mode = "deinstall";
-            this.Text = "Deinstalling Mods ...";
+            checkUpdateList = CheckUpdateModList;
+            updateModList = UpdateModList;
+            deinstallModList = DeinstallModList;
+            installModList = InstallModList;
         }
 
         private void InstallDeinstall_Form_Shown(object sender, EventArgs e)
         {
+            // Reinstall updating mods
+            for (int i = 0; i < updateModList.Count; i++)
+            {
+                if (Functions.IsModInstalled(updateModList[i]))
+                {
+                    installModList.Add(updateModList[i]);
+                    deinstallModList.Add(Functions.GetInstalledMod(updateModList[i]));
+                }
+            }
+
             // Check for overrides
             for (int i = 0; i < deinstallModList.Count; i++)
             {
@@ -101,7 +87,7 @@ namespace KSP_Mod_Manager
 
             // Initiate values
             stuff = new Thread(EmptyFunction);
-            stepSize = 100 / (installModList.Count + deinstallModList.Count + updateModList.Count);
+            stepSize = 100 / (checkUpdateList.Count + updateModList.Count + deinstallModList.Count + installModList.Count);
 
             // Initiate timer
             System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
@@ -140,9 +126,9 @@ namespace KSP_Mod_Manager
             allModProgress.Style = ProgressBarStyle.Continuous;
             allModProgress.Value = Convert.ToInt32(Math.Max(0, stepSize * currentMod));
 
-            progressLabel2.Text = "(" + currentMod + "/" + (installModList.Count + deinstallModList.Count + updateModList.Count) + ")";
+            progressLabel2.Text = "(" + currentMod + "/" + (checkUpdateList.Count + updateModList.Count + deinstallModList.Count + installModList.Count) + ")";
 
-            if (currentMod == installModList.Count + deinstallModList.Count + updateModList.Count)
+            if (currentMod == checkUpdateList.Count + updateModList.Count + deinstallModList.Count + installModList.Count)
             {
                 progressLabel1.Text = "Done!";
                 formDone = true;
@@ -153,69 +139,81 @@ namespace KSP_Mod_Manager
                 return;
             }
 
-            else if (mode == "install")
+            else if (currentMod < checkUpdateList.Count)
             {
-                progressLabel1.Text = "Installing Mod '" + installModList[currentMod].name + "'";
+                currentIndex = currentMod;
 
-                Main.acces.LogMessage("Installing '" + installModList[currentMod].zipfile + "'.");
+                progressLabel1.Text = "Checking Update For '" + checkUpdateList[currentIndex].name + "'";
+                this.Text = "Checking for Updates ...";
 
-                stuff = new Thread(Install);
-                stuff.Start();
-            }
-
-            else if (mode == "deinstall")
-            {
-                progressLabel1.Text = "Deinstalling Mod '" + deinstallModList[currentMod].modName + "'";
-
-                Main.acces.LogMessage("Deinstalling '" + deinstallModList[currentMod].codeName + "'.");
-
-                stuff = new Thread(Deinstall);
-                stuff.Start();
-            }
-
-            else if (mode == "checkUpdate")
-            {
-                progressLabel1.Text = "Checking Update For '" + updateModList[currentMod].name + "'";
-
-                Main.acces.LogMessage("Checking Update For '" + updateModList[currentMod].name + "'.");
+                Main.acces.LogMessage("Checking Update For '" + checkUpdateList[currentIndex].name + "'.");
 
                 stuff = new Thread(CheckUpdate);
                 stuff.Start();
             }
 
-            else if (mode == "update")
+            else if (currentMod < checkUpdateList.Count + updateModList.Count)
             {
-                progressLabel1.Text = "Updating Mod '" + updateModList[currentMod].name + "'";
+                currentIndex = currentMod - checkUpdateList.Count;
+
+                progressLabel1.Text = "Updating Mod '" + updateModList[currentIndex].name + "'";
+                this.Text = "Updating Mods ...";
                 thisModProgress.Style = ProgressBarStyle.Continuous;
 
-                Main.acces.LogMessage("Updating '" + updateModList[currentMod].name + "'.");
+                Main.acces.LogMessage("Updating '" + updateModList[currentIndex].name + "'.");
 
                 stuff = new Thread(UpdateMod);
+                stuff.Start();
+            }
+
+            else if (currentMod < checkUpdateList.Count + updateModList.Count + deinstallModList.Count)
+            {
+                currentIndex = currentMod - checkUpdateList.Count - updateModList.Count;
+
+                progressLabel1.Text = "Deinstalling Mod '" + deinstallModList[currentIndex].modName + "'";
+                this.Text = "Deinstalling Mods ...";
+
+                Main.acces.LogMessage("Deinstalling '" + deinstallModList[currentIndex].codeName + "'.");
+
+                stuff = new Thread(Deinstall);
+                stuff.Start();
+            }
+
+            else if (currentMod < checkUpdateList.Count + updateModList.Count + deinstallModList.Count + installModList.Count)
+            {
+                currentIndex = currentMod - checkUpdateList.Count - updateModList.Count - deinstallModList.Count;
+
+                progressLabel1.Text = "Installing Mod '" + installModList[currentIndex].name + "'";
+                this.Text = "Installing Mods ...";
+
+                Main.acces.LogMessage("Installing '" + installModList[currentIndex].zipfile + "'.");
+
+                stuff = new Thread(Install);
                 stuff.Start();
             }
         }
 
         private void Install()
         {
-            im.Install(installModList[currentMod]);
+            im.Install(installModList[currentIndex]);
             actionDone = true;
         }
 
         private void Deinstall()
         {
-            dm.Deinstall(deinstallModList[currentMod].codeName);
+            dm.Deinstall(deinstallModList[currentIndex].codeName);
             actionDone = true;
         }
 
         private void CheckUpdate()
         {
-            uc.CheckForUpdate(updateModList[currentMod]);
+            uc.CheckForUpdate(checkUpdateList[currentIndex]);
             actionDone = true;
         }
 
         private void UpdateMod()
         {
-            um.Update(updateModList[currentMod]);
+            um.Update(updateModList[currentIndex]);
         }
 
         private void DoneWait()

@@ -1,11 +1,6 @@
 Welcome to KMM!
-Installing 'NearFutureSpacecraft0_2_1.zip'.    at 'Testing Installation'
-Installing 'NearFutureSolar0_2_2.zip'.    at 'Testing Installation'
-Installing 'NearFuturePropulsion.zip'.    at 'Testing Installation'
-Installing 'NearFutureElectrical0_2_2.zip'.    at 'Testing Installation'
-Installing 'NearFutureConstruction0_2_3.zip'.    at 'Testing Installation'
-Deinstalling 'NearFutureConstruction0_2_3'.    at 'Testing Installation'
-Deinstalling 'NearFutureElectrical0_2_2'.    at 'Testing Installation'
-Deinstalling 'NearFuturePropulsion'.    at 'Testing Installation'
-Deinstalling 'NearFutureSolar0_2_2'.    at 'Testing Installation'
-Deinstalling 'NearFutureSpacecraft0_2_1'.    at 'Testing Installation'
+Deinstalling 'NearFutureConstruction0_2_3'.
+Deinstalling 'NearFutureElectrical0_2_2'.
+Deinstalling 'NearFuturePropulsion'.
+Deinstalling 'NearFutureSolar0_2_2'.
+Deinstalling 'NearFutureSpacecraft0_2_1'.
