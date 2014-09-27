@@ -38,6 +38,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(462, 674);
             this.textBox1.TabIndex = 0;
+            this.textBox1.Text = "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n";
             // 
             // LogForm
             // 

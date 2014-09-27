@@ -76,7 +76,6 @@ namespace KSP_Mod_Manager
         private void SaveFiles()
         {
             SaveLoad.SaveFileXml(new Settings(modInfo.modsPath, instanceList, installationBox.SelectedIndex), settingFolder + "\\settings.txt");
-            File.WriteAllText(Environment.CurrentDirectory + "\\KMM_LOG.txt", log);
         }
 
         // Updating Mod and KSP folder
@@ -212,8 +211,16 @@ namespace KSP_Mod_Manager
 
         public void LogMessage(string message)
         {
-            log += "\n";
+            log += "\r\n";
             log += message;
+            log += "    at 'Installation." + installationBox.SelectedItem + "'";
+
+            File.WriteAllText(Environment.CurrentDirectory + "\\KMM_LOG.txt", log);
+        }
+
+        public string GetLog()
+        {
+            return log;
         }
 
         private void InstallDeinstallSelected()
@@ -299,7 +306,7 @@ namespace KSP_Mod_Manager
 
         private void openLogButton_Click(object sender, EventArgs e)
         {
-            LogForm form = new LogForm(log);
+            LogForm form = new LogForm();
             form.Show();
         }
 

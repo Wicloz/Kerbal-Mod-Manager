@@ -12,29 +12,19 @@ namespace KSP_Mod_Manager
 {
     public partial class LogForm : Form
     {
-        public LogForm(string log)
+        public LogForm()
         {
             InitializeComponent();
-            char[] logArray = log.ToCharArray();
 
-            string line = "";
-            int lineIndex = 0;
+            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+            timer.Tick += new EventHandler(timer_Tick);
+            timer.Interval = 100;
+            timer.Start();
+        }
 
-            for (int i = 0; i < logArray.Length; i++)
-            {
-                if (Char.ConvertToUtf32(log, i) != 13)
-                {
-                    line += logArray[i];
-                }
-                else
-                {
-                    textBox1.Lines[lineIndex] = line;
-
-                    i++;
-                    lineIndex++;
-                    line = "";
-                }
-            }
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            textBox1.Text = Main.acces.GetLog();
         }
     }
 }
