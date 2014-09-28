@@ -144,10 +144,11 @@ namespace KSP_Mod_Manager
         {
             modBox.Items.Clear();
             SortLists();
+            string lastCat = "";
 
             if (kspInfo.installedModList.Count > 0)
             {
-                modBox.Items.Add("INSTALLED MODS");
+                modBox.Items.Add("INSTALLED MODS:");
             }
 
             foreach (InstalledInfo installedMod in kspInfo.installedModList)
@@ -166,6 +167,12 @@ namespace KSP_Mod_Manager
                         }
                     }
 
+                    if (mod.category.ToUpper() != lastCat)
+                    {
+                        lastCat = mod.category.ToUpper();
+                        modBox.Items.Add("-- " + lastCat + " --");
+                    }
+
                     if (mod.canUpdate)
                     {
                         addedString = " - Update Available";
@@ -177,7 +184,7 @@ namespace KSP_Mod_Manager
 
             if (modInfo.modList.Count > 0)
             {
-                modBox.Items.Add("DOWNLOADED MODS");
+                modBox.Items.Add("DOWNLOADED MODS:");
             }
 
             foreach (ModInfo mod in modInfo.modList)
@@ -185,6 +192,12 @@ namespace KSP_Mod_Manager
                 if (!mod.zipfile.Contains("Overrides\\") && !Functions.IsModInstalled(mod))
                 {
                     string addedString = "";
+
+                    if (mod.category.ToUpper() != lastCat)
+                    {
+                        lastCat = mod.category.ToUpper();
+                        modBox.Items.Add("-- " + lastCat + " --");
+                    }
 
                     if (mod.canUpdate)
                     {
@@ -210,7 +223,7 @@ namespace KSP_Mod_Manager
             }
             else if (kspInfo.installedModList.Count + modInfo.modList.Count > 0)
             {
-                modBox.SelectedIndex = 1;
+                modBox.SelectedIndex = 2;
             }
 
             foreach (ModInfo mod in modInfo.modList)
