@@ -63,7 +63,7 @@ namespace KSP_Mod_Manager
             {
                 for (int j = 0; j < Main.acces.kspInfo.installedModList.Count; j++)
                 {
-                    if (Functions.CleanName("Overrides\\" + deinstallModList[i].codeName) == Functions.CleanName(Main.acces.kspInfo.installedModList[j].codeName))
+                    if (Functions.CleanName(deinstallModList[i].modName + "\\Override").Replace("x", "").Replace("v", "") == Functions.CleanName(Main.acces.kspInfo.installedModList[j].modName).Replace("x", "").Replace("v", ""))
                     {
                         deinstallModList.Insert(0, Main.acces.kspInfo.installedModList[j]);
                         i++;
@@ -77,7 +77,7 @@ namespace KSP_Mod_Manager
             {
                 for (int j = 0; j < Main.acces.modInfo.modList.Count; j++)
                 {
-                    if (Functions.CleanName(installModList[i].name + "\\Override") == Functions.CleanName(Main.acces.modInfo.modList[j].name))
+                    if (Functions.CleanName(installModList[i].name + "\\Override").Replace("x", "").Replace("v", "") == Functions.CleanName(Main.acces.modInfo.modList[j].name).Replace("x", "").Replace("v", ""))
                     {
                         installModList.Add(Main.acces.modInfo.modList[j]);
                         break;
@@ -107,6 +107,7 @@ namespace KSP_Mod_Manager
 
             if (actionDone)
             {
+                Main.acces.kspInfo.SaveFiles(Main.acces.kspInfo.kspFolder);
                 HandleNextMod();
             }
         }

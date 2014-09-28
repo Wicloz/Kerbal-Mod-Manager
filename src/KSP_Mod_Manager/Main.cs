@@ -220,8 +220,6 @@ namespace KSP_Mod_Manager
                     Directory.CreateDirectory(modInfo.modsPath + "\\ModDownloads\\" + mod.name.Replace(" ", "_"));
                 }
             }
-
-            kspInfo.SaveFiles(kspInfo.kspFolder);
         }
 
         // Misc UI functions
@@ -453,7 +451,7 @@ namespace KSP_Mod_Manager
                 {
                     if (modInfo.modList[i].key == fav.key)
                     {
-                        if (fav.isFav)
+                        if (fav.isFav && !Functions.IsModInstalled(modInfo.modList[i]))
                         {
                             sendList.Add(modInfo.modList[i]);
                         }
