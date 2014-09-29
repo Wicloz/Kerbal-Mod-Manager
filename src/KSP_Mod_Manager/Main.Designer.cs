@@ -32,7 +32,7 @@
             this.modFolderBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.selectModFolderButton = new System.Windows.Forms.Button();
-            this.modBox = new System.Windows.Forms.ListBox();
+            this.downloadedModBox = new System.Windows.Forms.ListBox();
             this.opNameBox = new System.Windows.Forms.TextBox();
             this.opSiteBox = new System.Windows.Forms.TextBox();
             this.opDlSiteBox = new System.Windows.Forms.TextBox();
@@ -45,6 +45,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.editCategoryButton = new System.Windows.Forms.Button();
+            this.opAddCategoryButton = new System.Windows.Forms.Button();
             this.opOpenSiteButton = new System.Windows.Forms.Button();
             this.opIsFavoriteBox = new System.Windows.Forms.CheckBox();
             this.updateModFolderButton = new System.Windows.Forms.Button();
@@ -52,16 +54,15 @@
             this.topButton1 = new System.Windows.Forms.Button();
             this.topButton2 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.opReinstallLabel = new System.Windows.Forms.Label();
+            this.opReinstallButton = new System.Windows.Forms.Button();
             this.opCheckUpdateButton = new System.Windows.Forms.Button();
             this.addInstanceButton = new System.Windows.Forms.Button();
             this.removeInstanceButton = new System.Windows.Forms.Button();
             this.downloadModButton = new System.Windows.Forms.Button();
             this.openLogButton = new System.Windows.Forms.Button();
             this.deleteModButton = new System.Windows.Forms.Button();
-            this.opReinstallButton = new System.Windows.Forms.Button();
-            this.opReinstallLabel = new System.Windows.Forms.Label();
-            this.editCategoryButton = new System.Windows.Forms.Button();
-            this.opAddCategoryButton = new System.Windows.Forms.Button();
+            this.installedModBox = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -103,16 +104,16 @@
             this.selectModFolderButton.UseVisualStyleBackColor = true;
             this.selectModFolderButton.Click += new System.EventHandler(this.selectModFolderButton_Click);
             // 
-            // modBox
+            // downloadedModBox
             // 
-            this.modBox.FormattingEnabled = true;
-            this.modBox.Location = new System.Drawing.Point(147, 75);
-            this.modBox.Name = "modBox";
-            this.modBox.Size = new System.Drawing.Size(333, 550);
-            this.modBox.TabIndex = 5;
-            this.modBox.SelectedIndexChanged += new System.EventHandler(this.modBox_SelectedIndexChanged);
-            this.modBox.DoubleClick += new System.EventHandler(this.modBox_DoubleClick);
-            this.modBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.modBox_KeyPress);
+            this.downloadedModBox.FormattingEnabled = true;
+            this.downloadedModBox.Location = new System.Drawing.Point(147, 296);
+            this.downloadedModBox.Name = "downloadedModBox";
+            this.downloadedModBox.Size = new System.Drawing.Size(333, 329);
+            this.downloadedModBox.TabIndex = 5;
+            this.downloadedModBox.SelectedIndexChanged += new System.EventHandler(this.modBox_SelectedIndexChanged);
+            this.downloadedModBox.DoubleClick += new System.EventHandler(this.modBox_DoubleClick);
+            this.downloadedModBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.modBox_KeyPress);
             // 
             // opNameBox
             // 
@@ -244,6 +245,26 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings for Mod";
             // 
+            // editCategoryButton
+            // 
+            this.editCategoryButton.Location = new System.Drawing.Point(413, 45);
+            this.editCategoryButton.Name = "editCategoryButton";
+            this.editCategoryButton.Size = new System.Drawing.Size(44, 21);
+            this.editCategoryButton.TabIndex = 20;
+            this.editCategoryButton.Text = "Edit";
+            this.editCategoryButton.UseVisualStyleBackColor = true;
+            this.editCategoryButton.Click += new System.EventHandler(this.opAddCategoryButton_Click);
+            // 
+            // opAddCategoryButton
+            // 
+            this.opAddCategoryButton.Location = new System.Drawing.Point(363, 45);
+            this.opAddCategoryButton.Name = "opAddCategoryButton";
+            this.opAddCategoryButton.Size = new System.Drawing.Size(44, 21);
+            this.opAddCategoryButton.TabIndex = 20;
+            this.opAddCategoryButton.Text = "Add";
+            this.opAddCategoryButton.UseVisualStyleBackColor = true;
+            this.opAddCategoryButton.Click += new System.EventHandler(this.opAddCategoryButton_Click_1);
+            // 
             // opOpenSiteButton
             // 
             this.opOpenSiteButton.Location = new System.Drawing.Point(413, 72);
@@ -319,6 +340,25 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Updating";
             // 
+            // opReinstallLabel
+            // 
+            this.opReinstallLabel.AutoSize = true;
+            this.opReinstallLabel.Location = new System.Drawing.Point(6, 167);
+            this.opReinstallLabel.Name = "opReinstallLabel";
+            this.opReinstallLabel.Size = new System.Drawing.Size(103, 13);
+            this.opReinstallLabel.TabIndex = 15;
+            this.opReinstallLabel.Text = "No Reinstal Needed";
+            // 
+            // opReinstallButton
+            // 
+            this.opReinstallButton.Location = new System.Drawing.Point(6, 128);
+            this.opReinstallButton.Name = "opReinstallButton";
+            this.opReinstallButton.Size = new System.Drawing.Size(451, 36);
+            this.opReinstallButton.TabIndex = 14;
+            this.opReinstallButton.Text = "Reinstall Mod";
+            this.opReinstallButton.UseVisualStyleBackColor = true;
+            this.opReinstallButton.Click += new System.EventHandler(this.opReinstallButton_Click);
+            // 
             // opCheckUpdateButton
             // 
             this.opCheckUpdateButton.Location = new System.Drawing.Point(6, 19);
@@ -379,50 +419,21 @@
             this.deleteModButton.UseVisualStyleBackColor = true;
             this.deleteModButton.Click += new System.EventHandler(this.deleteMod_Click);
             // 
-            // opReinstallButton
+            // installedModBox
             // 
-            this.opReinstallButton.Location = new System.Drawing.Point(6, 128);
-            this.opReinstallButton.Name = "opReinstallButton";
-            this.opReinstallButton.Size = new System.Drawing.Size(451, 36);
-            this.opReinstallButton.TabIndex = 14;
-            this.opReinstallButton.Text = "Reinstall Mod";
-            this.opReinstallButton.UseVisualStyleBackColor = true;
-            this.opReinstallButton.Click += new System.EventHandler(this.opReinstallButton_Click);
-            // 
-            // opReinstallLabel
-            // 
-            this.opReinstallLabel.AutoSize = true;
-            this.opReinstallLabel.Location = new System.Drawing.Point(6, 167);
-            this.opReinstallLabel.Name = "opReinstallLabel";
-            this.opReinstallLabel.Size = new System.Drawing.Size(103, 13);
-            this.opReinstallLabel.TabIndex = 15;
-            this.opReinstallLabel.Text = "No Reinstal Needed";
-            // 
-            // editCategoryButton
-            // 
-            this.editCategoryButton.Location = new System.Drawing.Point(413, 45);
-            this.editCategoryButton.Name = "editCategoryButton";
-            this.editCategoryButton.Size = new System.Drawing.Size(44, 21);
-            this.editCategoryButton.TabIndex = 20;
-            this.editCategoryButton.Text = "Edit";
-            this.editCategoryButton.UseVisualStyleBackColor = true;
-            this.editCategoryButton.Click += new System.EventHandler(this.opAddCategoryButton_Click);
-            // 
-            // opAddCategoryButton
-            // 
-            this.opAddCategoryButton.Location = new System.Drawing.Point(363, 45);
-            this.opAddCategoryButton.Name = "opAddCategoryButton";
-            this.opAddCategoryButton.Size = new System.Drawing.Size(44, 21);
-            this.opAddCategoryButton.TabIndex = 20;
-            this.opAddCategoryButton.Text = "Add";
-            this.opAddCategoryButton.UseVisualStyleBackColor = true;
-            this.opAddCategoryButton.Click += new System.EventHandler(this.opAddCategoryButton_Click_1);
+            this.installedModBox.FormattingEnabled = true;
+            this.installedModBox.Location = new System.Drawing.Point(148, 78);
+            this.installedModBox.Name = "installedModBox";
+            this.installedModBox.Size = new System.Drawing.Size(332, 212);
+            this.installedModBox.TabIndex = 29;
+            this.installedModBox.SelectedIndexChanged += new System.EventHandler(this.installedModBox_SelectedIndexChanged);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(961, 675);
+            this.Controls.Add(this.installedModBox);
             this.Controls.Add(this.deleteModButton);
             this.Controls.Add(this.openLogButton);
             this.Controls.Add(this.downloadModButton);
@@ -435,7 +446,7 @@
             this.Controls.Add(this.updateModFolderButton);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.opInstallButton);
-            this.Controls.Add(this.modBox);
+            this.Controls.Add(this.downloadedModBox);
             this.Controls.Add(this.selectModFolderButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.modFolderBox);
@@ -461,7 +472,7 @@
         private System.Windows.Forms.TextBox modFolderBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button selectModFolderButton;
-        private System.Windows.Forms.ListBox modBox;
+        private System.Windows.Forms.ListBox downloadedModBox;
         private System.Windows.Forms.TextBox opNameBox;
         private System.Windows.Forms.TextBox opSiteBox;
         private System.Windows.Forms.TextBox opDlSiteBox;
@@ -491,6 +502,7 @@
         private System.Windows.Forms.Label opReinstallLabel;
         private System.Windows.Forms.Button editCategoryButton;
         private System.Windows.Forms.Button opAddCategoryButton;
+        private System.Windows.Forms.ListBox installedModBox;
     }
 }
 
