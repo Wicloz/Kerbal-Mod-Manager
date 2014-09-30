@@ -32,9 +32,11 @@
             this.addBox = new System.Windows.Forms.TextBox();
             this.addButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.editNameBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.deleteCatButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.editNameBox = new System.Windows.Forms.TextBox();
+            this.upButton = new System.Windows.Forms.Button();
+            this.downButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,32 +68,17 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.downButton);
+            this.groupBox1.Controls.Add(this.upButton);
             this.groupBox1.Controls.Add(this.deleteCatButton);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.editNameBox);
             this.groupBox1.Location = new System.Drawing.Point(262, 43);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(314, 82);
+            this.groupBox1.Size = new System.Drawing.Size(314, 126);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Selected Category";
-            // 
-            // editNameBox
-            // 
-            this.editNameBox.Location = new System.Drawing.Point(50, 20);
-            this.editNameBox.Name = "editNameBox";
-            this.editNameBox.Size = new System.Drawing.Size(258, 20);
-            this.editNameBox.TabIndex = 0;
-            this.editNameBox.TextChanged += new System.EventHandler(this.editNameBox_TextChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 23);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Name:";
             // 
             // deleteCatButton
             // 
@@ -102,6 +89,43 @@
             this.deleteCatButton.Text = "Remove";
             this.deleteCatButton.UseVisualStyleBackColor = true;
             this.deleteCatButton.Click += new System.EventHandler(this.deleteCatButton_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 23);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Name:";
+            // 
+            // editNameBox
+            // 
+            this.editNameBox.Location = new System.Drawing.Point(50, 20);
+            this.editNameBox.Name = "editNameBox";
+            this.editNameBox.Size = new System.Drawing.Size(258, 20);
+            this.editNameBox.TabIndex = 0;
+            this.editNameBox.TextChanged += new System.EventHandler(this.editNameBox_TextChanged);
+            // 
+            // upButton
+            // 
+            this.upButton.Location = new System.Drawing.Point(9, 83);
+            this.upButton.Name = "upButton";
+            this.upButton.Size = new System.Drawing.Size(144, 35);
+            this.upButton.TabIndex = 3;
+            this.upButton.Text = "Move Up";
+            this.upButton.UseVisualStyleBackColor = true;
+            this.upButton.Click += new System.EventHandler(this.upButton_Click);
+            // 
+            // downButton
+            // 
+            this.downButton.Location = new System.Drawing.Point(159, 82);
+            this.downButton.Name = "downButton";
+            this.downButton.Size = new System.Drawing.Size(148, 35);
+            this.downButton.TabIndex = 4;
+            this.downButton.Text = "Move Down";
+            this.downButton.UseVisualStyleBackColor = true;
+            this.downButton.Click += new System.EventHandler(this.downButton_Click);
             // 
             // EditCategories
             // 
@@ -132,5 +156,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox editNameBox;
         private System.Windows.Forms.Button deleteCatButton;
+        private System.Windows.Forms.Button downButton;
+        private System.Windows.Forms.Button upButton;
     }
 }

@@ -36,6 +36,24 @@ namespace KSP_Mod_Manager
         private void categoryBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             editNameBox.Text = categoryList[categoryBox.SelectedIndex];
+
+            if (categoryBox.SelectedIndex == 0)
+            {
+                upButton.Enabled = false;
+            }
+            else
+            {
+                upButton.Enabled = true;
+            }
+
+            if (categoryBox.SelectedIndex == categoryList.Count - 1)
+            {
+                downButton.Enabled = false;
+            }
+            else
+            {
+                downButton.Enabled = true;
+            }
         }
 
         private void editNameBox_TextChanged(object sender, EventArgs e)
@@ -58,6 +76,28 @@ namespace KSP_Mod_Manager
         {
             categoryList.RemoveAt(categoryBox.SelectedIndex);
             RefreshList(categoryBox.SelectedIndex - 1);
+        }
+
+        private void upButton_Click(object sender, EventArgs e)
+        {
+            string category = categoryList[categoryBox.SelectedIndex];
+            int index = categoryBox.SelectedIndex;
+
+            categoryList.RemoveAt(index);
+            categoryList.Insert(index - 1, category);
+
+            RefreshList(index - 1);
+        }
+
+        private void downButton_Click(object sender, EventArgs e)
+        {
+            string category = categoryList[categoryBox.SelectedIndex];
+            int index = categoryBox.SelectedIndex;
+
+            categoryList.RemoveAt(index);
+            categoryList.Insert(index + 1, category);
+
+            RefreshList(index + 1);
         }
     }
 }
