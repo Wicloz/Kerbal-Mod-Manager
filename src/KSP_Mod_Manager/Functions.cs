@@ -64,11 +64,27 @@ namespace KSP_Mod_Manager
 
         public static InstalledInfo GetInstalledMod(ModInfo mod)
         {
-            InstalledInfo returnMod = new InstalledInfo();
+            InstalledInfo returnMod = null;
 
             for (int i = 0; i < Main.acces.kspInfo.installedModList.Count; i++)
             {
                 if (Main.acces.kspInfo.installedModList[i].key == mod.key)
+                {
+                    returnMod = Main.acces.kspInfo.installedModList[i];
+                    break;
+                }
+            }
+
+            return returnMod;
+        }
+
+        public static InstalledInfo GetInstalledMod(string name)
+        {
+            InstalledInfo returnMod = null;
+
+            for (int i = 0; i < Main.acces.kspInfo.installedModList.Count; i++)
+            {
+                if (Main.acces.kspInfo.installedModList[i].modName == name)
                 {
                     returnMod = Main.acces.kspInfo.installedModList[i];
                     break;

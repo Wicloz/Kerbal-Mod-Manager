@@ -526,19 +526,22 @@ namespace KSP_Mod_Manager
 
         private void installedModBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateOpSettings((string)installedModBox.SelectedItem);
+            UpdateOpSettings((string)installedModBox.SelectedItem, true);
         }
 
         private void modBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateOpSettings((string)downloadedModBox.SelectedItem);
+            UpdateOpSettings((string)downloadedModBox.SelectedItem, false);
         }
 
-        private void UpdateOpSettings(string itemName)
+        private void UpdateOpSettings(string itemName, bool installed)
         {
             isChangingSelection = false;
             bool modExists = false;
 
+            selectedInstalledMod = Functions.GetInstalledMod((string)installedModBox.SelectedItem);
+
+            selectedMod = null;
             for (int i = 0; i < modInfo.modList.Count; i++)
             {
                 if (modInfo.modList[i].name == itemName.Replace(" - Update Available", ""))
@@ -547,15 +550,6 @@ namespace KSP_Mod_Manager
                     modExists = true;
                     break;
                 }
-            }
-
-            if (!modExists)
-            {
-                selectedInstalledMod = kspInfo.installedModList[installedModBox.SelectedIndex];
-            }
-            else
-            {
-                selectedInstalledMod = Functions.GetInstalledMod(selectedMod);
             }
 
             if (modExists)
@@ -601,7 +595,20 @@ namespace KSP_Mod_Manager
                 BlockSettingEditor();
             }
 
-            if (modExists && Functions.IsModInstalled(selectedMod))
+            if (modExists && installed)
+            {
+                opInstallButton.Text = "Deinstall Mod";
+            }
+            else if (modExists && !installed)
+            {
+                opInstallButton.Text = "Install Mod";
+            }
+            else
+            {
+                opInstallButton.Text = "Install Mod / Deinstall Mod";
+            }
+
+            if (modExists && installed)
             {
                 opReinstallLabel.Enabled = true;
 
