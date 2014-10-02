@@ -51,7 +51,7 @@ namespace KSP_Mod_Manager
             // Reinstall updating mods
             for (int i = 0; i < updateModList.Count; i++)
             {
-                if (Functions.IsModInstalled(updateModList[i]))
+                if (updateModList[i].IsInstalled)
                 {
                     installModList.Add(updateModList[i]);
                     deinstallModList.Add(Functions.GetInstalledMod(updateModList[i]));

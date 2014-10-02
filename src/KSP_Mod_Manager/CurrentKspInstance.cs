@@ -15,7 +15,7 @@ namespace KSP_Mod_Manager
         public List<FileInfo> installedFileList = new List<FileInfo>();
         public List<FavInfo> favoritesList = new List<FavInfo>();
 
-        private bool loaded = false;
+        public bool loaded = false;
 
         public bool LoadInstance(string path)
         {

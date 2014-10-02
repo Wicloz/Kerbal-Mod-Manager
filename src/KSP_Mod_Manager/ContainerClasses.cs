@@ -56,6 +56,22 @@ namespace KSP_Mod_Manager
             version = "none";
         }
 
+        public bool IsInstalled
+        {
+            get
+            {
+                foreach (InstalledInfo installedMod in Main.acces.kspInfo.installedModList)
+                {
+                    if (installedMod.key == this.key)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
+
         public int CompareTo(ModInfo other)
         {
             if (other == null)

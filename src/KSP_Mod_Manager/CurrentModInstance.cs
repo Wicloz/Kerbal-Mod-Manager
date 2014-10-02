@@ -14,7 +14,7 @@ namespace KSP_Mod_Manager
         public List<ModInfo> modList = new List<ModInfo>();
         private List<SiteInfo> siteList = new List<SiteInfo>();
 
-        private bool loaded = false;
+        public bool loaded = false;
 
         public void LoadInstance(string path)
         {

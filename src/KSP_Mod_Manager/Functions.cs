@@ -49,19 +49,6 @@ namespace KSP_Mod_Manager
                     .Replace(".", "");
         }
 
-        public static bool IsModInstalled(ModInfo mod)
-        {
-            foreach (InstalledInfo installedMod in Main.acces.kspInfo.installedModList)
-            {
-                if (installedMod.key == mod.key)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         public static InstalledInfo GetInstalledMod(ModInfo mod)
         {
             InstalledInfo returnMod = null;
