@@ -98,6 +98,18 @@ namespace KSP_Mod_Manager
             SaveLoad.SaveFileXml(new Settings(modInfo.modsPath, instanceList, installationBox.SelectedIndex, sendList), settingFolder + "\\settings.txt");
         }
 
+        public List<string> GetCategories()
+        {
+            List<string> sendList = new List<string>();
+
+            foreach (string category in opCategoryBox.Items)
+            {
+                sendList.Add(category);
+            }
+
+            return sendList;
+        }
+
         // Updating Mod and KSP folder
         private void LoadSelectedKspInstance()
         {

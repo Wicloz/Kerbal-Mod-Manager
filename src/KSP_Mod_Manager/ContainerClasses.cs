@@ -74,20 +74,50 @@ namespace KSP_Mod_Manager
 
         public int CompareTo(ModInfo other)
         {
+            int thisCat = 999;
+            int otherCat = 999;
+
             if (other == null)
             {
                 return 1;
             }
 
-            char[] charArray1 = (category + "|" + name).ToCharArray();
-            char[] charArray2 = (other.category + "|" + other.name).ToCharArray();
+            List<string> categoryList = Main.acces.GetCategories();
 
-            for (int i = 0; i < charArray1.Length; i++)
+            for (int i = 0; i < categoryList.Count; i++)
             {
-                if (charArray1[i].GetHashCode() != charArray2[i].GetHashCode())
+                if (this.category == categoryList[i])
                 {
-                    return charArray1[i].GetHashCode() - charArray2[i].GetHashCode();
+                    thisCat = i;
                 }
+
+                if (other.category == categoryList[i])
+                {
+                    otherCat = i;
+                }
+            }
+
+            if (thisCat == otherCat)
+            {
+                char[] charArray1 = (this.name).ToCharArray();
+                char[] charArray2 = (other.name).ToCharArray();
+
+                for (int i = 0; i < charArray1.Length; i++)
+                {
+                    if (charArray1[i].GetHashCode() != charArray2[i].GetHashCode())
+                    {
+                        return charArray1[i].GetHashCode() - charArray2[i].GetHashCode();
+                    }
+
+                    if (i + 1 >= charArray2.Length)
+                    {
+                        return -1;
+                    }
+                }
+            }
+            else
+            {
+                return thisCat - otherCat;
             }
 
             return 0;
@@ -117,20 +147,50 @@ namespace KSP_Mod_Manager
 
         public int CompareTo(InstalledInfo other)
         {
+            int thisCat = 999;
+            int otherCat = 999;
+
             if (other == null)
             {
                 return 1;
             }
 
-            char[] charArray1 = (category + "|" + modName).ToCharArray();
-            char[] charArray2 = (other.category + "|" + other.modName).ToCharArray();
+            List<string> categoryList = Main.acces.GetCategories();
 
-            for (int i = 0; i < charArray1.Length; i++)
+            for (int i = 0; i < categoryList.Count; i++)
             {
-                if (charArray1[i].GetHashCode() != charArray2[i].GetHashCode())
+                if (this.category == categoryList[i])
                 {
-                    return charArray1[i].GetHashCode() - charArray2[i].GetHashCode();
+                    thisCat = i;
                 }
+
+                if (other.category == categoryList[i])
+                {
+                    otherCat = i;
+                }
+            }
+
+            if (thisCat == otherCat)
+            {
+                char[] charArray1 = (this.modName).ToCharArray();
+                char[] charArray2 = (other.modName).ToCharArray();
+
+                for (int i = 0; i < charArray1.Length; i++)
+                {
+                    if (charArray1[i].GetHashCode() != charArray2[i].GetHashCode())
+                    {
+                        return charArray1[i].GetHashCode() - charArray2[i].GetHashCode();
+                    }
+
+                    if (i + 1 >= charArray2.Length)
+                    {
+                        return -1;
+                    }
+                }
+            }
+            else
+            {
+                return thisCat - otherCat;
             }
 
             return 0;
