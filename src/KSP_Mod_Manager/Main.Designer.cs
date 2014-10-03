@@ -83,7 +83,7 @@
             this.modFolderBox.Enabled = false;
             this.modFolderBox.Location = new System.Drawing.Point(81, 12);
             this.modFolderBox.Name = "modFolderBox";
-            this.modFolderBox.Size = new System.Drawing.Size(689, 20);
+            this.modFolderBox.Size = new System.Drawing.Size(892, 20);
             this.modFolderBox.TabIndex = 1;
             // 
             // label1
@@ -97,7 +97,7 @@
             // 
             // selectModFolderButton
             // 
-            this.selectModFolderButton.Location = new System.Drawing.Point(857, 12);
+            this.selectModFolderButton.Location = new System.Drawing.Point(1060, 12);
             this.selectModFolderButton.Name = "selectModFolderButton";
             this.selectModFolderButton.Size = new System.Drawing.Size(92, 20);
             this.selectModFolderButton.TabIndex = 4;
@@ -110,7 +110,7 @@
             this.downloadedModBox.FormattingEnabled = true;
             this.downloadedModBox.Location = new System.Drawing.Point(147, 296);
             this.downloadedModBox.Name = "downloadedModBox";
-            this.downloadedModBox.Size = new System.Drawing.Size(333, 329);
+            this.downloadedModBox.Size = new System.Drawing.Size(506, 329);
             this.downloadedModBox.TabIndex = 5;
             this.downloadedModBox.SelectedIndexChanged += new System.EventHandler(this.modBox_SelectedIndexChanged);
             this.downloadedModBox.DoubleClick += new System.EventHandler(this.modBox_DoubleClick);
@@ -120,7 +120,7 @@
             // 
             this.opNameBox.Location = new System.Drawing.Point(107, 19);
             this.opNameBox.Name = "opNameBox";
-            this.opNameBox.Size = new System.Drawing.Size(350, 20);
+            this.opNameBox.Size = new System.Drawing.Size(380, 20);
             this.opNameBox.TabIndex = 6;
             this.opNameBox.TextChanged += new System.EventHandler(this.opNameBox_TextChanged);
             // 
@@ -128,7 +128,7 @@
             // 
             this.opSiteBox.Location = new System.Drawing.Point(107, 72);
             this.opSiteBox.Name = "opSiteBox";
-            this.opSiteBox.Size = new System.Drawing.Size(300, 20);
+            this.opSiteBox.Size = new System.Drawing.Size(330, 20);
             this.opSiteBox.TabIndex = 8;
             this.opSiteBox.TextChanged += new System.EventHandler(this.opSiteBox_TextChanged);
             // 
@@ -136,15 +136,15 @@
             // 
             this.opDlSiteBox.Location = new System.Drawing.Point(107, 98);
             this.opDlSiteBox.Name = "opDlSiteBox";
-            this.opDlSiteBox.Size = new System.Drawing.Size(350, 20);
+            this.opDlSiteBox.Size = new System.Drawing.Size(380, 20);
             this.opDlSiteBox.TabIndex = 9;
             this.opDlSiteBox.TextChanged += new System.EventHandler(this.opDlSiteBox_TextChanged);
             // 
             // opInstallButton
             // 
-            this.opInstallButton.Location = new System.Drawing.Point(486, 194);
+            this.opInstallButton.Location = new System.Drawing.Point(659, 194);
             this.opInstallButton.Name = "opInstallButton";
-            this.opInstallButton.Size = new System.Drawing.Size(463, 47);
+            this.opInstallButton.Size = new System.Drawing.Size(493, 47);
             this.opInstallButton.TabIndex = 10;
             this.opInstallButton.Text = "Install Mod / Deinstall Mod";
             this.opInstallButton.UseVisualStyleBackColor = true;
@@ -165,7 +165,7 @@
             // 
             this.opDownloadButton.Location = new System.Drawing.Point(6, 85);
             this.opDownloadButton.Name = "opDownloadButton";
-            this.opDownloadButton.Size = new System.Drawing.Size(451, 37);
+            this.opDownloadButton.Size = new System.Drawing.Size(481, 37);
             this.opDownloadButton.TabIndex = 12;
             this.opDownloadButton.Text = "Update Mod";
             this.opDownloadButton.UseVisualStyleBackColor = true;
@@ -185,7 +185,7 @@
             "Graphic Install Packs"});
             this.opCategoryBox.Location = new System.Drawing.Point(107, 45);
             this.opCategoryBox.Name = "opCategoryBox";
-            this.opCategoryBox.Size = new System.Drawing.Size(250, 21);
+            this.opCategoryBox.Size = new System.Drawing.Size(280, 21);
             this.opCategoryBox.TabIndex = 13;
             this.opCategoryBox.TextChanged += new System.EventHandler(this.opCategoryBox_TextChanged);
             // 
@@ -239,16 +239,16 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.opSiteBox);
             this.groupBox1.Controls.Add(this.opDlSiteBox);
-            this.groupBox1.Location = new System.Drawing.Point(486, 38);
+            this.groupBox1.Location = new System.Drawing.Point(659, 38);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(463, 150);
+            this.groupBox1.Size = new System.Drawing.Size(493, 150);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings for Mod";
             // 
             // editCategoryButton
             // 
-            this.editCategoryButton.Location = new System.Drawing.Point(413, 45);
+            this.editCategoryButton.Location = new System.Drawing.Point(443, 45);
             this.editCategoryButton.Name = "editCategoryButton";
             this.editCategoryButton.Size = new System.Drawing.Size(44, 21);
             this.editCategoryButton.TabIndex = 20;
@@ -258,7 +258,7 @@
             // 
             // opAddCategoryButton
             // 
-            this.opAddCategoryButton.Location = new System.Drawing.Point(363, 45);
+            this.opAddCategoryButton.Location = new System.Drawing.Point(393, 45);
             this.opAddCategoryButton.Name = "opAddCategoryButton";
             this.opAddCategoryButton.Size = new System.Drawing.Size(44, 21);
             this.opAddCategoryButton.TabIndex = 20;
@@ -268,7 +268,7 @@
             // 
             // opOpenSiteButton
             // 
-            this.opOpenSiteButton.Location = new System.Drawing.Point(413, 72);
+            this.opOpenSiteButton.Location = new System.Drawing.Point(443, 72);
             this.opOpenSiteButton.Name = "opOpenSiteButton";
             this.opOpenSiteButton.Size = new System.Drawing.Size(44, 20);
             this.opOpenSiteButton.TabIndex = 19;
@@ -289,7 +289,7 @@
             // 
             // updateModFolderButton
             // 
-            this.updateModFolderButton.Location = new System.Drawing.Point(776, 12);
+            this.updateModFolderButton.Location = new System.Drawing.Point(979, 12);
             this.updateModFolderButton.Name = "updateModFolderButton";
             this.updateModFolderButton.Size = new System.Drawing.Size(75, 20);
             this.updateModFolderButton.TabIndex = 19;
@@ -299,9 +299,9 @@
             // 
             // checkUpdateButton
             // 
-            this.checkUpdateButton.Location = new System.Drawing.Point(486, 609);
+            this.checkUpdateButton.Location = new System.Drawing.Point(659, 609);
             this.checkUpdateButton.Name = "checkUpdateButton";
-            this.checkUpdateButton.Size = new System.Drawing.Size(463, 54);
+            this.checkUpdateButton.Size = new System.Drawing.Size(493, 54);
             this.checkUpdateButton.TabIndex = 20;
             this.checkUpdateButton.Text = "Check for updates";
             this.checkUpdateButton.UseVisualStyleBackColor = true;
@@ -311,7 +311,7 @@
             // 
             this.topButton1.Location = new System.Drawing.Point(147, 38);
             this.topButton1.Name = "topButton1";
-            this.topButton1.Size = new System.Drawing.Size(166, 33);
+            this.topButton1.Size = new System.Drawing.Size(263, 34);
             this.topButton1.TabIndex = 21;
             this.topButton1.Text = "Deinstall all mods";
             this.topButton1.UseVisualStyleBackColor = true;
@@ -319,9 +319,9 @@
             // 
             // topButton2
             // 
-            this.topButton2.Location = new System.Drawing.Point(319, 38);
+            this.topButton2.Location = new System.Drawing.Point(416, 38);
             this.topButton2.Name = "topButton2";
-            this.topButton2.Size = new System.Drawing.Size(161, 33);
+            this.topButton2.Size = new System.Drawing.Size(237, 34);
             this.topButton2.TabIndex = 22;
             this.topButton2.Text = "Install all Favorites";
             this.topButton2.UseVisualStyleBackColor = true;
@@ -334,9 +334,9 @@
             this.groupBox2.Controls.Add(this.opCheckUpdateButton);
             this.groupBox2.Controls.Add(this.opDownloadButton);
             this.groupBox2.Controls.Add(this.opCanDownloadBox);
-            this.groupBox2.Location = new System.Drawing.Point(486, 247);
+            this.groupBox2.Location = new System.Drawing.Point(659, 247);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(463, 189);
+            this.groupBox2.Size = new System.Drawing.Size(493, 189);
             this.groupBox2.TabIndex = 23;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Updating";
@@ -354,7 +354,7 @@
             // 
             this.opReinstallButton.Location = new System.Drawing.Point(6, 128);
             this.opReinstallButton.Name = "opReinstallButton";
-            this.opReinstallButton.Size = new System.Drawing.Size(451, 36);
+            this.opReinstallButton.Size = new System.Drawing.Size(481, 36);
             this.opReinstallButton.TabIndex = 14;
             this.opReinstallButton.Text = "Reinstall Mod";
             this.opReinstallButton.UseVisualStyleBackColor = true;
@@ -364,7 +364,7 @@
             // 
             this.opCheckUpdateButton.Location = new System.Drawing.Point(6, 19);
             this.opCheckUpdateButton.Name = "opCheckUpdateButton";
-            this.opCheckUpdateButton.Size = new System.Drawing.Size(451, 37);
+            this.opCheckUpdateButton.Size = new System.Drawing.Size(481, 37);
             this.opCheckUpdateButton.TabIndex = 13;
             this.opCheckUpdateButton.Text = "Check For Update";
             this.opCheckUpdateButton.UseVisualStyleBackColor = true;
@@ -392,9 +392,9 @@
             // 
             // downloadModButton
             // 
-            this.downloadModButton.Location = new System.Drawing.Point(486, 550);
+            this.downloadModButton.Location = new System.Drawing.Point(659, 550);
             this.downloadModButton.Name = "downloadModButton";
-            this.downloadModButton.Size = new System.Drawing.Size(463, 53);
+            this.downloadModButton.Size = new System.Drawing.Size(253, 53);
             this.downloadModButton.TabIndex = 26;
             this.downloadModButton.Text = "Update All Mods";
             this.downloadModButton.UseVisualStyleBackColor = true;
@@ -402,9 +402,9 @@
             // 
             // openLogButton
             // 
-            this.openLogButton.Location = new System.Drawing.Point(486, 508);
+            this.openLogButton.Location = new System.Drawing.Point(659, 508);
             this.openLogButton.Name = "openLogButton";
-            this.openLogButton.Size = new System.Drawing.Size(463, 36);
+            this.openLogButton.Size = new System.Drawing.Size(493, 36);
             this.openLogButton.TabIndex = 27;
             this.openLogButton.Text = "Open Log";
             this.openLogButton.UseVisualStyleBackColor = true;
@@ -414,7 +414,7 @@
             // 
             this.deleteModButton.Location = new System.Drawing.Point(147, 631);
             this.deleteModButton.Name = "deleteModButton";
-            this.deleteModButton.Size = new System.Drawing.Size(333, 32);
+            this.deleteModButton.Size = new System.Drawing.Size(506, 32);
             this.deleteModButton.TabIndex = 28;
             this.deleteModButton.Text = "Delete Mod";
             this.deleteModButton.UseVisualStyleBackColor = true;
@@ -425,15 +425,15 @@
             this.installedModBox.FormattingEnabled = true;
             this.installedModBox.Location = new System.Drawing.Point(148, 78);
             this.installedModBox.Name = "installedModBox";
-            this.installedModBox.Size = new System.Drawing.Size(332, 212);
+            this.installedModBox.Size = new System.Drawing.Size(505, 212);
             this.installedModBox.TabIndex = 29;
             this.installedModBox.SelectedIndexChanged += new System.EventHandler(this.installedModBox_SelectedIndexChanged);
             // 
             // reinstallAllButton
             // 
-            this.reinstallAllButton.Location = new System.Drawing.Point(487, 443);
+            this.reinstallAllButton.Location = new System.Drawing.Point(918, 550);
             this.reinstallAllButton.Name = "reinstallAllButton";
-            this.reinstallAllButton.Size = new System.Drawing.Size(462, 59);
+            this.reinstallAllButton.Size = new System.Drawing.Size(234, 53);
             this.reinstallAllButton.TabIndex = 30;
             this.reinstallAllButton.Text = "Reinstall All Mods";
             this.reinstallAllButton.UseVisualStyleBackColor = true;
@@ -443,7 +443,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(961, 675);
+            this.ClientSize = new System.Drawing.Size(1164, 675);
             this.Controls.Add(this.reinstallAllButton);
             this.Controls.Add(this.installedModBox);
             this.Controls.Add(this.deleteModButton);
