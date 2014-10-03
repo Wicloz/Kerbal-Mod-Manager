@@ -303,7 +303,7 @@
             this.checkUpdateButton.Name = "checkUpdateButton";
             this.checkUpdateButton.Size = new System.Drawing.Size(493, 54);
             this.checkUpdateButton.TabIndex = 20;
-            this.checkUpdateButton.Text = "Check for updates";
+            this.checkUpdateButton.Text = "Check For Updates On All Mods";
             this.checkUpdateButton.UseVisualStyleBackColor = true;
             this.checkUpdateButton.Click += new System.EventHandler(this.checkUpdateButton_Click);
             // 
@@ -412,7 +412,7 @@
             // 
             // deleteModButton
             // 
-            this.deleteModButton.Location = new System.Drawing.Point(147, 631);
+            this.deleteModButton.Location = new System.Drawing.Point(148, 631);
             this.deleteModButton.Name = "deleteModButton";
             this.deleteModButton.Size = new System.Drawing.Size(506, 32);
             this.deleteModButton.TabIndex = 28;
