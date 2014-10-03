@@ -87,7 +87,7 @@ namespace KSP_Mod_Manager
 
             // Initiate values
             stuff = new Thread(EmptyFunction);
-            stepSize = 100 / (checkUpdateList.Count + updateModList.Count + deinstallModList.Count + installModList.Count);
+            stepSize = 1000 / (checkUpdateList.Count + updateModList.Count + deinstallModList.Count + installModList.Count);
 
             // Initiate timer
             System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();

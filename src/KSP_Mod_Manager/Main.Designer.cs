@@ -63,6 +63,7 @@
             this.openLogButton = new System.Windows.Forms.Button();
             this.deleteModButton = new System.Windows.Forms.Button();
             this.installedModBox = new System.Windows.Forms.ListBox();
+            this.reinstallAllButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -428,11 +429,22 @@
             this.installedModBox.TabIndex = 29;
             this.installedModBox.SelectedIndexChanged += new System.EventHandler(this.installedModBox_SelectedIndexChanged);
             // 
+            // reinstallAllButton
+            // 
+            this.reinstallAllButton.Location = new System.Drawing.Point(487, 443);
+            this.reinstallAllButton.Name = "reinstallAllButton";
+            this.reinstallAllButton.Size = new System.Drawing.Size(462, 59);
+            this.reinstallAllButton.TabIndex = 30;
+            this.reinstallAllButton.Text = "Reinstall All Mods";
+            this.reinstallAllButton.UseVisualStyleBackColor = true;
+            this.reinstallAllButton.Click += new System.EventHandler(this.reinstallAllButton_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(961, 675);
+            this.Controls.Add(this.reinstallAllButton);
             this.Controls.Add(this.installedModBox);
             this.Controls.Add(this.deleteModButton);
             this.Controls.Add(this.openLogButton);
@@ -503,6 +515,7 @@
         private System.Windows.Forms.Button editCategoryButton;
         private System.Windows.Forms.Button opAddCategoryButton;
         private System.Windows.Forms.ListBox installedModBox;
+        private System.Windows.Forms.Button reinstallAllButton;
     }
 }
 

@@ -139,8 +139,6 @@ namespace KSP_Mod_Manager
                         if (site.key == mod.key)
                         {
                             exists = true;
-                            mod.websites = site;
-
                             break;
                         }
                     }
@@ -173,6 +171,8 @@ namespace KSP_Mod_Manager
             {
                 if (site.key == mod.key)
                 {
+                    mod.websites = site;
+
                     if (site.website.Contains("http://kerbal.curseforge.com"))
                     {
                         site.dlSite = site.website + "/files/latest";

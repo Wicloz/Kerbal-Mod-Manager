@@ -336,6 +336,33 @@ namespace KSP_Mod_Manager
         }
 
         // Buttons and stuff
+        private void reinstallAllButton_Click(object sender, EventArgs e)
+        {
+            List<ModInfo> sendListA = new List<ModInfo>();
+            List<InstalledInfo> sendListB = new List<InstalledInfo>();
+
+            foreach (ModInfo mod in modInfo.modList)
+            {
+                foreach (InstalledInfo installedMod in kspInfo.installedModList)
+                {
+                    if (mod.key == installedMod.key && !mod.zipfile.Contains("Overrides\\"))
+                    {
+                        sendListA.Add(mod);
+                        sendListB.Add(installedMod);
+                        break;
+                    }
+                }
+            }
+
+            if (sendListA.Count + sendListB.Count > 0 && sendListA.Count == sendListB.Count)
+            {
+                InstallDeinstallForm form = new InstallDeinstallForm(new List<ModInfo>(), new List<ModInfo>(), sendListB, sendListA);
+                form.ShowDialog();
+
+                UpdateModList(selectedItem);
+            }
+        }
+
         private void selectModFolderButton_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
@@ -726,7 +753,7 @@ namespace KSP_Mod_Manager
                 selectedMod.name = opNameBox.Text;
 
                 modInfo.ManageModInfo(selectedMod);
-                UpdateModList(selectedItem);
+                UpdateModList(opNameBox.Text);
             }
         }
 
