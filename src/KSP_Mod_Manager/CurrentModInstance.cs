@@ -46,6 +46,10 @@ namespace KSP_Mod_Manager
 
                 loaded = true;
             }
+            else
+            {
+                loaded = false;
+            }
         }
 
         public void UnloadInstance()

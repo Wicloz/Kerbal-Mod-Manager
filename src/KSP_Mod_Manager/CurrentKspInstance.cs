@@ -17,7 +17,7 @@ namespace KSP_Mod_Manager
 
         public bool loaded = false;
 
-        public bool LoadInstance(string path)
+        public void LoadInstance(string path)
         {
             kspFolder = path;
 
@@ -56,11 +56,10 @@ namespace KSP_Mod_Manager
                 SaveFiles(kspFolder);
 
                 loaded = true;
-                return true;
             }
             else
             {
-                return false;
+                loaded = false;
             }
         }
 

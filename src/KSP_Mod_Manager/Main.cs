@@ -30,6 +30,7 @@ namespace KSP_Mod_Manager
 
         private string log = "Welcome to KMM!";
         private string selectedItem = "";
+        private bool initialised = false;
 
         public Main()
         {
@@ -71,7 +72,9 @@ namespace KSP_Mod_Manager
             ChangeModFolder(savedModsPath);
             ChangeKspFolder(instanceList[selectedIndex].kspPath);
 
+            initialised = true;
             UpdateInstallInstanceList(selectedIndex);
+            UpdateModList("");
 
             SaveFiles();
         }
@@ -108,7 +111,7 @@ namespace KSP_Mod_Manager
             modInfo.UnloadInstance();
             modInfo.LoadInstance(newPath);
 
-            if (modInfo.loaded)
+            if (modInfo.loaded && initialised)
             {
                 UpdateModList("");
             }
@@ -117,10 +120,10 @@ namespace KSP_Mod_Manager
         private void ChangeKspFolder(string newPath)
         {
             kspInfo.UnloadInstance();
-            bool hasLoaded = kspInfo.LoadInstance(newPath);
-            downloadedModBox.Enabled = hasLoaded;
+            kspInfo.LoadInstance(newPath);
+            downloadedModBox.Enabled = kspInfo.loaded;
 
-            if (hasLoaded)
+            if (kspInfo.loaded)
             {
                 UnlockSettingEditor();
             }
@@ -129,7 +132,7 @@ namespace KSP_Mod_Manager
                 BlockSettingEditor();
             }
 
-            if (kspInfo.loaded)
+            if (kspInfo.loaded && initialised)
             {
                 UpdateModList("");
             }
