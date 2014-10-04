@@ -180,29 +180,39 @@ namespace KSP_Mod_Manager
                     ModInfo mod = installedMod.GetModInfo();
 
                     string updateStatus = "";
-                    if (mod.canUpdate)
-                    {
-                        updateStatus = "Update Required";
-                    }
-                    else if (mod.version != installedMod.version)
-                    {
-                        updateStatus = "Reinstall Required";
-                    }
-                    else
-                    {
-                        updateStatus = "Mod up to date";
-                    }
-                    lvi.SubItems.Add(updateStatus);
-
                     string isFav = "";
-                    if (mod.GetFav().isFav)
+
+                    if (mod != null)
                     {
-                        isFav = "True";
+                        if (mod.canUpdate)
+                        {
+                            updateStatus = "Update Required";
+                        }
+                        else if (mod.version != installedMod.version)
+                        {
+                            updateStatus = "Reinstall Required";
+                        }
+                        else
+                        {
+                            updateStatus = "Mod up to date";
+                        }
+
+                        if (mod.GetFav().isFav)
+                        {
+                            isFav = "True";
+                        }
+                        else
+                        {
+                            isFav = "False";
+                        }
                     }
                     else
                     {
-                        isFav = "False";
+                        updateStatus = "Not Available";
+                        isFav = "N/A";
                     }
+
+                    lvi.SubItems.Add(updateStatus);
                     lvi.SubItems.Add(isFav);
 
                     installedListView.Items.Add(lvi);
@@ -244,15 +254,6 @@ namespace KSP_Mod_Manager
             }
 
             // Selection
-            if (installedListView.Items.Count > 0)
-            {
-                installedListView.SelectedIndices.Add(0);
-            }
-            if (downloadedListView.Items.Count > 0)
-            {
-                downloadedListView.SelectedIndices.Add(0);
-            }
-
             if (modName != "")
             {
                 for (int i = 0; i < installedListView.Items.Count; i++)
@@ -277,6 +278,17 @@ namespace KSP_Mod_Manager
                     }
                 }
             }
+            else
+            {
+                if (installedListView.Items.Count > 0)
+                {
+                    installedListView.SelectedIndices.Add(0);
+                }
+                if (downloadedListView.Items.Count > 0)
+                {
+                    downloadedListView.SelectedIndices.Add(0);
+                }
+            }
 
             // Updating
             foreach (ModInfo mod in modInfo.modList)
@@ -286,6 +298,9 @@ namespace KSP_Mod_Manager
                     Directory.CreateDirectory(modInfo.modsPath + "\\ModDownloads\\" + mod.name.Replace(" ", "_"));
                 }
             }
+
+            kspInfo.SaveFiles(kspInfo.kspFolder);
+            modInfo.SaveFiles(modInfo.modsPath);
         }
 
         // Misc UI functions
@@ -310,7 +325,12 @@ namespace KSP_Mod_Manager
 
         private void InstallDeinstallSelected()
         {
-            bool isInstalled = selectedMod.isInstalled;
+            bool isInstalled = false;
+
+            if (selectedInstalledMod != null)
+            {
+                isInstalled = true;
+            }
 
             if (!isInstalled)
             {
@@ -583,7 +603,7 @@ namespace KSP_Mod_Manager
                 UpdateOpSettings(installedListView.SelectedItems[0].SubItems[0].Text, true);
             }
         }
-        
+
         private void downloadedListView_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (downloadedListView.SelectedItems.Count > 0)
@@ -808,6 +828,46 @@ namespace KSP_Mod_Manager
             if (opCategoryBox.Text != "" && !opCategoryBox.Items.Contains(opCategoryBox.Text))
             {
                 opCategoryBox.Items.Add(opCategoryBox.Text);
+            }
+        }
+
+        private void installedListView_DoubleClick(object sender, EventArgs e)
+        {
+            InstallDeinstallSelected();
+        }
+
+        private void downloadedListView_DoubleClick(object sender, EventArgs e)
+        {
+            InstallDeinstallSelected();
+        }
+
+        private void downloadedListView_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Char.ConvertFromUtf32(32).ToCharArray()[0])
+            {
+                try
+                {
+                    selectedFav.isFav = !selectedFav.isFav;
+                }
+                catch
+                { }
+
+                UpdateModList(selectedItem);
+            }
+        }
+
+        private void installedListView_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Char.ConvertFromUtf32(32).ToCharArray()[0])
+            {
+                try
+                {
+                    selectedFav.isFav = !selectedFav.isFav;
+                }
+                catch
+                { }
+
+                UpdateModList(selectedItem);
             }
         }
     }

@@ -432,6 +432,8 @@
             this.downloadedListView.UseCompatibleStateImageBehavior = false;
             this.downloadedListView.View = System.Windows.Forms.View.Details;
             this.downloadedListView.SelectedIndexChanged += new System.EventHandler(this.downloadedListView_SelectedIndexChanged);
+            this.downloadedListView.DoubleClick += new System.EventHandler(this.downloadedListView_DoubleClick);
+            this.downloadedListView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.downloadedListView_KeyPress);
             // 
             // modName
             // 
@@ -469,6 +471,8 @@
             this.installedListView.UseCompatibleStateImageBehavior = false;
             this.installedListView.View = System.Windows.Forms.View.Details;
             this.installedListView.SelectedIndexChanged += new System.EventHandler(this.installedListView_SelectedIndexChanged);
+            this.installedListView.DoubleClick += new System.EventHandler(this.installedListView_DoubleClick);
+            this.installedListView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.installedListView_KeyPress);
             // 
             // columnHeader1
             // 

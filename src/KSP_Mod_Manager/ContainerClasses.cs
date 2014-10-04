@@ -76,7 +76,18 @@ namespace KSP_Mod_Manager
         {
             get
             {
-                return !String.IsNullOrEmpty(this.zipfile);
+                if (String.IsNullOrEmpty(this.zipfile))
+                {
+                    return false;
+                }
+                else if (this.zipfile == "none")
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
 
