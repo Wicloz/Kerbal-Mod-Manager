@@ -32,7 +32,6 @@
             this.modFolderBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.selectModFolderButton = new System.Windows.Forms.Button();
-            this.downloadedModBox = new System.Windows.Forms.ListBox();
             this.opNameBox = new System.Windows.Forms.TextBox();
             this.opSiteBox = new System.Windows.Forms.TextBox();
             this.opDlSiteBox = new System.Windows.Forms.TextBox();
@@ -54,7 +53,6 @@
             this.topButton1 = new System.Windows.Forms.Button();
             this.topButton2 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.opReinstallLabel = new System.Windows.Forms.Label();
             this.opReinstallButton = new System.Windows.Forms.Button();
             this.opCheckUpdateButton = new System.Windows.Forms.Button();
             this.addInstanceButton = new System.Windows.Forms.Button();
@@ -62,8 +60,17 @@
             this.downloadModButton = new System.Windows.Forms.Button();
             this.openLogButton = new System.Windows.Forms.Button();
             this.deleteModButton = new System.Windows.Forms.Button();
-            this.installedModBox = new System.Windows.Forms.ListBox();
             this.reinstallAllButton = new System.Windows.Forms.Button();
+            this.downloadedListView = new System.Windows.Forms.ListView();
+            this.modName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.updateStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.favStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.category = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.installedListView = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -104,17 +111,6 @@
             this.selectModFolderButton.Text = "Select";
             this.selectModFolderButton.UseVisualStyleBackColor = true;
             this.selectModFolderButton.Click += new System.EventHandler(this.selectModFolderButton_Click);
-            // 
-            // downloadedModBox
-            // 
-            this.downloadedModBox.FormattingEnabled = true;
-            this.downloadedModBox.Location = new System.Drawing.Point(147, 296);
-            this.downloadedModBox.Name = "downloadedModBox";
-            this.downloadedModBox.Size = new System.Drawing.Size(506, 329);
-            this.downloadedModBox.TabIndex = 5;
-            this.downloadedModBox.SelectedIndexChanged += new System.EventHandler(this.modBox_SelectedIndexChanged);
-            this.downloadedModBox.DoubleClick += new System.EventHandler(this.modBox_DoubleClick);
-            this.downloadedModBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.modBox_KeyPress);
             // 
             // opNameBox
             // 
@@ -329,26 +325,16 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.opReinstallLabel);
             this.groupBox2.Controls.Add(this.opReinstallButton);
             this.groupBox2.Controls.Add(this.opCheckUpdateButton);
             this.groupBox2.Controls.Add(this.opDownloadButton);
             this.groupBox2.Controls.Add(this.opCanDownloadBox);
             this.groupBox2.Location = new System.Drawing.Point(659, 247);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(493, 189);
+            this.groupBox2.Size = new System.Drawing.Size(493, 173);
             this.groupBox2.TabIndex = 23;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Updating";
-            // 
-            // opReinstallLabel
-            // 
-            this.opReinstallLabel.AutoSize = true;
-            this.opReinstallLabel.Location = new System.Drawing.Point(6, 167);
-            this.opReinstallLabel.Name = "opReinstallLabel";
-            this.opReinstallLabel.Size = new System.Drawing.Size(103, 13);
-            this.opReinstallLabel.TabIndex = 15;
-            this.opReinstallLabel.Text = "No Reinstal Needed";
             // 
             // opReinstallButton
             // 
@@ -420,15 +406,6 @@
             this.deleteModButton.UseVisualStyleBackColor = true;
             this.deleteModButton.Click += new System.EventHandler(this.deleteMod_Click);
             // 
-            // installedModBox
-            // 
-            this.installedModBox.FormattingEnabled = true;
-            this.installedModBox.Location = new System.Drawing.Point(148, 78);
-            this.installedModBox.Name = "installedModBox";
-            this.installedModBox.Size = new System.Drawing.Size(505, 212);
-            this.installedModBox.TabIndex = 29;
-            this.installedModBox.SelectedIndexChanged += new System.EventHandler(this.installedModBox_SelectedIndexChanged);
-            // 
             // reinstallAllButton
             // 
             this.reinstallAllButton.Location = new System.Drawing.Point(918, 550);
@@ -439,13 +416,88 @@
             this.reinstallAllButton.UseVisualStyleBackColor = true;
             this.reinstallAllButton.Click += new System.EventHandler(this.reinstallAllButton_Click);
             // 
+            // downloadedListView
+            // 
+            this.downloadedListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.modName,
+            this.category,
+            this.updateStatus,
+            this.favStatus});
+            this.downloadedListView.FullRowSelect = true;
+            this.downloadedListView.GridLines = true;
+            this.downloadedListView.Location = new System.Drawing.Point(147, 309);
+            this.downloadedListView.Name = "downloadedListView";
+            this.downloadedListView.Size = new System.Drawing.Size(506, 316);
+            this.downloadedListView.TabIndex = 31;
+            this.downloadedListView.UseCompatibleStateImageBehavior = false;
+            this.downloadedListView.View = System.Windows.Forms.View.Details;
+            this.downloadedListView.SelectedIndexChanged += new System.EventHandler(this.downloadedListView_SelectedIndexChanged);
+            // 
+            // modName
+            // 
+            this.modName.Text = "Mod Name";
+            this.modName.Width = 181;
+            // 
+            // updateStatus
+            // 
+            this.updateStatus.Text = "Update Status";
+            this.updateStatus.Width = 119;
+            // 
+            // favStatus
+            // 
+            this.favStatus.Text = "Is Favorite";
+            this.favStatus.Width = 86;
+            // 
+            // category
+            // 
+            this.category.Text = "Category";
+            this.category.Width = 99;
+            // 
+            // installedListView
+            // 
+            this.installedListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4});
+            this.installedListView.FullRowSelect = true;
+            this.installedListView.GridLines = true;
+            this.installedListView.Location = new System.Drawing.Point(147, 78);
+            this.installedListView.Name = "installedListView";
+            this.installedListView.Size = new System.Drawing.Size(506, 225);
+            this.installedListView.TabIndex = 32;
+            this.installedListView.UseCompatibleStateImageBehavior = false;
+            this.installedListView.View = System.Windows.Forms.View.Details;
+            this.installedListView.SelectedIndexChanged += new System.EventHandler(this.installedListView_SelectedIndexChanged);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Mod Name";
+            this.columnHeader1.Width = 181;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Category";
+            this.columnHeader2.Width = 99;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Update Status";
+            this.columnHeader3.Width = 119;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Is Favorite";
+            this.columnHeader4.Width = 86;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1164, 675);
+            this.Controls.Add(this.installedListView);
+            this.Controls.Add(this.downloadedListView);
             this.Controls.Add(this.reinstallAllButton);
-            this.Controls.Add(this.installedModBox);
             this.Controls.Add(this.deleteModButton);
             this.Controls.Add(this.openLogButton);
             this.Controls.Add(this.downloadModButton);
@@ -458,7 +510,6 @@
             this.Controls.Add(this.updateModFolderButton);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.opInstallButton);
-            this.Controls.Add(this.downloadedModBox);
             this.Controls.Add(this.selectModFolderButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.modFolderBox);
@@ -484,7 +535,6 @@
         private System.Windows.Forms.TextBox modFolderBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button selectModFolderButton;
-        private System.Windows.Forms.ListBox downloadedModBox;
         private System.Windows.Forms.TextBox opNameBox;
         private System.Windows.Forms.TextBox opSiteBox;
         private System.Windows.Forms.TextBox opDlSiteBox;
@@ -511,11 +561,19 @@
         private System.Windows.Forms.Button openLogButton;
         private System.Windows.Forms.Button deleteModButton;
         private System.Windows.Forms.Button opReinstallButton;
-        private System.Windows.Forms.Label opReinstallLabel;
         private System.Windows.Forms.Button editCategoryButton;
         private System.Windows.Forms.Button opAddCategoryButton;
-        private System.Windows.Forms.ListBox installedModBox;
         private System.Windows.Forms.Button reinstallAllButton;
+        private System.Windows.Forms.ListView downloadedListView;
+        private System.Windows.Forms.ColumnHeader modName;
+        private System.Windows.Forms.ColumnHeader updateStatus;
+        private System.Windows.Forms.ColumnHeader favStatus;
+        private System.Windows.Forms.ColumnHeader category;
+        private System.Windows.Forms.ListView installedListView;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
     }
 }
 

@@ -56,7 +56,31 @@ namespace KSP_Mod_Manager
             version = "none";
         }
 
-        public bool IsInstalled
+        public FavInfo GetFav()
+        {
+            FavInfo returnval = null;
+
+            foreach (FavInfo fav in Main.acces.kspInfo.favoritesList)
+            {
+                if (this.key == fav.key)
+                {
+                    returnval = fav;
+                    break;
+                }
+            }
+
+            return returnval;
+        }
+
+        public bool hasZipfile
+        {
+            get
+            {
+                return !String.IsNullOrEmpty(this.zipfile);
+            }
+        }
+
+        public bool isInstalled
         {
             get
             {
@@ -143,6 +167,22 @@ namespace KSP_Mod_Manager
             key = Key;
             codeName = CodeName;
             version = Version;
+        }
+
+        public ModInfo GetModInfo()
+        {
+            ModInfo returnval = null;
+
+            foreach (ModInfo mod in Main.acces.modInfo.modList)
+            {
+                if (mod.key == this.key)
+                {
+                    returnval = mod;
+                    break;
+                }
+            }
+
+            return returnval;
         }
 
         public int CompareTo(InstalledInfo other)

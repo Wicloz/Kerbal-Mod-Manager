@@ -49,6 +49,22 @@ namespace KSP_Mod_Manager
                     .Replace(".", "");
         }
 
+        public static ModInfo GetDownloadedMod(string name)
+        {
+            ModInfo returnval = null;
+
+            for (int i = 0; i < Main.acces.modInfo.modList.Count; i++)
+            {
+                if (Main.acces.modInfo.modList[i].name == name)
+                {
+                    returnval = Main.acces.modInfo.modList[i];
+                    break;
+                }
+            }
+
+            return returnval;
+        }
+
         public static InstalledInfo GetInstalledMod(ModInfo mod)
         {
             InstalledInfo returnMod = null;
