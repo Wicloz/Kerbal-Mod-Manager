@@ -27,6 +27,10 @@ namespace KSP_Mod_Manager
             {
                 mode = "kstuff";
             }
+            else if (site.Contains("github.com"))
+            {
+                mode = "github";
+            }
 
             WebClient client = new WebClient();
 
@@ -58,6 +62,14 @@ namespace KSP_Mod_Manager
                 if (mode == "kstuff")
                 {
                     while (!newVersion.Contains("<h2>Version"))
+                    {
+                        newVersion = sr.ReadLine();
+                    }
+                }
+
+                if (mode == "github")
+                {
+                    while (!newVersion.Contains("\" rel=\"nofollow\" class=\"button primary\">"))
                     {
                         newVersion = sr.ReadLine();
                     }

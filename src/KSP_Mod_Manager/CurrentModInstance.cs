@@ -190,6 +190,7 @@ namespace KSP_Mod_Manager
                         {
                             char[] c = new char[1];
                             sr.Read(c, 0, 1);
+
                             if (c[0] == '<')
                             {
                                 break;
@@ -201,6 +202,29 @@ namespace KSP_Mod_Manager
                         }
 
                         site.dlSite = site.website + "/download/" + version;
+                    }
+
+                    if (site.website.Contains("github.com"))
+                    {
+                        StringReader sr = new StringReader(mod.version.Replace("<a href=\"/", "").Replace(" ", ""));
+                        string version = "";
+
+                        for (int i = 0; i < 111; i++)
+                        {
+                            char[] c = new char[1];
+                            sr.Read(c, 0, 1);
+
+                            if (c[0] == '"')
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                version += Convert.ToString(c[0]);
+                            }
+                        }
+
+                        site.dlSite = "https://github.com/" + version;
                     }
 
                     break;
