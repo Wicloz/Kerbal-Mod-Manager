@@ -15,26 +15,26 @@ namespace KSP_Mod_Manager
             string mode = "";
             string site = modInfo.websites.website;
 
-            if (site.Contains("curse"))
+            if (site.Contains("kerbal.curseforge.com"))
             {
                 mode = "curse";
             }
-            else
+            else if (site.Contains("forum.kerbalspaceprogram.com"))
             {
                 mode = "forum";
             }
-
-            Directory.CreateDirectory(Main.acces.modInfo.modsPath + "\\SiteDownload");
-            string siteFile = Main.acces.modInfo.modsPath + "\\SiteDownload\\" + "download.html";
+            else if (site.Contains("kerbalstuff.com"))
+            {
+                mode = "kstuff";
+            }
 
             WebClient client = new WebClient();
-            client.DownloadFile(site, siteFile);
 
-            if (File.Exists(siteFile))
+            try
             {
-                FileStream file = File.Open(siteFile, FileMode.Open);
+                string siteString = client.DownloadString(site);
 
-                StreamReader sf = new StreamReader(file);
+                StringReader sr = new StringReader(siteString);
 
                 string oldVersion = modInfo.version;
                 string newVersion = "";
@@ -43,7 +43,7 @@ namespace KSP_Mod_Manager
                 {
                     while (!newVersion.Contains("<li>Last Released File:"))
                     {
-                        newVersion = sf.ReadLine();
+                        newVersion = sr.ReadLine();
                     }
                 }
 
@@ -51,12 +51,17 @@ namespace KSP_Mod_Manager
                 {
                     while (!newVersion.Contains("<title>"))
                     {
-                        newVersion = sf.ReadLine();
+                        newVersion = sr.ReadLine();
                     }
                 }
 
-                file.Close();
-                sf.Close();
+                if (mode == "kstuff")
+                {
+                    while (!newVersion.Contains("<h2>Version"))
+                    {
+                        newVersion = sr.ReadLine();
+                    }
+                }
 
                 if (oldVersion != newVersion)
                 {
@@ -65,12 +70,10 @@ namespace KSP_Mod_Manager
                     Main.acces.LogMessage("Update found for '" + modInfo.name + "'.");
                 }
             }
-            else
+            catch
             {
                 Main.acces.LogMessage("Site failed to download, skipping '" + modInfo.name + "'!");
             }
-
-            Directory.Delete(Main.acces.modInfo.modsPath + "\\SiteDownload", true);
         }
     }
 }
