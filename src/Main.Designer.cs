@@ -45,6 +45,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.opGoogleButton = new System.Windows.Forms.Button();
             this.editCategoryButton = new System.Windows.Forms.Button();
             this.opAddCategoryButton = new System.Windows.Forms.Button();
             this.opOpenSiteButton = new System.Windows.Forms.Button();
@@ -67,15 +68,14 @@
             this.category = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.updateStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.favStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.installedListView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.opGoogleButton = new System.Windows.Forms.Button();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -248,6 +248,16 @@
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings for Mod";
+            // 
+            // opGoogleButton
+            // 
+            this.opGoogleButton.Location = new System.Drawing.Point(436, 19);
+            this.opGoogleButton.Name = "opGoogleButton";
+            this.opGoogleButton.Size = new System.Drawing.Size(51, 20);
+            this.opGoogleButton.TabIndex = 21;
+            this.opGoogleButton.Text = "Google";
+            this.opGoogleButton.UseVisualStyleBackColor = true;
+            this.opGoogleButton.Click += new System.EventHandler(this.opGoogleButton_Click);
             // 
             // editCategoryButton
             // 
@@ -463,6 +473,26 @@
             this.favStatus.Text = "Is Favorite";
             this.favStatus.Width = 86;
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.toolStripSeparator1});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(124, 32);
+            this.contextMenuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.contextMenuStrip1_ItemClicked);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(123, 22);
+            this.toolStripMenuItem1.Text = "Reset List";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(120, 6);
+            // 
             // installedListView
             // 
             this.installedListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -501,36 +531,6 @@
             // 
             this.columnHeader4.Text = "Is Favorite";
             this.columnHeader4.Width = 86;
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.toolStripSeparator1});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 54);
-            this.contextMenuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.contextMenuStrip1_ItemClicked);
-            // 
-            // opGoogleButton
-            // 
-            this.opGoogleButton.Location = new System.Drawing.Point(436, 19);
-            this.opGoogleButton.Name = "opGoogleButton";
-            this.opGoogleButton.Size = new System.Drawing.Size(51, 20);
-            this.opGoogleButton.TabIndex = 21;
-            this.opGoogleButton.Text = "Google";
-            this.opGoogleButton.UseVisualStyleBackColor = true;
-            this.opGoogleButton.Click += new System.EventHandler(this.opGoogleButton_Click);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem1.Text = "Reset List";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // Main
             // 

@@ -38,6 +38,7 @@ namespace KSP_Mod_Manager
             else
             {
                 PostDownload();
+                Exit();
             }
         }
 
@@ -94,6 +95,7 @@ namespace KSP_Mod_Manager
             try
             {
                 FileStream fs = new FileStream(downloadFolder + "\\" + modInfo.name.Replace(" ", "") + ".zip", FileMode.Open);
+                fs.Close();
                 PostDownload();
             }
             catch

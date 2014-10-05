@@ -230,7 +230,7 @@ namespace KSP_Mod_Manager
             // Downloaded Mod List
             foreach (ModInfo mod in modInfo.modList)
             {
-                if (!mod.zipfile.Contains("Overrides\\") && !mod.isInstalled && mod.hasZipfile && filterList.Contains(mod.category))
+                if (!mod.zipfile.Contains("Overrides\\") && !mod.isInstalled && mod.hasZipfile && !filterList.Contains(mod.category))
                 {
                     ListViewItem lvi = new ListViewItem(mod.name);
                     lvi.SubItems.Add(mod.category);
@@ -267,7 +267,7 @@ namespace KSP_Mod_Manager
 
             foreach (ModInfo mod in modInfo.modList)
             {
-                if (!mod.zipfile.Contains("Overrides\\") && !mod.isInstalled && !mod.hasZipfile && filterList.Contains(mod.category))
+                if (!mod.zipfile.Contains("Overrides\\") && !mod.isInstalled && !mod.hasZipfile && !filterList.Contains(mod.category))
                 {
                     ListViewItem lvi = new ListViewItem(mod.name);
                     lvi.SubItems.Add(mod.category);
@@ -347,10 +347,6 @@ namespace KSP_Mod_Manager
             if (reset)
             {
                 filterList.Clear();
-                foreach (string cat in opCategoryBox.Items)
-                {
-                    filterList.Add(cat);
-                }
             }
         }
 
@@ -456,7 +452,13 @@ namespace KSP_Mod_Manager
 
         private void updateModFolderButton_Click(object sender, EventArgs e)
         {
+            initialised = false;
+
             ChangeModFolder(modFolderBox.Text);
+            LoadSelectedKspInstance();
+
+            initialised = true;
+            UpdateModList("");
         }
 
         private void checkUpdateButton_Click(object sender, EventArgs e)
