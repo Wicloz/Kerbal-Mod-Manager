@@ -52,16 +52,10 @@ namespace KSP_Mod_Manager
             try
             {
                 newModFile = Directory.GetFiles(downloadFolder, "*.zip")[0];
-                using (FileStream fs = new FileStream(newModFile, FileMode.Open))
-                {}
             }
             catch
             {
                 Main.acces.LogMessage("Mod failed to download, aborting updating of '" + modInfo.name + "'!");
-
-                progress = 100;
-                updateDone = true;
-
                 return;
             }
 
@@ -81,15 +75,33 @@ namespace KSP_Mod_Manager
             catch
             { }
 
-            progress = 100;
             modInfo.canUpdate = false;
+        }
+
+        private void Exit()
+        {
+            progress = 100;
             updateDone = true;
         }
 
         private void client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
+            string modFolder = "\\ModDownloads\\" + modInfo.name.Replace(" ", "_");
+            string downloadFolder = Main.acces.modInfo.modsPath + modFolder;
+
             Main.acces.LogMessage("'" + modInfo.name + "' has finished downloading.");
-            PostDownload();
+
+            try
+            {
+                FileStream fs = new FileStream(downloadFolder + "\\" + modInfo.name.Replace(" ", "") + ".zip", FileMode.Open);
+                PostDownload();
+            }
+            catch
+            {
+                Main.acces.LogMessage("Mod failed to download, aborting updating of '" + modInfo.name + "'!");
+            }
+
+            Exit();
         }
 
         private void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)

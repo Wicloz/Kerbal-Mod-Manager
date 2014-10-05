@@ -98,11 +98,20 @@ namespace KSP_Mod_Manager
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            thisModProgress.Value = um.progress;
+            thisModProgress.Value = um.progress + uc.progress;
+
             if (um.updateDone)
             {
                 actionDone = true;
                 um.updateDone = false;
+                um.progress = 0;
+            }
+
+            if (uc.checkDone)
+            {
+                actionDone = true;
+                uc.checkDone = false;
+                um.progress = 0;
             }
 
             if (actionDone)
@@ -146,6 +155,7 @@ namespace KSP_Mod_Manager
 
                 progressLabel1.Text = "Checking Update For '" + checkUpdateList[currentIndex].name + "'";
                 this.Text = "Checking for Updates ...";
+                thisModProgress.Style = ProgressBarStyle.Continuous;
 
                 Main.acces.LogMessage("Checking Update For '" + checkUpdateList[currentIndex].name + "'...");
 
@@ -209,7 +219,6 @@ namespace KSP_Mod_Manager
         private void CheckUpdate()
         {
             uc.CheckForUpdate(checkUpdateList[currentIndex]);
-            actionDone = true;
         }
 
         private void UpdateMod()
