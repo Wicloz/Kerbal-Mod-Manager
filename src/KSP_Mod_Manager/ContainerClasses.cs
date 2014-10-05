@@ -32,10 +32,47 @@ namespace KSP_Mod_Manager
         public string name;
         public string category;
         public string key;
-        public SiteInfo websites;
         public string zipfile;
         public bool canUpdate;
         public string version;
+
+        public SiteInfo websites
+        {
+            get
+            {
+                SiteInfo returnval = null;
+
+                foreach (SiteInfo site in Main.acces.modInfo.siteList)
+                {
+                    if (site.key == this.key)
+                    {
+                        returnval = site;
+                        break;
+                    }
+                }
+
+                return returnval;
+            }
+        }
+
+        public FavInfo favorite
+        {
+            get
+            {
+                FavInfo returnval = null;
+
+                foreach (FavInfo fav in Main.acces.kspInfo.favoritesList)
+                {
+                    if (this.key == fav.key)
+                    {
+                        returnval = fav;
+                        break;
+                    }
+                }
+
+                return returnval;
+            }
+        }
 
         public ModInfo()
         { }
@@ -50,26 +87,9 @@ namespace KSP_Mod_Manager
 
             category = "none";
             key = name;
-            websites = null;
             zipfile = Zipfile;
             canUpdate = false;
             version = "none";
-        }
-
-        public FavInfo GetFav()
-        {
-            FavInfo returnval = null;
-
-            foreach (FavInfo fav in Main.acces.kspInfo.favoritesList)
-            {
-                if (this.key == fav.key)
-                {
-                    returnval = fav;
-                    break;
-                }
-            }
-
-            return returnval;
         }
 
         public bool hasZipfile

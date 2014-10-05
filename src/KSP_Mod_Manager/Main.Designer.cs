@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.installationBox = new System.Windows.Forms.ListBox();
             this.modFolderBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -63,14 +64,15 @@
             this.reinstallAllButton = new System.Windows.Forms.Button();
             this.downloadedListView = new System.Windows.Forms.ListView();
             this.modName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.category = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.updateStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.favStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.category = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.installedListView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -423,6 +425,7 @@
             this.category,
             this.updateStatus,
             this.favStatus});
+            this.downloadedListView.ContextMenuStrip = this.contextMenuStrip1;
             this.downloadedListView.FullRowSelect = true;
             this.downloadedListView.GridLines = true;
             this.downloadedListView.Location = new System.Drawing.Point(147, 309);
@@ -440,6 +443,11 @@
             this.modName.Text = "Mod Name";
             this.modName.Width = 181;
             // 
+            // category
+            // 
+            this.category.Text = "Category";
+            this.category.Width = 99;
+            // 
             // updateStatus
             // 
             this.updateStatus.Text = "Update Status";
@@ -449,11 +457,6 @@
             // 
             this.favStatus.Text = "Is Favorite";
             this.favStatus.Width = 86;
-            // 
-            // category
-            // 
-            this.category.Text = "Category";
-            this.category.Width = 99;
             // 
             // installedListView
             // 
@@ -493,6 +496,12 @@
             // 
             this.columnHeader4.Text = "Is Favorite";
             this.columnHeader4.Width = 86;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 26);
+            this.contextMenuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.contextMenuStrip1_ItemClicked);
             // 
             // Main
             // 
@@ -578,6 +587,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }
 

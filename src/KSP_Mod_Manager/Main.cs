@@ -28,6 +28,8 @@ namespace KSP_Mod_Manager
         private InstalledInfo selectedInstalledMod = new InstalledInfo();
         private FavInfo selectedFav = new FavInfo();
 
+        private List<string> filterList = new List<string>();
+
         private string log = "Welcome to KMM!";
         private string selectedItem = "";
         private bool initialised = false;
@@ -67,6 +69,12 @@ namespace KSP_Mod_Manager
             {
                 instanceList = new List<InstallInstance>();
                 instanceList.Add(new InstallInstance("New Instance"));
+            }
+
+            filterList.Clear();
+            foreach (string cat in opCategoryBox.Items)
+            {
+                filterList.Add(cat);
             }
 
             ChangeModFolder(savedModsPath);
@@ -169,6 +177,14 @@ namespace KSP_Mod_Manager
             installedListView.Items.Clear();
             SortLists();
 
+            // Right Click Menu
+            contextMenuStrip1.Items.Clear();
+
+            foreach (string cat in opCategoryBox.Items)
+            {
+                contextMenuStrip1.Items.Add(cat);
+            }
+
             // Istalled Mod List
             foreach (InstalledInfo installedMod in kspInfo.installedModList)
             {
@@ -184,7 +200,11 @@ namespace KSP_Mod_Manager
 
                     if (mod != null)
                     {
-                        if (mod.canUpdate)
+                        if (mod.websites.website == "NONE")
+                        {
+                            updateStatus = "No Website";
+                        }
+                        else if (mod.canUpdate)
                         {
                             updateStatus = "Update Required";
                         }
@@ -197,7 +217,7 @@ namespace KSP_Mod_Manager
                             updateStatus = "Mod up to date";
                         }
 
-                        if (mod.GetFav().isFav)
+                        if (mod.favorite.isFav)
                         {
                             isFav = "True";
                         }
@@ -222,13 +242,17 @@ namespace KSP_Mod_Manager
             // Downloaded Mod List
             foreach (ModInfo mod in modInfo.modList)
             {
-                if (!mod.zipfile.Contains("Overrides\\") && !mod.isInstalled && mod.hasZipfile)
+                if (!mod.zipfile.Contains("Overrides\\") && !mod.isInstalled && mod.hasZipfile && filterList.Contains(mod.category))
                 {
                     ListViewItem lvi = new ListViewItem(mod.name);
                     lvi.SubItems.Add(mod.category);
 
                     string updateStatus = "";
-                    if (mod.canUpdate)
+                    if (mod.websites.website == "NONE")
+                    {
+                        updateStatus = "No Website";
+                    }
+                    else if (mod.canUpdate)
                     {
                         updateStatus = "Update Required";
                     }
@@ -239,7 +263,31 @@ namespace KSP_Mod_Manager
                     lvi.SubItems.Add(updateStatus);
 
                     string isFav = "";
-                    if (mod.GetFav().isFav)
+                    if (mod.favorite.isFav)
+                    {
+                        isFav = "True";
+                    }
+                    else
+                    {
+                        isFav = "False";
+                    }
+                    lvi.SubItems.Add(isFav);
+
+                    downloadedListView.Items.Add(lvi);
+                }
+            }
+
+            foreach (ModInfo mod in modInfo.modList)
+            {
+                if (!mod.zipfile.Contains("Overrides\\") && !mod.isInstalled && !mod.hasZipfile && filterList.Contains(mod.category))
+                {
+                    ListViewItem lvi = new ListViewItem(mod.name);
+                    lvi.SubItems.Add(mod.category);
+
+                    lvi.SubItems.Add("Not Downloaded");
+
+                    string isFav = "";
+                    if (mod.favorite.isFav)
                     {
                         isFav = "True";
                     }
@@ -350,6 +398,14 @@ namespace KSP_Mod_Manager
         }
 
         // Buttons and stuff
+        private void contextMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            filterList.Clear();
+            filterList.Add(e.ClickedItem.Text);
+
+            UpdateModList("");
+        }
+
         private void reinstallAllButton_Click(object sender, EventArgs e)
         {
             List<ModInfo> sendListA = new List<ModInfo>();
@@ -612,9 +668,23 @@ namespace KSP_Mod_Manager
         private void UpdateOpSettings(string itemName, bool installed)
         {
             isChangingSelection = true;
+            string mode = "";
 
             selectedInstalledMod = Functions.GetInstalledMod(itemName);
             selectedMod = Functions.GetDownloadedMod(itemName);
+
+            if (installed)
+            {
+                mode = "installed";
+            }
+            else if (selectedMod.hasZipfile)
+            {
+                mode = "downloaded";
+            }
+            else
+            {
+                mode = "missing";
+            }
 
             if (selectedMod != null)
             {
@@ -631,13 +701,14 @@ namespace KSP_Mod_Manager
 
             if (selectedMod != null)
             {
-                selectedFav = selectedMod.GetFav();
+                selectedFav = selectedMod.favorite;
             }
             else
             {
                 selectedFav = null;
             }
 
+            // Managing Option Editor
             if (selectedMod != null)
             {
                 modInfo.ManageModInfo(selectedMod);
@@ -651,6 +722,11 @@ namespace KSP_Mod_Manager
                 opCanDownloadBox.Checked = selectedMod.canUpdate;
 
                 UnlockSettingEditor();
+
+                if (mode == "mssing")
+                {
+                    opInstallButton.Enabled = false;
+                }
             }
             else
             {
@@ -732,9 +808,9 @@ namespace KSP_Mod_Manager
             if (!isChangingSelection)
             {
                 selectedMod.websites.website = opSiteBox.Text;
-
                 modInfo.ManageModInfo(selectedMod);
-                UpdateModList(selectedItem);
+
+                UpdateOpSettings(selectedMod.name, selectedMod.isInstalled);
             }
         }
 
@@ -743,9 +819,9 @@ namespace KSP_Mod_Manager
             if (!isChangingSelection)
             {
                 selectedMod.websites.dlSite = opDlSiteBox.Text;
-
                 modInfo.ManageModInfo(selectedMod);
-                UpdateModList(selectedItem);
+
+                UpdateOpSettings(selectedMod.name, selectedMod.isInstalled);
             }
         }
 

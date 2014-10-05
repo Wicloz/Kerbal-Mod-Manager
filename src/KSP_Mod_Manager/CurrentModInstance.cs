@@ -12,7 +12,7 @@ namespace KSP_Mod_Manager
         public string modsPath = "";
 
         public List<ModInfo> modList = new List<ModInfo>();
-        private List<SiteInfo> siteList = new List<SiteInfo>();
+        public List<SiteInfo> siteList = new List<SiteInfo>();
 
         public bool loaded = false;
 
@@ -174,8 +174,6 @@ namespace KSP_Mod_Manager
             {
                 if (site.key == mod.key)
                 {
-                    mod.websites = site;
-
                     if (site.website.Contains("kerbal.curseforge.com"))
                     {
                         site.dlSite = site.website + "/files/latest";

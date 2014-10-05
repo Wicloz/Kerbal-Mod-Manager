@@ -55,7 +55,7 @@ namespace KSP_Mod_Manager
 
             for (int i = 0; i < Main.acces.modInfo.modList.Count; i++)
             {
-                if (Main.acces.modInfo.modList[i].name == name && Main.acces.modInfo.modList[i].hasZipfile)
+                if (Main.acces.modInfo.modList[i].name == name)
                 {
                     returnval = Main.acces.modInfo.modList[i];
                     break;
