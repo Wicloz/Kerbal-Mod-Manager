@@ -71,11 +71,7 @@ namespace KSP_Mod_Manager
                 instanceList.Add(new InstallInstance("New Instance"));
             }
 
-            filterList.Clear();
-            foreach (string cat in opCategoryBox.Items)
-            {
-                filterList.Add(cat);
-            }
+            HandleCategories(true);
 
             ChangeModFolder(savedModsPath);
             ChangeKspFolder(instanceList[selectedIndex].kspPath);
@@ -176,14 +172,6 @@ namespace KSP_Mod_Manager
             downloadedListView.Items.Clear();
             installedListView.Items.Clear();
             SortLists();
-
-            // Right Click Menu
-            contextMenuStrip1.Items.Clear();
-
-            foreach (string cat in opCategoryBox.Items)
-            {
-                contextMenuStrip1.Items.Add(cat);
-            }
 
             // Istalled Mod List
             foreach (InstalledInfo installedMod in kspInfo.installedModList)
@@ -348,6 +336,24 @@ namespace KSP_Mod_Manager
             }
         }
 
+        private void HandleCategories(bool reset)
+        {
+            contextMenuStrip1.Items.Clear();
+            foreach (string cat in opCategoryBox.Items)
+            {
+                contextMenuStrip1.Items.Add(cat);
+            }
+
+            if (reset)
+            {
+                filterList.Clear();
+                foreach (string cat in opCategoryBox.Items)
+                {
+                    filterList.Add(cat);
+                }
+            }
+        }
+
         // Misc UI functions
         public void SortLists()
         {
@@ -400,8 +406,14 @@ namespace KSP_Mod_Manager
         // Buttons and stuff
         private void contextMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            filterList.Clear();
-            filterList.Add(e.ClickedItem.Text);
+            if (filterList.Contains(e.ClickedItem.Text))
+            {
+                filterList.Remove(e.ClickedItem.Text);
+            }
+            else
+            {
+                filterList.Add(e.ClickedItem.Text);
+            }
 
             UpdateModList("");
         }
@@ -553,6 +565,8 @@ namespace KSP_Mod_Manager
             {
                 opCategoryBox.Items.Add(category);
             }
+
+            HandleCategories(false);
         }
 
         EditInstanceSettings editInstanceForm;
@@ -902,6 +916,8 @@ namespace KSP_Mod_Manager
             {
                 opCategoryBox.Items.Add(opCategoryBox.Text);
             }
+
+            HandleCategories(false);
         }
 
         private void installedListView_DoubleClick(object sender, EventArgs e)
@@ -942,6 +958,11 @@ namespace KSP_Mod_Manager
 
                 UpdateModList(selectedItem);
             }
+        }
+
+        private void opGoogleButton_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://www.google.com/?#q=ksp+" + selectedMod.name);
         }
     }
 }

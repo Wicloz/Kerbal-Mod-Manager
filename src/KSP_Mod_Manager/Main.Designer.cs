@@ -73,8 +73,12 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.opGoogleButton = new System.Windows.Forms.Button();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // installationBox
@@ -118,7 +122,7 @@
             // 
             this.opNameBox.Location = new System.Drawing.Point(107, 19);
             this.opNameBox.Name = "opNameBox";
-            this.opNameBox.Size = new System.Drawing.Size(380, 20);
+            this.opNameBox.Size = new System.Drawing.Size(323, 20);
             this.opNameBox.TabIndex = 6;
             this.opNameBox.TextChanged += new System.EventHandler(this.opNameBox_TextChanged);
             // 
@@ -225,6 +229,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.opGoogleButton);
             this.groupBox1.Controls.Add(this.editCategoryButton);
             this.groupBox1.Controls.Add(this.opAddCategoryButton);
             this.groupBox1.Controls.Add(this.opOpenSiteButton);
@@ -499,9 +504,33 @@
             // 
             // contextMenuStrip1
             // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.toolStripSeparator1});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 54);
             this.contextMenuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.contextMenuStrip1_ItemClicked);
+            // 
+            // opGoogleButton
+            // 
+            this.opGoogleButton.Location = new System.Drawing.Point(436, 19);
+            this.opGoogleButton.Name = "opGoogleButton";
+            this.opGoogleButton.Size = new System.Drawing.Size(51, 20);
+            this.opGoogleButton.TabIndex = 21;
+            this.opGoogleButton.Text = "Google";
+            this.opGoogleButton.UseVisualStyleBackColor = true;
+            this.opGoogleButton.Click += new System.EventHandler(this.opGoogleButton_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem1.Text = "Reset List";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // Main
             // 
@@ -537,6 +566,7 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -588,6 +618,9 @@
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.Button opGoogleButton;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

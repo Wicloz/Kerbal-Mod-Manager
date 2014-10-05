@@ -23,7 +23,12 @@ namespace KSP_Mod_Manager
 
             if (includeFirst)
             {
-                Directory.Delete(startLocation, false);
+                try
+                {
+                    Directory.Delete(startLocation, false);
+                }
+                catch
+                { }
             }
         }
 
