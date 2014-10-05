@@ -298,9 +298,6 @@ namespace KSP_Mod_Manager
                     Directory.CreateDirectory(modInfo.modsPath + "\\ModDownloads\\" + mod.name.Replace(" ", "_"));
                 }
             }
-
-            kspInfo.SaveFiles(kspInfo.kspFolder);
-            modInfo.SaveFiles(modInfo.modsPath);
         }
 
         // Misc UI functions

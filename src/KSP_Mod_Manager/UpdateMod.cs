@@ -52,6 +52,8 @@ namespace KSP_Mod_Manager
             try
             {
                 newModFile = Directory.GetFiles(downloadFolder, "*.zip")[0];
+                using (FileStream fs = new FileStream(newModFile, FileMode.Open))
+                {}
             }
             catch
             {

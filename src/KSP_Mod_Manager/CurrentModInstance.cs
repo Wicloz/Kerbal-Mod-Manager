@@ -22,7 +22,7 @@ namespace KSP_Mod_Manager
 
             if (File.Exists(modsPath + "\\ModList.txt"))
             {
-                modList = SaveLoad.LoadFileXml<List<ModInfo>>(path + "\\ModList.txt");
+                modList = SaveLoad.LoadFileBf<List<ModInfo>>(path + "\\ModList.txt");
             }
             else
             {
@@ -31,7 +31,7 @@ namespace KSP_Mod_Manager
 
             if (File.Exists(modsPath + "\\SiteList.txt"))
             {
-                siteList = SaveLoad.LoadFileXml<List<SiteInfo>>(path + "\\SiteList.txt");
+                siteList = SaveLoad.LoadFileBf<List<SiteInfo>>(path + "\\SiteList.txt");
             }
             else
             {
@@ -78,8 +78,8 @@ namespace KSP_Mod_Manager
         {
             if (loaded)
             {
-                SaveLoad.SaveFileXml(modList, path + "\\ModList.txt");
-                SaveLoad.SaveFileXml(siteList, path + "\\SiteList.txt");
+                SaveLoad.SaveFileBf(modList, path + "\\ModList.txt");
+                SaveLoad.SaveFileBf(siteList, path + "\\SiteList.txt");
             }
         }
 

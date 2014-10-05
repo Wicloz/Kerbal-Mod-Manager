@@ -31,7 +31,17 @@ namespace KSP_Mod_Manager
             Directory.CreateDirectory(tempExtractLocation);
 
             // Extract
-            ZipFile.ExtractToDirectory(Main.acces.modInfo.modsPath + "\\" + modInfo.zipfile, Main.acces.kspInfo.kspFolder + "\\KMM\\temp");
+            try
+            {
+                ZipFile.ExtractToDirectory(Main.acces.modInfo.modsPath + "\\" + modInfo.zipfile, Main.acces.kspInfo.kspFolder + "\\KMM\\temp");
+            }
+            catch
+            {
+                Main.acces.LogMessage("Extraction failed, aborting installation of '" + modInfo.name + "'!");
+
+                Directory.Delete(tempExtractLocation, true);
+                Functions.ProcessDirectory(Main.acces.kspInfo.kspFolder + "\\KMM\\overrides", false);
+            }
 
             // Checking for GameData mode
             List<string> dirListTop = new List<string>();
