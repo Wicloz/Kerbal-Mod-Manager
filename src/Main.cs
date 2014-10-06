@@ -71,7 +71,8 @@ namespace KSP_Mod_Manager
                 instanceList.Add(new InstallInstance("New Instance"));
             }
 
-            HandleCategories(true);
+            HandleCategories();
+            filterList.Add("ALL");
 
             ChangeModFolder(savedModsPath);
             ChangeKspFolder(instanceList[selectedIndex].kspPath);
@@ -137,8 +138,7 @@ namespace KSP_Mod_Manager
         {
             kspInfo.UnloadInstance();
             kspInfo.LoadInstance(newPath);
-            downloadedListView.Enabled = kspInfo.loaded;
-            installedListView.Enabled = kspInfo.loaded;
+            modsListView.Enabled = kspInfo.loaded;
 
             if (kspInfo.loaded)
             {
@@ -169,71 +169,48 @@ namespace KSP_Mod_Manager
 
         private void UpdateModList(string modName)
         {
-            downloadedListView.Items.Clear();
-            installedListView.Items.Clear();
+            modsListView.Items.Clear();
             SortLists();
 
             // Istalled Mod List
             foreach (InstalledInfo installedMod in kspInfo.installedModList)
             {
-                if (!installedMod.codeName.Contains("Overrides\\"))
+                if (!installedMod.codeName.Contains("Overrides\\") && (filterList.Contains(installedMod.category) || filterList.Contains("ALL")))
                 {
-                    ListViewItem lvi = new ListViewItem(installedMod.modName);
-                    lvi.SubItems.Add(installedMod.category);
-
                     ModInfo mod = installedMod.GetModInfo();
 
-                    string updateStatus = "";
-                    string isFav = "";
-
-                    if (mod != null)
+                    if (mod == null)
                     {
-                        if (mod.websites.website == "NONE")
-                        {
-                            updateStatus = "No Website";
-                        }
-                        else if (mod.canUpdate)
-                        {
-                            updateStatus = "Update Required";
-                        }
-                        else if (mod.version != installedMod.version)
-                        {
-                            updateStatus = "Reinstall Required";
-                        }
-                        else
-                        {
-                            updateStatus = "Mod up to date";
-                        }
+                        ListViewItem lvi = new ListViewItem(installedMod.modName);
+                        lvi.SubItems.Add(installedMod.category);
 
-                        if (mod.favorite.isFav)
-                        {
-                            isFav = "True";
-                        }
-                        else
-                        {
-                            isFav = "False";
-                        }
+                        lvi.SubItems.Add("Yes");
+                        lvi.SubItems.Add("Not Available");
+                        lvi.SubItems.Add("N/A");
+
+                        modsListView.Items.Add(lvi);
                     }
-                    else
-                    {
-                        updateStatus = "Not Available";
-                        isFav = "N/A";
-                    }
-
-                    lvi.SubItems.Add(updateStatus);
-                    lvi.SubItems.Add(isFav);
-
-                    installedListView.Items.Add(lvi);
                 }
             }
 
             // Downloaded Mod List
             foreach (ModInfo mod in modInfo.modList)
             {
-                if (!mod.zipfile.Contains("Overrides\\") && !mod.isInstalled && mod.hasZipfile && !filterList.Contains(mod.category))
+                if (!mod.zipfile.Contains("Overrides\\") && mod.hasZipfile && (filterList.Contains(mod.category) || filterList.Contains("ALL")))
                 {
+                    InstalledInfo installedMod = Functions.GetInstalledMod(mod);
+
                     ListViewItem lvi = new ListViewItem(mod.name);
                     lvi.SubItems.Add(mod.category);
+
+                    if (mod.isInstalled)
+                    {
+                        lvi.SubItems.Add("Yes");
+                    }
+                    else
+                    {
+                        lvi.SubItems.Add("No");
+                    }
 
                     string updateStatus = "";
                     if (mod.websites.website == "NONE")
@@ -244,34 +221,37 @@ namespace KSP_Mod_Manager
                     {
                         updateStatus = "Update Required";
                     }
+                    else if (installedMod != null && mod.version != installedMod.version)
+                    {
+                        updateStatus = "Reinstall Required";
+                    }
                     else
                     {
                         updateStatus = "Mod up to date";
                     }
                     lvi.SubItems.Add(updateStatus);
 
-                    string isFav = "";
                     if (mod.favorite.isFav)
                     {
-                        isFav = "True";
+                        lvi.SubItems.Add("True");
                     }
                     else
                     {
-                        isFav = "False";
+                        lvi.SubItems.Add("False");
                     }
-                    lvi.SubItems.Add(isFav);
 
-                    downloadedListView.Items.Add(lvi);
+                    modsListView.Items.Add(lvi);
                 }
             }
 
             foreach (ModInfo mod in modInfo.modList)
             {
-                if (!mod.zipfile.Contains("Overrides\\") && !mod.isInstalled && !mod.hasZipfile && !filterList.Contains(mod.category))
+                if (!mod.zipfile.Contains("Overrides\\") && !mod.isInstalled && !mod.hasZipfile && (filterList.Contains(mod.category) || filterList.Contains("ALL")))
                 {
                     ListViewItem lvi = new ListViewItem(mod.name);
                     lvi.SubItems.Add(mod.category);
 
+                    lvi.SubItems.Add("No");
                     lvi.SubItems.Add("Not Downloaded");
 
                     string isFav = "";
@@ -285,45 +265,27 @@ namespace KSP_Mod_Manager
                     }
                     lvi.SubItems.Add(isFav);
 
-                    downloadedListView.Items.Add(lvi);
+                    modsListView.Items.Add(lvi);
                 }
             }
 
             // Selection
             if (modName != "")
             {
-                for (int i = 0; i < installedListView.Items.Count; i++)
+                for (int i = 0; i < modsListView.Items.Count; i++)
                 {
-                    string item = installedListView.Items[i].SubItems[0].Text;
+                    string item = modsListView.Items[i].SubItems[0].Text;
 
                     if (item == modName)
                     {
-                        installedListView.SelectedIndices.Clear();
-                        installedListView.SelectedIndices.Add(i);
-                    }
-                }
-
-                for (int i = 0; i < downloadedListView.Items.Count; i++)
-                {
-                    string item = downloadedListView.Items[i].SubItems[0].Text;
-
-                    if (item == modName)
-                    {
-                        downloadedListView.SelectedIndices.Clear();
-                        downloadedListView.SelectedIndices.Add(i);
+                        modsListView.SelectedIndices.Clear();
+                        modsListView.SelectedIndices.Add(i);
                     }
                 }
             }
-            else
+            else if (modsListView.Items.Count > 0)
             {
-                if (installedListView.Items.Count > 0)
-                {
-                    installedListView.SelectedIndices.Add(0);
-                }
-                if (downloadedListView.Items.Count > 0)
-                {
-                    downloadedListView.SelectedIndices.Add(0);
-                }
+                modsListView.SelectedIndices.Add(0);
             }
 
             // Updating
@@ -336,17 +298,12 @@ namespace KSP_Mod_Manager
             }
         }
 
-        private void HandleCategories(bool reset)
+        private void HandleCategories()
         {
             contextMenuStrip1.Items.Clear();
             foreach (string cat in opCategoryBox.Items)
             {
                 contextMenuStrip1.Items.Add(cat);
-            }
-
-            if (reset)
-            {
-                filterList.Clear();
             }
         }
 
@@ -543,6 +500,14 @@ namespace KSP_Mod_Manager
             LoadSelectedKspInstance();
         }
 
+        private void favAllButton_Click(object sender, EventArgs e)
+        {
+            foreach (FavInfo fav in kspInfo.favoritesList)
+            {
+                fav.isFav = true;
+            }
+        }
+
         EditCategories editCategories;
         private void opAddCategoryButton_Click(object sender, EventArgs e)
         {
@@ -568,7 +533,7 @@ namespace KSP_Mod_Manager
                 opCategoryBox.Items.Add(category);
             }
 
-            HandleCategories(false);
+            HandleCategories();
         }
 
         EditInstanceSettings editInstanceForm;
@@ -609,6 +574,21 @@ namespace KSP_Mod_Manager
                 }
             }
 
+            UpdateModList("");
+        }
+
+        private void deleteZipButton_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < modInfo.modList.Count; i++)
+            {
+                if (modInfo.modList[i].key == selectedMod.key)
+                {
+                    File.Delete(modInfo.modsPath + "\\" + modInfo.modList[i].zipfile);
+                    break;
+                }
+            }
+
+            ChangeModFolder(modFolderBox.Text);
             UpdateModList("");
         }
 
@@ -665,23 +645,15 @@ namespace KSP_Mod_Manager
         // ModInfo editing stuff
         private bool isChangingSelection = true;
 
-        private void installedListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (installedListView.SelectedItems.Count > 0)
-            {
-                UpdateOpSettings(installedListView.SelectedItems[0].SubItems[0].Text, true);
-            }
-        }
-
         private void downloadedListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (downloadedListView.SelectedItems.Count > 0)
+            if (modsListView.SelectedItems.Count > 0)
             {
-                UpdateOpSettings(downloadedListView.SelectedItems[0].SubItems[0].Text, false);
+                UpdateOpSettings(modsListView.SelectedItems[0].SubItems[0].Text);
             }
         }
 
-        private void UpdateOpSettings(string itemName, bool installed)
+        private void UpdateOpSettings(string itemName)
         {
             isChangingSelection = true;
             string mode = "";
@@ -689,7 +661,7 @@ namespace KSP_Mod_Manager
             selectedInstalledMod = Functions.GetInstalledMod(itemName);
             selectedMod = Functions.GetDownloadedMod(itemName);
 
-            if (installed)
+            if (selectedMod.isInstalled || selectedMod == null)
             {
                 mode = "installed";
             }
@@ -757,11 +729,11 @@ namespace KSP_Mod_Manager
                 BlockSettingEditor();
             }
 
-            if (installed)
+            if (mode == "installed")
             {
                 opInstallButton.Text = "Deinstall Mod";
             }
-            else if (selectedMod != null && !installed)
+            else if (selectedMod != null && mode != "installed")
             {
                 opInstallButton.Text = "Install Mod";
             }
@@ -826,7 +798,7 @@ namespace KSP_Mod_Manager
                 selectedMod.websites.website = opSiteBox.Text;
                 modInfo.ManageModInfo(selectedMod);
 
-                UpdateOpSettings(selectedMod.name, selectedMod.isInstalled);
+                UpdateOpSettings(selectedMod.name);
             }
         }
 
@@ -837,7 +809,7 @@ namespace KSP_Mod_Manager
                 selectedMod.websites.dlSite = opDlSiteBox.Text;
                 modInfo.ManageModInfo(selectedMod);
 
-                UpdateOpSettings(selectedMod.name, selectedMod.isInstalled);
+                UpdateOpSettings(selectedMod.name);
             }
         }
 
@@ -919,7 +891,7 @@ namespace KSP_Mod_Manager
                 opCategoryBox.Items.Add(opCategoryBox.Text);
             }
 
-            HandleCategories(false);
+            HandleCategories();
         }
 
         private void installedListView_DoubleClick(object sender, EventArgs e)
@@ -947,24 +919,77 @@ namespace KSP_Mod_Manager
             }
         }
 
-        private void installedListView_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == Char.ConvertFromUtf32(32).ToCharArray()[0])
-            {
-                try
-                {
-                    selectedFav.isFav = !selectedFav.isFav;
-                }
-                catch
-                { }
-
-                UpdateModList(selectedItem);
-            }
-        }
-
         private void opGoogleButton_Click(object sender, EventArgs e)
         {
             Process.Start("https://www.google.com/?#q=ksp+" + selectedMod.name);
+        }
+
+        private void catButton1_Click(object sender, EventArgs e)
+        {
+            filterList.Clear();
+            filterList.Add("ALL");
+            UpdateModList("");
+        }
+
+        private void catButton2_Click(object sender, EventArgs e)
+        {
+            filterList.Clear();
+
+            filterList.Add("API");
+            filterList.Add("Core");
+
+            UpdateModList("");
+        }
+
+        private void catButton3_Click(object sender, EventArgs e)
+        {
+            filterList.Clear();
+
+            filterList.Add("Tools");
+
+            UpdateModList("");
+        }
+
+        private void catButton4_Click(object sender, EventArgs e)
+        {
+            filterList.Clear();
+
+            filterList.Add("Plugins");
+            filterList.Add("Science");
+            filterList.Add("Realism");
+            filterList.Add("Planet Stuff");
+
+            UpdateModList("");
+        }
+
+        private void catButton5_Click(object sender, EventArgs e)
+        {
+            filterList.Clear();
+
+            filterList.Add("Graphic Install Packs");
+            filterList.Add("Graphic Mods");
+            filterList.Add("Sound Mods");
+
+            UpdateModList("");
+        }
+
+        private void catButton6_Click(object sender, EventArgs e)
+        {
+            filterList.Clear();
+
+            filterList.Add("Parts, Base");
+
+            UpdateModList("");
+        }
+
+        private void catButton7_Click(object sender, EventArgs e)
+        {
+            filterList.Clear();
+
+            filterList.Add("Parts, Stock Extension");
+            filterList.Add("Parts");
+
+            UpdateModList("");
         }
     }
 }

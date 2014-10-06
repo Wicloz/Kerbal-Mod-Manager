@@ -63,19 +63,25 @@
             this.openLogButton = new System.Windows.Forms.Button();
             this.deleteModButton = new System.Windows.Forms.Button();
             this.reinstallAllButton = new System.Windows.Forms.Button();
-            this.downloadedListView = new System.Windows.Forms.ListView();
+            this.modsListView = new System.Windows.Forms.ListView();
             this.modName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.category = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.installStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.updateStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.favStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.installedListView = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.deleteZipButton = new System.Windows.Forms.Button();
+            this.addModButton = new System.Windows.Forms.Button();
+            this.catButton1 = new System.Windows.Forms.Button();
+            this.catButton2 = new System.Windows.Forms.Button();
+            this.catButton4 = new System.Windows.Forms.Button();
+            this.catButton3 = new System.Windows.Forms.Button();
+            this.catButton6 = new System.Windows.Forms.Button();
+            this.catButton5 = new System.Windows.Forms.Button();
+            this.catButton7 = new System.Windows.Forms.Button();
+            this.favAllButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -86,7 +92,7 @@
             this.installationBox.FormattingEnabled = true;
             this.installationBox.Location = new System.Drawing.Point(12, 38);
             this.installationBox.Name = "installationBox";
-            this.installationBox.Size = new System.Drawing.Size(129, 550);
+            this.installationBox.Size = new System.Drawing.Size(129, 667);
             this.installationBox.TabIndex = 0;
             this.installationBox.Click += new System.EventHandler(this.installationBox_Click);
             this.installationBox.DoubleClick += new System.EventHandler(this.installationBox_DoubleClick);
@@ -122,7 +128,7 @@
             // 
             this.opNameBox.Location = new System.Drawing.Point(107, 19);
             this.opNameBox.Name = "opNameBox";
-            this.opNameBox.Size = new System.Drawing.Size(323, 20);
+            this.opNameBox.Size = new System.Drawing.Size(643, 20);
             this.opNameBox.TabIndex = 6;
             this.opNameBox.TextChanged += new System.EventHandler(this.opNameBox_TextChanged);
             // 
@@ -130,7 +136,7 @@
             // 
             this.opSiteBox.Location = new System.Drawing.Point(107, 72);
             this.opSiteBox.Name = "opSiteBox";
-            this.opSiteBox.Size = new System.Drawing.Size(330, 20);
+            this.opSiteBox.Size = new System.Drawing.Size(650, 20);
             this.opSiteBox.TabIndex = 8;
             this.opSiteBox.TextChanged += new System.EventHandler(this.opSiteBox_TextChanged);
             // 
@@ -138,15 +144,15 @@
             // 
             this.opDlSiteBox.Location = new System.Drawing.Point(107, 98);
             this.opDlSiteBox.Name = "opDlSiteBox";
-            this.opDlSiteBox.Size = new System.Drawing.Size(380, 20);
+            this.opDlSiteBox.Size = new System.Drawing.Size(700, 20);
             this.opDlSiteBox.TabIndex = 9;
             this.opDlSiteBox.TextChanged += new System.EventHandler(this.opDlSiteBox_TextChanged);
             // 
             // opInstallButton
             // 
-            this.opInstallButton.Location = new System.Drawing.Point(659, 194);
+            this.opInstallButton.Location = new System.Drawing.Point(147, 194);
             this.opInstallButton.Name = "opInstallButton";
-            this.opInstallButton.Size = new System.Drawing.Size(493, 47);
+            this.opInstallButton.Size = new System.Drawing.Size(807, 43);
             this.opInstallButton.TabIndex = 10;
             this.opInstallButton.Text = "Install Mod / Deinstall Mod";
             this.opInstallButton.UseVisualStyleBackColor = true;
@@ -167,7 +173,7 @@
             // 
             this.opDownloadButton.Location = new System.Drawing.Point(6, 85);
             this.opDownloadButton.Name = "opDownloadButton";
-            this.opDownloadButton.Size = new System.Drawing.Size(481, 37);
+            this.opDownloadButton.Size = new System.Drawing.Size(174, 37);
             this.opDownloadButton.TabIndex = 12;
             this.opDownloadButton.Text = "Update Mod";
             this.opDownloadButton.UseVisualStyleBackColor = true;
@@ -187,7 +193,7 @@
             "Graphic Install Packs"});
             this.opCategoryBox.Location = new System.Drawing.Point(107, 45);
             this.opCategoryBox.Name = "opCategoryBox";
-            this.opCategoryBox.Size = new System.Drawing.Size(280, 21);
+            this.opCategoryBox.Size = new System.Drawing.Size(600, 21);
             this.opCategoryBox.TabIndex = 13;
             this.opCategoryBox.TextChanged += new System.EventHandler(this.opCategoryBox_TextChanged);
             // 
@@ -242,16 +248,16 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.opSiteBox);
             this.groupBox1.Controls.Add(this.opDlSiteBox);
-            this.groupBox1.Location = new System.Drawing.Point(659, 38);
+            this.groupBox1.Location = new System.Drawing.Point(147, 38);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(493, 150);
+            this.groupBox1.Size = new System.Drawing.Size(813, 150);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings for Mod";
             // 
             // opGoogleButton
             // 
-            this.opGoogleButton.Location = new System.Drawing.Point(436, 19);
+            this.opGoogleButton.Location = new System.Drawing.Point(756, 19);
             this.opGoogleButton.Name = "opGoogleButton";
             this.opGoogleButton.Size = new System.Drawing.Size(51, 20);
             this.opGoogleButton.TabIndex = 21;
@@ -261,7 +267,7 @@
             // 
             // editCategoryButton
             // 
-            this.editCategoryButton.Location = new System.Drawing.Point(443, 45);
+            this.editCategoryButton.Location = new System.Drawing.Point(763, 45);
             this.editCategoryButton.Name = "editCategoryButton";
             this.editCategoryButton.Size = new System.Drawing.Size(44, 21);
             this.editCategoryButton.TabIndex = 20;
@@ -271,7 +277,7 @@
             // 
             // opAddCategoryButton
             // 
-            this.opAddCategoryButton.Location = new System.Drawing.Point(393, 45);
+            this.opAddCategoryButton.Location = new System.Drawing.Point(713, 45);
             this.opAddCategoryButton.Name = "opAddCategoryButton";
             this.opAddCategoryButton.Size = new System.Drawing.Size(44, 21);
             this.opAddCategoryButton.TabIndex = 20;
@@ -281,7 +287,7 @@
             // 
             // opOpenSiteButton
             // 
-            this.opOpenSiteButton.Location = new System.Drawing.Point(443, 72);
+            this.opOpenSiteButton.Location = new System.Drawing.Point(763, 72);
             this.opOpenSiteButton.Name = "opOpenSiteButton";
             this.opOpenSiteButton.Size = new System.Drawing.Size(44, 20);
             this.opOpenSiteButton.TabIndex = 19;
@@ -312,9 +318,9 @@
             // 
             // checkUpdateButton
             // 
-            this.checkUpdateButton.Location = new System.Drawing.Point(659, 609);
+            this.checkUpdateButton.Location = new System.Drawing.Point(960, 435);
             this.checkUpdateButton.Name = "checkUpdateButton";
-            this.checkUpdateButton.Size = new System.Drawing.Size(493, 54);
+            this.checkUpdateButton.Size = new System.Drawing.Size(192, 53);
             this.checkUpdateButton.TabIndex = 20;
             this.checkUpdateButton.Text = "Check For Updates On All Mods";
             this.checkUpdateButton.UseVisualStyleBackColor = true;
@@ -322,9 +328,9 @@
             // 
             // topButton1
             // 
-            this.topButton1.Location = new System.Drawing.Point(147, 38);
+            this.topButton1.Location = new System.Drawing.Point(960, 217);
             this.topButton1.Name = "topButton1";
-            this.topButton1.Size = new System.Drawing.Size(263, 34);
+            this.topButton1.Size = new System.Drawing.Size(192, 34);
             this.topButton1.TabIndex = 21;
             this.topButton1.Text = "Deinstall all mods";
             this.topButton1.UseVisualStyleBackColor = true;
@@ -332,9 +338,9 @@
             // 
             // topButton2
             // 
-            this.topButton2.Location = new System.Drawing.Point(416, 38);
+            this.topButton2.Location = new System.Drawing.Point(960, 257);
             this.topButton2.Name = "topButton2";
-            this.topButton2.Size = new System.Drawing.Size(237, 34);
+            this.topButton2.Size = new System.Drawing.Size(192, 34);
             this.topButton2.TabIndex = 22;
             this.topButton2.Text = "Install all Favorites";
             this.topButton2.UseVisualStyleBackColor = true;
@@ -346,9 +352,9 @@
             this.groupBox2.Controls.Add(this.opCheckUpdateButton);
             this.groupBox2.Controls.Add(this.opDownloadButton);
             this.groupBox2.Controls.Add(this.opCanDownloadBox);
-            this.groupBox2.Location = new System.Drawing.Point(659, 247);
+            this.groupBox2.Location = new System.Drawing.Point(960, 38);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(493, 173);
+            this.groupBox2.Size = new System.Drawing.Size(192, 173);
             this.groupBox2.TabIndex = 23;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Updating";
@@ -357,7 +363,7 @@
             // 
             this.opReinstallButton.Location = new System.Drawing.Point(6, 128);
             this.opReinstallButton.Name = "opReinstallButton";
-            this.opReinstallButton.Size = new System.Drawing.Size(481, 36);
+            this.opReinstallButton.Size = new System.Drawing.Size(174, 36);
             this.opReinstallButton.TabIndex = 14;
             this.opReinstallButton.Text = "Reinstall Mod";
             this.opReinstallButton.UseVisualStyleBackColor = true;
@@ -367,7 +373,7 @@
             // 
             this.opCheckUpdateButton.Location = new System.Drawing.Point(6, 19);
             this.opCheckUpdateButton.Name = "opCheckUpdateButton";
-            this.opCheckUpdateButton.Size = new System.Drawing.Size(481, 37);
+            this.opCheckUpdateButton.Size = new System.Drawing.Size(174, 37);
             this.opCheckUpdateButton.TabIndex = 13;
             this.opCheckUpdateButton.Text = "Check For Update";
             this.opCheckUpdateButton.UseVisualStyleBackColor = true;
@@ -375,7 +381,7 @@
             // 
             // addInstanceButton
             // 
-            this.addInstanceButton.Location = new System.Drawing.Point(12, 630);
+            this.addInstanceButton.Location = new System.Drawing.Point(12, 757);
             this.addInstanceButton.Name = "addInstanceButton";
             this.addInstanceButton.Size = new System.Drawing.Size(129, 33);
             this.addInstanceButton.TabIndex = 24;
@@ -385,7 +391,7 @@
             // 
             // removeInstanceButton
             // 
-            this.removeInstanceButton.Location = new System.Drawing.Point(12, 594);
+            this.removeInstanceButton.Location = new System.Drawing.Point(12, 718);
             this.removeInstanceButton.Name = "removeInstanceButton";
             this.removeInstanceButton.Size = new System.Drawing.Size(129, 33);
             this.removeInstanceButton.TabIndex = 25;
@@ -395,9 +401,9 @@
             // 
             // downloadModButton
             // 
-            this.downloadModButton.Location = new System.Drawing.Point(659, 550);
+            this.downloadModButton.Location = new System.Drawing.Point(960, 376);
             this.downloadModButton.Name = "downloadModButton";
-            this.downloadModButton.Size = new System.Drawing.Size(253, 53);
+            this.downloadModButton.Size = new System.Drawing.Size(192, 53);
             this.downloadModButton.TabIndex = 26;
             this.downloadModButton.Text = "Update All Mods";
             this.downloadModButton.UseVisualStyleBackColor = true;
@@ -405,9 +411,9 @@
             // 
             // openLogButton
             // 
-            this.openLogButton.Location = new System.Drawing.Point(659, 508);
+            this.openLogButton.Location = new System.Drawing.Point(960, 742);
             this.openLogButton.Name = "openLogButton";
-            this.openLogButton.Size = new System.Drawing.Size(493, 36);
+            this.openLogButton.Size = new System.Drawing.Size(192, 48);
             this.openLogButton.TabIndex = 27;
             this.openLogButton.Text = "Open Log";
             this.openLogButton.UseVisualStyleBackColor = true;
@@ -415,9 +421,9 @@
             // 
             // deleteModButton
             // 
-            this.deleteModButton.Location = new System.Drawing.Point(148, 631);
+            this.deleteModButton.Location = new System.Drawing.Point(147, 758);
             this.deleteModButton.Name = "deleteModButton";
-            this.deleteModButton.Size = new System.Drawing.Size(506, 32);
+            this.deleteModButton.Size = new System.Drawing.Size(248, 32);
             this.deleteModButton.TabIndex = 28;
             this.deleteModButton.Text = "Delete Mod";
             this.deleteModButton.UseVisualStyleBackColor = true;
@@ -425,53 +431,59 @@
             // 
             // reinstallAllButton
             // 
-            this.reinstallAllButton.Location = new System.Drawing.Point(918, 550);
+            this.reinstallAllButton.Location = new System.Drawing.Point(960, 297);
             this.reinstallAllButton.Name = "reinstallAllButton";
-            this.reinstallAllButton.Size = new System.Drawing.Size(234, 53);
+            this.reinstallAllButton.Size = new System.Drawing.Size(192, 34);
             this.reinstallAllButton.TabIndex = 30;
             this.reinstallAllButton.Text = "Reinstall All Mods";
             this.reinstallAllButton.UseVisualStyleBackColor = true;
             this.reinstallAllButton.Click += new System.EventHandler(this.reinstallAllButton_Click);
             // 
-            // downloadedListView
+            // modsListView
             // 
-            this.downloadedListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.modsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.modName,
             this.category,
+            this.installStatus,
             this.updateStatus,
             this.favStatus});
-            this.downloadedListView.ContextMenuStrip = this.contextMenuStrip1;
-            this.downloadedListView.FullRowSelect = true;
-            this.downloadedListView.GridLines = true;
-            this.downloadedListView.Location = new System.Drawing.Point(147, 309);
-            this.downloadedListView.Name = "downloadedListView";
-            this.downloadedListView.Size = new System.Drawing.Size(506, 316);
-            this.downloadedListView.TabIndex = 31;
-            this.downloadedListView.UseCompatibleStateImageBehavior = false;
-            this.downloadedListView.View = System.Windows.Forms.View.Details;
-            this.downloadedListView.SelectedIndexChanged += new System.EventHandler(this.downloadedListView_SelectedIndexChanged);
-            this.downloadedListView.DoubleClick += new System.EventHandler(this.downloadedListView_DoubleClick);
-            this.downloadedListView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.downloadedListView_KeyPress);
+            this.modsListView.ContextMenuStrip = this.contextMenuStrip1;
+            this.modsListView.FullRowSelect = true;
+            this.modsListView.GridLines = true;
+            this.modsListView.Location = new System.Drawing.Point(147, 268);
+            this.modsListView.Name = "modsListView";
+            this.modsListView.Size = new System.Drawing.Size(807, 484);
+            this.modsListView.TabIndex = 31;
+            this.modsListView.UseCompatibleStateImageBehavior = false;
+            this.modsListView.View = System.Windows.Forms.View.Details;
+            this.modsListView.SelectedIndexChanged += new System.EventHandler(this.downloadedListView_SelectedIndexChanged);
+            this.modsListView.DoubleClick += new System.EventHandler(this.downloadedListView_DoubleClick);
+            this.modsListView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.downloadedListView_KeyPress);
             // 
             // modName
             // 
             this.modName.Text = "Mod Name";
-            this.modName.Width = 181;
+            this.modName.Width = 307;
             // 
             // category
             // 
             this.category.Text = "Category";
-            this.category.Width = 99;
+            this.category.Width = 197;
+            // 
+            // installStatus
+            // 
+            this.installStatus.Text = "Installed";
+            this.installStatus.Width = 70;
             // 
             // updateStatus
             // 
             this.updateStatus.Text = "Update Status";
-            this.updateStatus.Width = 119;
+            this.updateStatus.Width = 138;
             // 
             // favStatus
             // 
             this.favStatus.Text = "Is Favorite";
-            this.favStatus.Width = 86;
+            this.favStatus.Width = 79;
             // 
             // contextMenuStrip1
             // 
@@ -493,52 +505,121 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(120, 6);
             // 
-            // installedListView
+            // deleteZipButton
             // 
-            this.installedListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4});
-            this.installedListView.FullRowSelect = true;
-            this.installedListView.GridLines = true;
-            this.installedListView.Location = new System.Drawing.Point(147, 78);
-            this.installedListView.Name = "installedListView";
-            this.installedListView.Size = new System.Drawing.Size(506, 225);
-            this.installedListView.TabIndex = 32;
-            this.installedListView.UseCompatibleStateImageBehavior = false;
-            this.installedListView.View = System.Windows.Forms.View.Details;
-            this.installedListView.SelectedIndexChanged += new System.EventHandler(this.installedListView_SelectedIndexChanged);
-            this.installedListView.DoubleClick += new System.EventHandler(this.installedListView_DoubleClick);
-            this.installedListView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.installedListView_KeyPress);
+            this.deleteZipButton.Location = new System.Drawing.Point(401, 758);
+            this.deleteZipButton.Name = "deleteZipButton";
+            this.deleteZipButton.Size = new System.Drawing.Size(266, 32);
+            this.deleteZipButton.TabIndex = 32;
+            this.deleteZipButton.Text = "Delete Zip File";
+            this.deleteZipButton.UseVisualStyleBackColor = true;
+            this.deleteZipButton.Click += new System.EventHandler(this.deleteZipButton_Click);
             // 
-            // columnHeader1
+            // addModButton
             // 
-            this.columnHeader1.Text = "Mod Name";
-            this.columnHeader1.Width = 181;
+            this.addModButton.Location = new System.Drawing.Point(673, 758);
+            this.addModButton.Name = "addModButton";
+            this.addModButton.Size = new System.Drawing.Size(281, 32);
+            this.addModButton.TabIndex = 33;
+            this.addModButton.Text = "Add Mod";
+            this.addModButton.UseVisualStyleBackColor = true;
             // 
-            // columnHeader2
+            // catButton1
             // 
-            this.columnHeader2.Text = "Category";
-            this.columnHeader2.Width = 99;
+            this.catButton1.Location = new System.Drawing.Point(147, 243);
+            this.catButton1.Name = "catButton1";
+            this.catButton1.Size = new System.Drawing.Size(110, 27);
+            this.catButton1.TabIndex = 34;
+            this.catButton1.Text = "All Mods";
+            this.catButton1.UseVisualStyleBackColor = true;
+            this.catButton1.Click += new System.EventHandler(this.catButton1_Click);
             // 
-            // columnHeader3
+            // catButton2
             // 
-            this.columnHeader3.Text = "Update Status";
-            this.columnHeader3.Width = 119;
+            this.catButton2.Location = new System.Drawing.Point(263, 243);
+            this.catButton2.Name = "catButton2";
+            this.catButton2.Size = new System.Drawing.Size(110, 27);
+            this.catButton2.TabIndex = 35;
+            this.catButton2.Text = "Core";
+            this.catButton2.UseVisualStyleBackColor = true;
+            this.catButton2.Click += new System.EventHandler(this.catButton2_Click);
             // 
-            // columnHeader4
+            // catButton4
             // 
-            this.columnHeader4.Text = "Is Favorite";
-            this.columnHeader4.Width = 86;
+            this.catButton4.Location = new System.Drawing.Point(495, 243);
+            this.catButton4.Name = "catButton4";
+            this.catButton4.Size = new System.Drawing.Size(110, 27);
+            this.catButton4.TabIndex = 36;
+            this.catButton4.Text = "Plugins";
+            this.catButton4.UseVisualStyleBackColor = true;
+            this.catButton4.Click += new System.EventHandler(this.catButton4_Click);
+            // 
+            // catButton3
+            // 
+            this.catButton3.Location = new System.Drawing.Point(379, 243);
+            this.catButton3.Name = "catButton3";
+            this.catButton3.Size = new System.Drawing.Size(110, 27);
+            this.catButton3.TabIndex = 37;
+            this.catButton3.Text = "Tools";
+            this.catButton3.UseVisualStyleBackColor = true;
+            this.catButton3.Click += new System.EventHandler(this.catButton3_Click);
+            // 
+            // catButton6
+            // 
+            this.catButton6.Location = new System.Drawing.Point(727, 243);
+            this.catButton6.Name = "catButton6";
+            this.catButton6.Size = new System.Drawing.Size(110, 27);
+            this.catButton6.TabIndex = 38;
+            this.catButton6.Text = "Base Parts";
+            this.catButton6.UseVisualStyleBackColor = true;
+            this.catButton6.Click += new System.EventHandler(this.catButton6_Click);
+            // 
+            // catButton5
+            // 
+            this.catButton5.Location = new System.Drawing.Point(611, 243);
+            this.catButton5.Name = "catButton5";
+            this.catButton5.Size = new System.Drawing.Size(110, 27);
+            this.catButton5.TabIndex = 39;
+            this.catButton5.Text = "Graphics";
+            this.catButton5.UseVisualStyleBackColor = true;
+            this.catButton5.Click += new System.EventHandler(this.catButton5_Click);
+            // 
+            // catButton7
+            // 
+            this.catButton7.Location = new System.Drawing.Point(843, 243);
+            this.catButton7.Name = "catButton7";
+            this.catButton7.Size = new System.Drawing.Size(110, 27);
+            this.catButton7.TabIndex = 40;
+            this.catButton7.Text = "Parts";
+            this.catButton7.UseVisualStyleBackColor = true;
+            this.catButton7.Click += new System.EventHandler(this.catButton7_Click);
+            // 
+            // favAllButton
+            // 
+            this.favAllButton.Location = new System.Drawing.Point(960, 337);
+            this.favAllButton.Name = "favAllButton";
+            this.favAllButton.Size = new System.Drawing.Size(192, 33);
+            this.favAllButton.TabIndex = 41;
+            this.favAllButton.Text = "Favorite All Mods";
+            this.favAllButton.UseVisualStyleBackColor = true;
+            this.favAllButton.Click += new System.EventHandler(this.favAllButton_Click);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1164, 675);
-            this.Controls.Add(this.installedListView);
-            this.Controls.Add(this.downloadedListView);
+            this.ClientSize = new System.Drawing.Size(1164, 802);
+            this.Controls.Add(this.favAllButton);
+            this.Controls.Add(this.catButton7);
+            this.Controls.Add(this.catButton5);
+            this.Controls.Add(this.catButton6);
+            this.Controls.Add(this.catButton3);
+            this.Controls.Add(this.catButton4);
+            this.Controls.Add(this.catButton2);
+            this.Controls.Add(this.catButton1);
+            this.Controls.Add(this.addModButton);
+            this.Controls.Add(this.deleteZipButton);
+            this.Controls.Add(this.modsListView);
             this.Controls.Add(this.reinstallAllButton);
             this.Controls.Add(this.deleteModButton);
             this.Controls.Add(this.openLogButton);
@@ -607,20 +688,26 @@
         private System.Windows.Forms.Button editCategoryButton;
         private System.Windows.Forms.Button opAddCategoryButton;
         private System.Windows.Forms.Button reinstallAllButton;
-        private System.Windows.Forms.ListView downloadedListView;
+        private System.Windows.Forms.ListView modsListView;
         private System.Windows.Forms.ColumnHeader modName;
         private System.Windows.Forms.ColumnHeader updateStatus;
         private System.Windows.Forms.ColumnHeader favStatus;
         private System.Windows.Forms.ColumnHeader category;
-        private System.Windows.Forms.ListView installedListView;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Button opGoogleButton;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ColumnHeader installStatus;
+        private System.Windows.Forms.Button deleteZipButton;
+        private System.Windows.Forms.Button addModButton;
+        private System.Windows.Forms.Button catButton1;
+        private System.Windows.Forms.Button catButton2;
+        private System.Windows.Forms.Button catButton4;
+        private System.Windows.Forms.Button catButton3;
+        private System.Windows.Forms.Button catButton6;
+        private System.Windows.Forms.Button catButton5;
+        private System.Windows.Forms.Button catButton7;
+        private System.Windows.Forms.Button favAllButton;
     }
 }
 
