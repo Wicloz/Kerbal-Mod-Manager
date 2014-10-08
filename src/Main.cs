@@ -740,6 +740,15 @@ namespace KSP_Mod_Manager
                 opInstallButton.Text = "Install Mod";
             }
 
+            if (mode == "installed")
+            {
+                opReinstallButton.Enabled = true;
+            }
+            else
+            {
+                opReinstallButton.Enabled = false;
+            }
+
             if (selectedMod != null && selectedMod.websites.dlSite == "NONE")
             {
                 opDownloadButton.Text = "Open Site";
