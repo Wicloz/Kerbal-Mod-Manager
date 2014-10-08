@@ -123,7 +123,14 @@ namespace KSP_Mod_Manager
 
                 if (!exists)
                 {
-                    AddToFileList(new FileInfo(file1, "default"));
+                    if (file1.Contains("GameData\\Squad\\") || file1.Contains("GameData\\NASAmission\\"))
+                    {
+                        AddToFileList(new FileInfo(file1, "vanilla"));
+                    }
+                    else
+                    {
+                        AddToFileList(new FileInfo(file1, "default"));
+                    }
                 }
 			}
 

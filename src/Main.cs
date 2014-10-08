@@ -79,7 +79,7 @@ namespace KSP_Mod_Manager
 
             initialised = true;
             UpdateInstallInstanceList(selectedIndex);
-            UpdateModList("");
+            UpdateModList("", true);
 
             SaveFiles();
         }
@@ -130,7 +130,7 @@ namespace KSP_Mod_Manager
 
             if (modInfo.loaded && initialised)
             {
-                UpdateModList("");
+                UpdateModList("", true);
             }
         }
 
@@ -151,7 +151,7 @@ namespace KSP_Mod_Manager
 
             if (kspInfo.loaded && initialised)
             {
-                UpdateModList("");
+                UpdateModList("", true);
             }
         }
 
@@ -167,7 +167,7 @@ namespace KSP_Mod_Manager
             installationBox.SelectedIndex = index;
         }
 
-        private void UpdateModList(string modName)
+        private void UpdateModList(string modName, bool reselect)
         {
             modsListView.Items.Clear();
             SortLists();
@@ -288,6 +288,11 @@ namespace KSP_Mod_Manager
                 modsListView.SelectedIndices.Add(0);
             }
 
+            if (reselect)
+            {
+                modsListView.Select();
+            }
+
             // Updating
             foreach (ModInfo mod in modInfo.modList)
             {
@@ -353,7 +358,7 @@ namespace KSP_Mod_Manager
                 form.ShowDialog();
             }
 
-            UpdateModList(selectedItem);
+            UpdateModList(selectedItem, true);
         }
 
         // Buttons and stuff
@@ -368,7 +373,7 @@ namespace KSP_Mod_Manager
                 filterList.Add(e.ClickedItem.Text);
             }
 
-            UpdateModList("");
+            UpdateModList("", true);
         }
 
         private void reinstallAllButton_Click(object sender, EventArgs e)
@@ -394,7 +399,7 @@ namespace KSP_Mod_Manager
                 InstallDeinstallForm form = new InstallDeinstallForm(new List<ModInfo>(), new List<ModInfo>(), sendListB, sendListA);
                 form.ShowDialog();
 
-                UpdateModList(selectedItem);
+                UpdateModList(selectedItem, true);
             }
         }
 
@@ -415,7 +420,7 @@ namespace KSP_Mod_Manager
             LoadSelectedKspInstance();
 
             initialised = true;
-            UpdateModList("");
+            UpdateModList("", true);
         }
 
         private void checkUpdateButton_Click(object sender, EventArgs e)
@@ -435,7 +440,7 @@ namespace KSP_Mod_Manager
                 InstallDeinstallForm form = new InstallDeinstallForm(sendList, new List<ModInfo>(), new List<InstalledInfo>(), new List<ModInfo>());
                 form.ShowDialog();
 
-                UpdateModList(selectedItem);
+                UpdateModList(selectedItem, true);
             }
         }
 
@@ -474,7 +479,7 @@ namespace KSP_Mod_Manager
                 InstallDeinstallForm form = new InstallDeinstallForm(new List<ModInfo>(), sendList, sendListB, sendListA);
                 form.ShowDialog();
 
-                UpdateModList(selectedItem);
+                UpdateModList(selectedItem, true);
             }
         }
 
@@ -510,7 +515,7 @@ namespace KSP_Mod_Manager
                 fav.isFav = true;
             }
 
-            UpdateModList(selectedItem);
+            UpdateModList(selectedItem, true);
         }
 
         EditCategories editCategories;
@@ -579,7 +584,7 @@ namespace KSP_Mod_Manager
                 }
             }
 
-            UpdateModList("");
+            UpdateModList("", true);
         }
 
         private void deleteZipButton_Click(object sender, EventArgs e)
@@ -594,7 +599,7 @@ namespace KSP_Mod_Manager
             }
 
             ChangeModFolder(modFolderBox.Text);
-            UpdateModList("");
+            UpdateModList("", true);
         }
 
         private void topButton1_Click(object sender, EventArgs e)
@@ -614,7 +619,7 @@ namespace KSP_Mod_Manager
                 InstallDeinstallForm form = new InstallDeinstallForm(new List<ModInfo>(), new List<ModInfo>(), sendList, new List<ModInfo>());
                 form.ShowDialog();
 
-                UpdateModList(selectedItem);
+                UpdateModList(selectedItem, true);
             }
         }
 
@@ -643,7 +648,7 @@ namespace KSP_Mod_Manager
                 InstallDeinstallForm form = new InstallDeinstallForm(new List<ModInfo>(), new List<ModInfo>(), new List<InstalledInfo>(), sendList);
                 form.ShowDialog();
 
-                UpdateModList(selectedItem);
+                UpdateModList(selectedItem, true);
             }
         }
 
@@ -793,7 +798,7 @@ namespace KSP_Mod_Manager
                 selectedMod.name = opNameBox.Text;
 
                 modInfo.ManageModInfo(selectedMod);
-                UpdateModList(opNameBox.Text);
+                UpdateModList(opNameBox.Text, false);
             }
         }
 
@@ -804,7 +809,7 @@ namespace KSP_Mod_Manager
                 selectedMod.category = opCategoryBox.Text;
 
                 modInfo.ManageModInfo(selectedMod);
-                UpdateModList(selectedItem);
+                UpdateModList(selectedItem, false);
             }
         }
 
@@ -837,7 +842,7 @@ namespace KSP_Mod_Manager
                 selectedFav.isFav = opIsFavoriteBox.Checked;
 
                 modInfo.ManageModInfo(selectedMod);
-                UpdateModList(selectedItem);
+                UpdateModList(selectedItem, false);
             }
         }
 
@@ -848,7 +853,7 @@ namespace KSP_Mod_Manager
                 selectedMod.canUpdate = opCanDownloadBox.Checked;
 
                 modInfo.ManageModInfo(selectedMod);
-                UpdateModList(selectedItem);
+                UpdateModList(selectedItem, true);
             }
         }
 
@@ -865,7 +870,7 @@ namespace KSP_Mod_Manager
             InstallDeinstallForm form = new InstallDeinstallForm(sendList, new List<ModInfo>(), new List<InstalledInfo>(), new List<ModInfo>());
             form.ShowDialog();
 
-            UpdateModList(selectedItem);
+            UpdateModList(selectedItem, true);
         }
 
         private void opDownloadButton_Click(object sender, EventArgs e)
@@ -879,7 +884,7 @@ namespace KSP_Mod_Manager
                 InstallDeinstallForm form = new InstallDeinstallForm(new List<ModInfo>(), sendList, new List<InstalledInfo>(), new List<ModInfo>());
                 form.ShowDialog();
 
-                UpdateModList(selectedItem);
+                UpdateModList(selectedItem, true);
             }
 
             else
@@ -898,7 +903,7 @@ namespace KSP_Mod_Manager
             InstallDeinstallForm form = new InstallDeinstallForm(new List<ModInfo>(), new List<ModInfo>(), sendListB, sendListA);
             form.ShowDialog();
 
-            UpdateModList(selectedItem);
+            UpdateModList(selectedItem, true);
         }
 
         private void opAddCategoryButton_Click_1(object sender, EventArgs e)
@@ -928,11 +933,22 @@ namespace KSP_Mod_Manager
                 try
                 {
                     selectedFav.isFav = !selectedFav.isFav;
+                    opIsFavoriteBox.Checked = selectedFav.isFav;
+
+                    string isFav;
+                    if (selectedFav.isFav)
+                    {
+                        isFav = "True";
+                    }
+                    else
+                    {
+                        isFav = "False";
+                    }
+
+                    modsListView.SelectedItems[0].SubItems[4].Text = isFav;
                 }
                 catch
                 { }
-
-                UpdateModList(selectedItem);
             }
         }
 
@@ -945,7 +961,7 @@ namespace KSP_Mod_Manager
         {
             filterList.Clear();
             filterList.Add("ALL");
-            UpdateModList("");
+            UpdateModList("", true);
         }
 
         private void catButton2_Click(object sender, EventArgs e)
@@ -955,7 +971,7 @@ namespace KSP_Mod_Manager
             filterList.Add("API");
             filterList.Add("Core");
 
-            UpdateModList("");
+            UpdateModList("", true);
         }
 
         private void catButton3_Click(object sender, EventArgs e)
@@ -964,7 +980,7 @@ namespace KSP_Mod_Manager
 
             filterList.Add("Tools");
 
-            UpdateModList("");
+            UpdateModList("", true);
         }
 
         private void catButton4_Click(object sender, EventArgs e)
@@ -976,7 +992,7 @@ namespace KSP_Mod_Manager
             filterList.Add("Realism");
             filterList.Add("Planet Stuff");
 
-            UpdateModList("");
+            UpdateModList("", true);
         }
 
         private void catButton5_Click(object sender, EventArgs e)
@@ -987,7 +1003,7 @@ namespace KSP_Mod_Manager
             filterList.Add("Graphic Mods");
             filterList.Add("Sound Mods");
 
-            UpdateModList("");
+            UpdateModList("", true);
         }
 
         private void catButton6_Click(object sender, EventArgs e)
@@ -996,7 +1012,7 @@ namespace KSP_Mod_Manager
 
             filterList.Add("Parts, Base");
 
-            UpdateModList("");
+            UpdateModList("", true);
         }
 
         private void catButton7_Click(object sender, EventArgs e)
@@ -1006,7 +1022,7 @@ namespace KSP_Mod_Manager
             filterList.Add("Parts, Stock Extension");
             filterList.Add("Parts");
 
-            UpdateModList("");
+            UpdateModList("", true);
         }
 
         private void fdaButton_Click(object sender, EventArgs e)
@@ -1046,7 +1062,7 @@ namespace KSP_Mod_Manager
                 InstallDeinstallForm form = new InstallDeinstallForm(new List<ModInfo>(), sendList, sendListB, sendListA);
                 form.ShowDialog();
 
-                UpdateModList(selectedItem);
+                UpdateModList(selectedItem, true);
             }
         }
     }
