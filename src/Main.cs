@@ -451,7 +451,10 @@ namespace KSP_Mod_Manager
                 {
                     sendList.Add(mod);
                 }
+            }
 
+            foreach (ModInfo mod in sendList)
+            {
                 foreach (InstalledInfo installedMod in kspInfo.installedModList)
                 {
                     if (mod.key == installedMod.key)
@@ -1004,6 +1007,47 @@ namespace KSP_Mod_Manager
             filterList.Add("Parts");
 
             UpdateModList("");
+        }
+
+        private void fdaButton_Click(object sender, EventArgs e)
+        {
+            checkUpdateButton_Click(null, null);
+
+            List<ModInfo> sendList = new List<ModInfo>();
+            List<ModInfo> sendListA = new List<ModInfo>();
+            List<InstalledInfo> sendListB = new List<InstalledInfo>();
+
+            foreach (ModInfo mod in modInfo.modList)
+            {
+                if (!mod.zipfile.Contains("Overrides\\") && mod.websites.dlSite != "NONE" && !mod.websites.dlSite.Contains("forum.kerbalspaceprogram.com"))
+                {
+                    sendList.Add(mod);
+                }
+            }
+
+            foreach (ModInfo mod in sendList)
+            {
+                foreach (InstalledInfo installedMod in kspInfo.installedModList)
+                {
+                    if (mod.key == installedMod.key)
+                    {
+                        if (mod.version != installedMod.version)
+                        {
+                            sendListA.Add(mod);
+                            sendListB.Add(installedMod);
+                        }
+                        break;
+                    }
+                }
+            }
+
+            if (sendList.Count + sendListA.Count + sendListB.Count > 0)
+            {
+                InstallDeinstallForm form = new InstallDeinstallForm(new List<ModInfo>(), sendList, sendListB, sendListA);
+                form.ShowDialog();
+
+                UpdateModList(selectedItem);
+            }
         }
     }
 }

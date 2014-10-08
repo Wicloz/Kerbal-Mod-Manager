@@ -55,8 +55,8 @@
             this.topButton1 = new System.Windows.Forms.Button();
             this.topButton2 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.opReinstallButton = new System.Windows.Forms.Button();
             this.opCheckUpdateButton = new System.Windows.Forms.Button();
+            this.opReinstallButton = new System.Windows.Forms.Button();
             this.addInstanceButton = new System.Windows.Forms.Button();
             this.removeInstanceButton = new System.Windows.Forms.Button();
             this.downloadModButton = new System.Windows.Forms.Button();
@@ -82,6 +82,7 @@
             this.catButton5 = new System.Windows.Forms.Button();
             this.catButton7 = new System.Windows.Forms.Button();
             this.favAllButton = new System.Windows.Forms.Button();
+            this.fdaButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -128,7 +129,7 @@
             // 
             this.opNameBox.Location = new System.Drawing.Point(107, 19);
             this.opNameBox.Name = "opNameBox";
-            this.opNameBox.Size = new System.Drawing.Size(506, 20);
+            this.opNameBox.Size = new System.Drawing.Size(489, 20);
             this.opNameBox.TabIndex = 6;
             this.opNameBox.TextChanged += new System.EventHandler(this.opNameBox_TextChanged);
             // 
@@ -136,7 +137,7 @@
             // 
             this.opSiteBox.Location = new System.Drawing.Point(107, 72);
             this.opSiteBox.Name = "opSiteBox";
-            this.opSiteBox.Size = new System.Drawing.Size(506, 20);
+            this.opSiteBox.Size = new System.Drawing.Size(496, 20);
             this.opSiteBox.TabIndex = 8;
             this.opSiteBox.TextChanged += new System.EventHandler(this.opSiteBox_TextChanged);
             // 
@@ -144,7 +145,7 @@
             // 
             this.opDlSiteBox.Location = new System.Drawing.Point(107, 98);
             this.opDlSiteBox.Name = "opDlSiteBox";
-            this.opDlSiteBox.Size = new System.Drawing.Size(506, 20);
+            this.opDlSiteBox.Size = new System.Drawing.Size(546, 20);
             this.opDlSiteBox.TabIndex = 9;
             this.opDlSiteBox.TextChanged += new System.EventHandler(this.opDlSiteBox_TextChanged);
             // 
@@ -193,7 +194,7 @@
             "Graphic Install Packs"});
             this.opCategoryBox.Location = new System.Drawing.Point(107, 45);
             this.opCategoryBox.Name = "opCategoryBox";
-            this.opCategoryBox.Size = new System.Drawing.Size(506, 21);
+            this.opCategoryBox.Size = new System.Drawing.Size(446, 21);
             this.opCategoryBox.TabIndex = 13;
             this.opCategoryBox.TextChanged += new System.EventHandler(this.opCategoryBox_TextChanged);
             // 
@@ -257,7 +258,7 @@
             // 
             // opGoogleButton
             // 
-            this.opGoogleButton.Location = new System.Drawing.Point(756, 19);
+            this.opGoogleButton.Location = new System.Drawing.Point(602, 19);
             this.opGoogleButton.Name = "opGoogleButton";
             this.opGoogleButton.Size = new System.Drawing.Size(51, 20);
             this.opGoogleButton.TabIndex = 21;
@@ -267,7 +268,7 @@
             // 
             // editCategoryButton
             // 
-            this.editCategoryButton.Location = new System.Drawing.Point(763, 45);
+            this.editCategoryButton.Location = new System.Drawing.Point(609, 45);
             this.editCategoryButton.Name = "editCategoryButton";
             this.editCategoryButton.Size = new System.Drawing.Size(44, 21);
             this.editCategoryButton.TabIndex = 20;
@@ -277,7 +278,7 @@
             // 
             // opAddCategoryButton
             // 
-            this.opAddCategoryButton.Location = new System.Drawing.Point(713, 45);
+            this.opAddCategoryButton.Location = new System.Drawing.Point(559, 45);
             this.opAddCategoryButton.Name = "opAddCategoryButton";
             this.opAddCategoryButton.Size = new System.Drawing.Size(44, 21);
             this.opAddCategoryButton.TabIndex = 20;
@@ -287,7 +288,7 @@
             // 
             // opOpenSiteButton
             // 
-            this.opOpenSiteButton.Location = new System.Drawing.Point(763, 72);
+            this.opOpenSiteButton.Location = new System.Drawing.Point(609, 72);
             this.opOpenSiteButton.Name = "opOpenSiteButton";
             this.opOpenSiteButton.Size = new System.Drawing.Size(44, 20);
             this.opOpenSiteButton.TabIndex = 19;
@@ -358,16 +359,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Updating";
             // 
-            // opReinstallButton
-            // 
-            this.opReinstallButton.Location = new System.Drawing.Point(556, 194);
-            this.opReinstallButton.Name = "opReinstallButton";
-            this.opReinstallButton.Size = new System.Drawing.Size(398, 43);
-            this.opReinstallButton.TabIndex = 14;
-            this.opReinstallButton.Text = "Reinstall Mod";
-            this.opReinstallButton.UseVisualStyleBackColor = true;
-            this.opReinstallButton.Click += new System.EventHandler(this.opReinstallButton_Click);
-            // 
             // opCheckUpdateButton
             // 
             this.opCheckUpdateButton.Location = new System.Drawing.Point(6, 19);
@@ -377,6 +368,16 @@
             this.opCheckUpdateButton.Text = "Check For Update";
             this.opCheckUpdateButton.UseVisualStyleBackColor = true;
             this.opCheckUpdateButton.Click += new System.EventHandler(this.opCheckUpdateButton_Click);
+            // 
+            // opReinstallButton
+            // 
+            this.opReinstallButton.Location = new System.Drawing.Point(556, 194);
+            this.opReinstallButton.Name = "opReinstallButton";
+            this.opReinstallButton.Size = new System.Drawing.Size(398, 43);
+            this.opReinstallButton.TabIndex = 14;
+            this.opReinstallButton.Text = "Reinstall Mod";
+            this.opReinstallButton.UseVisualStyleBackColor = true;
+            this.opReinstallButton.Click += new System.EventHandler(this.opReinstallButton_Click);
             // 
             // addInstanceButton
             // 
@@ -603,11 +604,22 @@
             this.favAllButton.UseVisualStyleBackColor = true;
             this.favAllButton.Click += new System.EventHandler(this.favAllButton_Click);
             // 
+            // fdaButton
+            // 
+            this.fdaButton.Location = new System.Drawing.Point(961, 336);
+            this.fdaButton.Name = "fdaButton";
+            this.fdaButton.Size = new System.Drawing.Size(191, 41);
+            this.fdaButton.TabIndex = 42;
+            this.fdaButton.Text = "Force Update All Mods";
+            this.fdaButton.UseVisualStyleBackColor = true;
+            this.fdaButton.Click += new System.EventHandler(this.fdaButton_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1164, 802);
+            this.Controls.Add(this.fdaButton);
             this.Controls.Add(this.opReinstallButton);
             this.Controls.Add(this.favAllButton);
             this.Controls.Add(this.catButton7);
@@ -708,6 +720,7 @@
         private System.Windows.Forms.Button catButton5;
         private System.Windows.Forms.Button catButton7;
         private System.Windows.Forms.Button favAllButton;
+        private System.Windows.Forms.Button fdaButton;
     }
 }
 
