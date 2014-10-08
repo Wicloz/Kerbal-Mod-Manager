@@ -506,6 +506,8 @@ namespace KSP_Mod_Manager
             {
                 fav.isFav = true;
             }
+
+            UpdateModList(selectedItem);
         }
 
         EditCategories editCategories;
@@ -661,7 +663,7 @@ namespace KSP_Mod_Manager
             selectedInstalledMod = Functions.GetInstalledMod(itemName);
             selectedMod = Functions.GetDownloadedMod(itemName);
 
-            if (selectedMod.isInstalled || selectedMod == null)
+            if (selectedMod == null || selectedMod.isInstalled)
             {
                 mode = "installed";
             }
@@ -753,6 +755,8 @@ namespace KSP_Mod_Manager
         private void BlockSettingEditor()
         {
             opInstallButton.Enabled = false;
+            opReinstallButton.Enabled = false;
+
             groupBox1.Enabled = false;
             groupBox2.Enabled = false;
 
@@ -762,6 +766,7 @@ namespace KSP_Mod_Manager
         private void UnlockSettingEditor()
         {
             opInstallButton.Enabled = true;
+            opReinstallButton.Enabled = true;
 
             groupBox1.Enabled = true;
             groupBox2.Enabled = true;

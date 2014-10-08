@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
 using System.Net;
+using System.IO.Compression;
 
 namespace KSP_Mod_Manager
 {
@@ -94,8 +95,7 @@ namespace KSP_Mod_Manager
 
             try
             {
-                FileStream fs = new FileStream(downloadFolder + "\\" + modInfo.name.Replace(" ", "") + ".zip", FileMode.Open);
-                fs.Close();
+                ZipFile.ExtractToDirectory(downloadFolder + "\\" + modInfo.name.Replace(" ", "") + ".zip", downloadFolder + "\\temp");
                 PostDownload();
             }
             catch

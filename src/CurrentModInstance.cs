@@ -20,23 +20,7 @@ namespace KSP_Mod_Manager
         {
             modsPath = path;
 
-            if (File.Exists(modsPath + "\\ModList.txt"))
-            {
-                modList = SaveLoad.LoadFileBf<List<ModInfo>>(path + "\\ModList.txt");
-            }
-            else
-            {
-                modList = new List<ModInfo>();
-            }
-
-            if (File.Exists(modsPath + "\\SiteList.txt"))
-            {
-                siteList = SaveLoad.LoadFileBf<List<SiteInfo>>(path + "\\SiteList.txt");
-            }
-            else
-            {
-                siteList = new List<SiteInfo>();
-            }
+            LoadFiles(modsPath);
 
             if (modsPath.Contains(":\\"))
             {
@@ -64,6 +48,36 @@ namespace KSP_Mod_Manager
             modsPath = "";
         }
 
+        public void LoadFiles(string path)
+        {
+            if (File.Exists(modsPath + "\\ModList.txt"))
+            {
+                modList = SaveLoad.LoadFileBf<List<ModInfo>>(path + "\\ModList.txt");
+            }
+            else
+            {
+                modList = new List<ModInfo>();
+            }
+
+            if (File.Exists(modsPath + "\\SiteList.txt"))
+            {
+                siteList = SaveLoad.LoadFileBf<List<SiteInfo>>(path + "\\SiteList.txt");
+            }
+            else
+            {
+                siteList = new List<SiteInfo>();
+            }
+        }
+
+        public void SaveFiles(string path)
+        {
+            if (loaded)
+            {
+                SaveLoad.SaveFileBf(modList, path + "\\ModList.txt");
+                SaveLoad.SaveFileBf(siteList, path + "\\SiteList.txt");
+            }
+        }
+
         private void SetupModFolder(string path)
         {
             Directory.CreateDirectory(path + "\\Overrides");
@@ -76,15 +90,6 @@ namespace KSP_Mod_Manager
             if (Directory.Exists(path + "\\ModDownloads"))
             {
                 Functions.ProcessDirectory(path + "\\ModDownloads", true);
-            }
-        }
-
-        public void SaveFiles(string path)
-        {
-            if (loaded)
-            {
-                SaveLoad.SaveFileBf(modList, path + "\\ModList.txt");
-                SaveLoad.SaveFileBf(siteList, path + "\\SiteList.txt");
             }
         }
 

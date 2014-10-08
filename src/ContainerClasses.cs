@@ -36,6 +36,19 @@ namespace KSP_Mod_Manager
         public bool canUpdate;
         public string version;
 
+        public ModInfo()
+        { }
+
+        public ModInfo(string Zipfile)
+        {
+            name = Functions.CleanName(Zipfile);
+            category = "none";
+            key = name;
+            zipfile = Zipfile;
+            canUpdate = false;
+            version = "none";
+        }
+
         public SiteInfo websites
         {
             get
@@ -72,24 +85,6 @@ namespace KSP_Mod_Manager
 
                 return returnval;
             }
-        }
-
-        public ModInfo()
-        { }
-
-        public ModInfo(string Zipfile)
-        {
-            name = Functions.CleanName(Zipfile);
-            if (name.Contains("overrides\\"))
-            {
-                name = name.Replace("overrides\\", "") + "\\Override";
-            }
-
-            category = "none";
-            key = name;
-            zipfile = Zipfile;
-            canUpdate = false;
-            version = "none";
         }
 
         public bool hasZipfile

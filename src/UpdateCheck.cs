@@ -111,11 +111,18 @@ namespace KSP_Mod_Manager
 
         private void client_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
-            if (!String.IsNullOrEmpty(e.Result))
+            try
             {
-                PostDownload(e.Result);
+                if (!String.IsNullOrEmpty(e.Result))
+                {
+                    PostDownload(e.Result);
+                }
+                else
+                {
+                    Main.acces.LogMessage("Site failed to download, skipping '" + modInfo.name + "'!");
+                }
             }
-            else
+            catch
             {
                 Main.acces.LogMessage("Site failed to download, skipping '" + modInfo.name + "'!");
             }

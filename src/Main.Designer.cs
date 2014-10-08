@@ -128,7 +128,7 @@
             // 
             this.opNameBox.Location = new System.Drawing.Point(107, 19);
             this.opNameBox.Name = "opNameBox";
-            this.opNameBox.Size = new System.Drawing.Size(643, 20);
+            this.opNameBox.Size = new System.Drawing.Size(506, 20);
             this.opNameBox.TabIndex = 6;
             this.opNameBox.TextChanged += new System.EventHandler(this.opNameBox_TextChanged);
             // 
@@ -136,7 +136,7 @@
             // 
             this.opSiteBox.Location = new System.Drawing.Point(107, 72);
             this.opSiteBox.Name = "opSiteBox";
-            this.opSiteBox.Size = new System.Drawing.Size(650, 20);
+            this.opSiteBox.Size = new System.Drawing.Size(506, 20);
             this.opSiteBox.TabIndex = 8;
             this.opSiteBox.TextChanged += new System.EventHandler(this.opSiteBox_TextChanged);
             // 
@@ -144,7 +144,7 @@
             // 
             this.opDlSiteBox.Location = new System.Drawing.Point(107, 98);
             this.opDlSiteBox.Name = "opDlSiteBox";
-            this.opDlSiteBox.Size = new System.Drawing.Size(700, 20);
+            this.opDlSiteBox.Size = new System.Drawing.Size(506, 20);
             this.opDlSiteBox.TabIndex = 9;
             this.opDlSiteBox.TextChanged += new System.EventHandler(this.opDlSiteBox_TextChanged);
             // 
@@ -152,7 +152,7 @@
             // 
             this.opInstallButton.Location = new System.Drawing.Point(147, 194);
             this.opInstallButton.Name = "opInstallButton";
-            this.opInstallButton.Size = new System.Drawing.Size(807, 43);
+            this.opInstallButton.Size = new System.Drawing.Size(403, 43);
             this.opInstallButton.TabIndex = 10;
             this.opInstallButton.Text = "Install Mod / Deinstall Mod";
             this.opInstallButton.UseVisualStyleBackColor = true;
@@ -173,7 +173,7 @@
             // 
             this.opDownloadButton.Location = new System.Drawing.Point(6, 85);
             this.opDownloadButton.Name = "opDownloadButton";
-            this.opDownloadButton.Size = new System.Drawing.Size(174, 37);
+            this.opDownloadButton.Size = new System.Drawing.Size(130, 37);
             this.opDownloadButton.TabIndex = 12;
             this.opDownloadButton.Text = "Update Mod";
             this.opDownloadButton.UseVisualStyleBackColor = true;
@@ -193,7 +193,7 @@
             "Graphic Install Packs"});
             this.opCategoryBox.Location = new System.Drawing.Point(107, 45);
             this.opCategoryBox.Name = "opCategoryBox";
-            this.opCategoryBox.Size = new System.Drawing.Size(600, 21);
+            this.opCategoryBox.Size = new System.Drawing.Size(506, 21);
             this.opCategoryBox.TabIndex = 13;
             this.opCategoryBox.TextChanged += new System.EventHandler(this.opCategoryBox_TextChanged);
             // 
@@ -250,7 +250,7 @@
             this.groupBox1.Controls.Add(this.opDlSiteBox);
             this.groupBox1.Location = new System.Drawing.Point(147, 38);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(813, 150);
+            this.groupBox1.Size = new System.Drawing.Size(659, 150);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings for Mod";
@@ -318,7 +318,7 @@
             // 
             // checkUpdateButton
             // 
-            this.checkUpdateButton.Location = new System.Drawing.Point(960, 435);
+            this.checkUpdateButton.Location = new System.Drawing.Point(960, 217);
             this.checkUpdateButton.Name = "checkUpdateButton";
             this.checkUpdateButton.Size = new System.Drawing.Size(192, 53);
             this.checkUpdateButton.TabIndex = 20;
@@ -328,7 +328,7 @@
             // 
             // topButton1
             // 
-            this.topButton1.Location = new System.Drawing.Point(960, 217);
+            this.topButton1.Location = new System.Drawing.Point(960, 38);
             this.topButton1.Name = "topButton1";
             this.topButton1.Size = new System.Drawing.Size(192, 34);
             this.topButton1.TabIndex = 21;
@@ -338,7 +338,7 @@
             // 
             // topButton2
             // 
-            this.topButton2.Location = new System.Drawing.Point(960, 257);
+            this.topButton2.Location = new System.Drawing.Point(960, 78);
             this.topButton2.Name = "topButton2";
             this.topButton2.Size = new System.Drawing.Size(192, 34);
             this.topButton2.TabIndex = 22;
@@ -348,22 +348,21 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.opReinstallButton);
             this.groupBox2.Controls.Add(this.opCheckUpdateButton);
             this.groupBox2.Controls.Add(this.opDownloadButton);
             this.groupBox2.Controls.Add(this.opCanDownloadBox);
-            this.groupBox2.Location = new System.Drawing.Point(960, 38);
+            this.groupBox2.Location = new System.Drawing.Point(812, 38);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(192, 173);
+            this.groupBox2.Size = new System.Drawing.Size(142, 150);
             this.groupBox2.TabIndex = 23;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Updating";
             // 
             // opReinstallButton
             // 
-            this.opReinstallButton.Location = new System.Drawing.Point(6, 128);
+            this.opReinstallButton.Location = new System.Drawing.Point(556, 194);
             this.opReinstallButton.Name = "opReinstallButton";
-            this.opReinstallButton.Size = new System.Drawing.Size(174, 36);
+            this.opReinstallButton.Size = new System.Drawing.Size(398, 43);
             this.opReinstallButton.TabIndex = 14;
             this.opReinstallButton.Text = "Reinstall Mod";
             this.opReinstallButton.UseVisualStyleBackColor = true;
@@ -373,7 +372,7 @@
             // 
             this.opCheckUpdateButton.Location = new System.Drawing.Point(6, 19);
             this.opCheckUpdateButton.Name = "opCheckUpdateButton";
-            this.opCheckUpdateButton.Size = new System.Drawing.Size(174, 37);
+            this.opCheckUpdateButton.Size = new System.Drawing.Size(130, 37);
             this.opCheckUpdateButton.TabIndex = 13;
             this.opCheckUpdateButton.Text = "Check For Update";
             this.opCheckUpdateButton.UseVisualStyleBackColor = true;
@@ -401,7 +400,7 @@
             // 
             // downloadModButton
             // 
-            this.downloadModButton.Location = new System.Drawing.Point(960, 376);
+            this.downloadModButton.Location = new System.Drawing.Point(960, 276);
             this.downloadModButton.Name = "downloadModButton";
             this.downloadModButton.Size = new System.Drawing.Size(192, 53);
             this.downloadModButton.TabIndex = 26;
@@ -431,7 +430,7 @@
             // 
             // reinstallAllButton
             // 
-            this.reinstallAllButton.Location = new System.Drawing.Point(960, 297);
+            this.reinstallAllButton.Location = new System.Drawing.Point(960, 118);
             this.reinstallAllButton.Name = "reinstallAllButton";
             this.reinstallAllButton.Size = new System.Drawing.Size(192, 34);
             this.reinstallAllButton.TabIndex = 30;
@@ -596,9 +595,9 @@
             // 
             // favAllButton
             // 
-            this.favAllButton.Location = new System.Drawing.Point(960, 337);
+            this.favAllButton.Location = new System.Drawing.Point(960, 158);
             this.favAllButton.Name = "favAllButton";
-            this.favAllButton.Size = new System.Drawing.Size(192, 33);
+            this.favAllButton.Size = new System.Drawing.Size(192, 53);
             this.favAllButton.TabIndex = 41;
             this.favAllButton.Text = "Favorite All Mods";
             this.favAllButton.UseVisualStyleBackColor = true;
@@ -609,6 +608,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1164, 802);
+            this.Controls.Add(this.opReinstallButton);
             this.Controls.Add(this.favAllButton);
             this.Controls.Add(this.catButton7);
             this.Controls.Add(this.catButton5);

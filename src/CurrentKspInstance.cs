@@ -21,34 +21,9 @@ namespace KSP_Mod_Manager
         {
             kspFolder = path;
 
-            if (File.Exists(path + "\\KMM\\Favorites.txt"))
-            {
-                favoritesList = SaveLoad.LoadFileXml<List<FavInfo>>(path + "\\KMM\\Favorites.txt");
-            }
-            else
-            {
-                favoritesList = new List<FavInfo>();
-            }
+            LoadFiles(kspFolder);
 
-            if (File.Exists(path + "\\KMM\\FileList.txt"))
-            {
-                installedFileList = SaveLoad.LoadFileXml<List<FileInfo>>(path + "\\KMM\\FileList.txt");
-            }
-            else
-            {
-                installedFileList = new List<FileInfo>();
-            }
-
-            if (File.Exists(path + "\\KMM\\ModList.txt"))
-            {
-                installedModList = SaveLoad.LoadFileXml<List<InstalledInfo>>(path + "\\KMM\\ModList.txt");
-            }
-            else
-            {
-                installedModList = new List<InstalledInfo>();
-            }
-
-            if (Directory.Exists(kspFolder))
+            if (Directory.Exists(kspFolder + "\\GameData"))
             {
                 SetupKspFolder(kspFolder);
                 ManageFileList(kspFolder);
@@ -76,13 +51,33 @@ namespace KSP_Mod_Manager
             kspFolder = "";
         }
 
-        private void SetupKspFolder(string path)
+        public void LoadFiles(string path)
         {
-            Directory.CreateDirectory(path + "\\KMM\\overrides");
-
-            if (Directory.Exists(path + "\\KMM\\temp"))
+            if (File.Exists(path + "\\KMM\\Favorites.txt"))
             {
-                Directory.Delete(path + "\\KMM\\temp", true);
+                favoritesList = SaveLoad.LoadFileXml<List<FavInfo>>(path + "\\KMM\\Favorites.txt");
+            }
+            else
+            {
+                favoritesList = new List<FavInfo>();
+            }
+
+            if (File.Exists(path + "\\KMM\\FileList.txt"))
+            {
+                installedFileList = SaveLoad.LoadFileXml<List<FileInfo>>(path + "\\KMM\\FileList.txt");
+            }
+            else
+            {
+                installedFileList = new List<FileInfo>();
+            }
+
+            if (File.Exists(path + "\\KMM\\ModList.txt"))
+            {
+                installedModList = SaveLoad.LoadFileXml<List<InstalledInfo>>(path + "\\KMM\\ModList.txt");
+            }
+            else
+            {
+                installedModList = new List<InstalledInfo>();
             }
         }
 
@@ -93,6 +88,16 @@ namespace KSP_Mod_Manager
                 SaveLoad.SaveFileXml(favoritesList, path + "\\KMM\\Favorites.txt");
                 SaveLoad.SaveFileXml(installedFileList, path + "\\KMM\\FileList.txt");
                 SaveLoad.SaveFileXml(installedModList, path + "\\KMM\\ModList.txt");
+            }
+        }
+
+        private void SetupKspFolder(string path)
+        {
+            Directory.CreateDirectory(path + "\\KMM\\overrides");
+
+            if (Directory.Exists(path + "\\KMM\\temp"))
+            {
+                Directory.Delete(path + "\\KMM\\temp", true);
             }
         }
 
