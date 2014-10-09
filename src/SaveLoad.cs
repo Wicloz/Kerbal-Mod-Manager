@@ -13,11 +13,23 @@ namespace KSP_Mod_Manager
     {
         public static void SaveFileXml<T>(T data, string file)
         {
-            FileStream fs = File.Create(file);
-            XmlSerializer xs = new XmlSerializer(typeof(T));
+            bool succeed = false;
 
-            xs.Serialize(fs, data);
-            fs.Close();
+            while (!succeed)
+            {
+                try
+                {
+                    FileStream fs = File.Create(file);
+                    XmlSerializer xs = new XmlSerializer(typeof(T));
+
+                    xs.Serialize(fs, data);
+                    fs.Close();
+
+                    succeed = true;
+                }
+                catch
+                { }
+            }
         }
 
         public static T LoadFileXml<T>(string file)
@@ -42,11 +54,23 @@ namespace KSP_Mod_Manager
 
         public static void SaveFileBf<T>(T data, string file)
         {
-            FileStream fs = File.Create(file);
-            BinaryFormatter bf = new BinaryFormatter();
+            bool succeed = false;
 
-            bf.Serialize(fs, data);
-            fs.Close();
+            while (!succeed)
+            {
+                try
+                {
+                    FileStream fs = File.Create(file);
+                    BinaryFormatter bf = new BinaryFormatter();
+
+                    bf.Serialize(fs, data);
+                    fs.Close();
+
+                    succeed = true;
+                }
+                catch
+                { }
+            }
         }
 
         public static T LoadFileBf<T>(string file)

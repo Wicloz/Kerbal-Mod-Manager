@@ -186,12 +186,12 @@
             this.opCategoryBox.Items.AddRange(new object[] {
             "API",
             "Core",
-            "Parts",
             "Tools",
             "Plugins",
+            "Graphic Install Packs",
             "Graphic Mods",
             "Sound Mods",
-            "Graphic Install Packs"});
+            "Parts"});
             this.opCategoryBox.Location = new System.Drawing.Point(107, 45);
             this.opCategoryBox.Name = "opCategoryBox";
             this.opCategoryBox.Size = new System.Drawing.Size(446, 21);

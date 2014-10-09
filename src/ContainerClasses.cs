@@ -122,6 +122,19 @@ namespace KSP_Mod_Manager
             }
         }
 
+        public ModInfo GetOverride()
+        {
+            for (int i = 0; i < Main.acces.modInfo.modList.Count; i++)
+            {
+                if (("overrides\\" + Functions.CleanName(this.name)).Replace("x", "").Replace("v", "") == Functions.CleanName(Main.acces.modInfo.modList[i].name).Replace("x", "").Replace("v", ""))
+                {
+                    return Main.acces.modInfo.modList[i];
+                }
+            }
+
+            return null;
+        }
+
         public int CompareTo(ModInfo other)
         {
             int thisCat = 999;
@@ -193,6 +206,19 @@ namespace KSP_Mod_Manager
             key = Key;
             codeName = CodeName;
             version = Version;
+        }
+
+        public InstalledInfo GetOverride()
+        {
+            for (int i = 0; i < Main.acces.kspInfo.installedModList.Count; i++)
+            {
+                if (("overrides\\" + Functions.CleanName(this.modName)).Replace("x", "").Replace("v", "") == Functions.CleanName(Main.acces.kspInfo.installedModList[i].modName).Replace("x", "").Replace("v", ""))
+                {
+                    return Main.acces.kspInfo.installedModList[i];
+                }
+            }
+
+            return null;
         }
 
         public ModInfo GetModInfo()

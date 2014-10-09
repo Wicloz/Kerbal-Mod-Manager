@@ -1019,7 +1019,6 @@ namespace KSP_Mod_Manager
         {
             filterList.Clear();
 
-            filterList.Add("Parts, Stock Extension");
             filterList.Add("Parts");
 
             UpdateModList("", true);
