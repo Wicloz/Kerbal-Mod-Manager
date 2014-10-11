@@ -83,6 +83,8 @@
             this.catButton7 = new System.Windows.Forms.Button();
             this.favAllButton = new System.Windows.Forms.Button();
             this.fdaButton = new System.Windows.Forms.Button();
+            this.versionLocal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.versionOnline = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -446,7 +448,9 @@
             this.category,
             this.installStatus,
             this.updateStatus,
-            this.favStatus});
+            this.favStatus,
+            this.versionLocal,
+            this.versionOnline});
             this.modsListView.ContextMenuStrip = this.contextMenuStrip1;
             this.modsListView.FullRowSelect = true;
             this.modsListView.GridLines = true;
@@ -463,12 +467,12 @@
             // modName
             // 
             this.modName.Text = "Mod Name";
-            this.modName.Width = 307;
+            this.modName.Width = 228;
             // 
             // category
             // 
             this.category.Text = "Category";
-            this.category.Width = 197;
+            this.category.Width = 148;
             // 
             // installStatus
             // 
@@ -478,7 +482,7 @@
             // updateStatus
             // 
             this.updateStatus.Text = "Update Status";
-            this.updateStatus.Width = 138;
+            this.updateStatus.Width = 123;
             // 
             // favStatus
             // 
@@ -614,6 +618,16 @@
             this.fdaButton.UseVisualStyleBackColor = true;
             this.fdaButton.Click += new System.EventHandler(this.fdaButton_Click);
             // 
+            // versionLocal
+            // 
+            this.versionLocal.Text = "Local Version";
+            this.versionLocal.Width = 76;
+            // 
+            // versionOnline
+            // 
+            this.versionOnline.Text = "Online Version";
+            this.versionOnline.Width = 80;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -721,6 +735,8 @@
         private System.Windows.Forms.Button catButton7;
         private System.Windows.Forms.Button favAllButton;
         private System.Windows.Forms.Button fdaButton;
+        private System.Windows.Forms.ColumnHeader versionLocal;
+        private System.Windows.Forms.ColumnHeader versionOnline;
     }
 }
 

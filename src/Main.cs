@@ -187,6 +187,8 @@ namespace KSP_Mod_Manager
                         lvi.SubItems.Add("Yes");
                         lvi.SubItems.Add("Not Available");
                         lvi.SubItems.Add("N/A");
+                        lvi.SubItems.Add("N/A");
+                        lvi.SubItems.Add("N/A");
 
                         modsListView.Items.Add(lvi);
                     }
@@ -229,7 +231,7 @@ namespace KSP_Mod_Manager
                     {
                         updateStatus = "Mod up to date";
                     }
-                    lvi.SubItems.Add(updateStatus);
+                    lvi.SubItems.Add(mod.zipfile);
 
                     if (mod.favorite.isFav)
                     {
@@ -239,6 +241,9 @@ namespace KSP_Mod_Manager
                     {
                         lvi.SubItems.Add("False");
                     }
+
+                    lvi.SubItems.Add(mod.vnLocal);
+                    lvi.SubItems.Add(mod.vnOnline);
 
                     modsListView.Items.Add(lvi);
                 }
@@ -264,6 +269,9 @@ namespace KSP_Mod_Manager
                         isFav = "False";
                     }
                     lvi.SubItems.Add(isFav);
+
+                    lvi.SubItems.Add("N/A");
+                    lvi.SubItems.Add(mod.vnOnline);
 
                     modsListView.Items.Add(lvi);
                 }
@@ -704,7 +712,7 @@ namespace KSP_Mod_Manager
             // Managing Option Editor
             if (selectedMod != null)
             {
-                modInfo.ManageModInfo(selectedMod);
+                selectedMod.ManageMod();
 
                 opNameBox.Text = selectedMod.name;
                 opCategoryBox.Text = selectedMod.category;
@@ -792,7 +800,7 @@ namespace KSP_Mod_Manager
             {
                 selectedMod.name = opNameBox.Text;
 
-                modInfo.ManageModInfo(selectedMod);
+                selectedMod.ManageMod();
                 UpdateModList(opNameBox.Text, false);
             }
         }
@@ -803,7 +811,7 @@ namespace KSP_Mod_Manager
             {
                 selectedMod.category = opCategoryBox.Text;
 
-                modInfo.ManageModInfo(selectedMod);
+                selectedMod.ManageMod();
                 UpdateModList(selectedItem, false);
             }
         }
@@ -813,8 +821,8 @@ namespace KSP_Mod_Manager
             if (!isChangingSelection)
             {
                 selectedMod.websites.website = opSiteBox.Text;
-                modInfo.ManageModInfo(selectedMod);
 
+                selectedMod.ManageMod();
                 UpdateOpSettings(selectedMod.name);
             }
         }
@@ -824,8 +832,8 @@ namespace KSP_Mod_Manager
             if (!isChangingSelection)
             {
                 selectedMod.websites.dlSite = opDlSiteBox.Text;
-                modInfo.ManageModInfo(selectedMod);
 
+                selectedMod.ManageMod();
                 UpdateOpSettings(selectedMod.name);
             }
         }
@@ -836,7 +844,7 @@ namespace KSP_Mod_Manager
             {
                 selectedFav.isFav = opIsFavoriteBox.Checked;
 
-                modInfo.ManageModInfo(selectedMod);
+                selectedMod.ManageMod();
                 UpdateModList(selectedItem, false);
             }
         }
@@ -847,7 +855,7 @@ namespace KSP_Mod_Manager
             {
                 selectedMod.canUpdate = opCanDownloadBox.Checked;
 
-                modInfo.ManageModInfo(selectedMod);
+                selectedMod.ManageMod();
                 UpdateModList(selectedItem, true);
             }
         }
@@ -876,6 +884,7 @@ namespace KSP_Mod_Manager
 
             if (selectedMod.websites.dlSite != "NONE")
             {
+                form.AddCheckUpdateMod(selectedMod);
                 form.AddUpdateMod(selectedMod);
 
                 if (form.HasActions())

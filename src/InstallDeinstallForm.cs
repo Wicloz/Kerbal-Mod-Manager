@@ -136,7 +136,7 @@ namespace KSP_Mod_Manager
             {
                 actionDone = true;
                 uc.checkDone = false;
-                um.progress = 0;
+                uc.progress = 0;
             }
 
             if (actionDone)

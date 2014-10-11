@@ -165,78 +165,7 @@ namespace KSP_Mod_Manager
 
             foreach (ModInfo mod in modList)
             {
-                ManageModInfo(mod);
-            }
-        }
-
-        public void ManageModInfo(ModInfo mod)
-        {
-            if (mod.zipfile == "none" && (mod.key == "none" || mod.key == "" || mod.key == null))
-            {
-                mod.key = Functions.CleanName(mod.name);
-            }
-            else if (mod.key == "none" || mod.key == "" || mod.key == null)
-            {
-                mod.key = Functions.CleanName(mod.zipfile);
-            }
-
-            foreach (SiteInfo site in siteList)
-            {
-                if (site.key == mod.key)
-                {
-                    if (site.website.Contains("kerbal.curseforge.com"))
-                    {
-                        site.dlSite = site.website + "/files/latest";
-                    }
-
-                    if (site.website.Contains("kerbalstuff.com"))
-                    {
-                        StringReader sr = new StringReader(mod.version.Replace("<h2>Version", "").Replace(" ", ""));
-                        string version = "";
-
-                        for (int i = 0; i < 22; i++)
-                        {
-                            char[] c = new char[1];
-                            sr.Read(c, 0, 1);
-
-                            if (c[0] == '<')
-                            {
-                                break;
-                            }
-                            else
-                            {
-                                version += Convert.ToString(c[0]);
-                            }
-                        }
-
-                        site.dlSite = site.website + "/download/" + version;
-                    }
-
-                    if (site.website.Contains("github.com"))
-                    {
-                        StringReader sr = new StringReader(mod.version.Replace("<a href=\"/", "").Replace(" ", ""));
-                        string version = "";
-
-                        for (int i = 0; i < 111; i++)
-                        {
-                            char[] c = new char[1];
-                            sr.Read(c, 0, 1);
-
-                            if (c[0] == '"')
-                            {
-                                break;
-                            }
-                            else
-                            {
-                                version += Convert.ToString(c[0]);
-                            }
-                        }
-
-                        site.dlSite = "https://github.com/" + version;
-                    }
-
-                    break;
-                }
+                mod.ManageMod();
             }
         }
     }

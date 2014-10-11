@@ -75,6 +75,7 @@
     <Compile Include="LogForm.Designer.cs">
       <DependentUpon>LogForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ModInfo.cs" />
     <Compile Include="SaveLoad.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>

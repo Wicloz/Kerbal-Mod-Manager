@@ -20,6 +20,7 @@ namespace KSP_Mod_Manager
         {
             modInfo = ModInfo;
             string site = modInfo.websites.website;
+            modInfo.GetVersion(false);
 
             if (site.Contains("kerbal.curseforge.com"))
             {
