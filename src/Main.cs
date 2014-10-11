@@ -300,15 +300,6 @@ namespace KSP_Mod_Manager
             {
                 modsListView.Select();
             }
-
-            // Updating
-            foreach (ModInfo mod in modInfo.modList)
-            {
-                if (mod.canUpdate)
-                {
-                    Directory.CreateDirectory(modInfo.modsPath + "\\ModDownloads\\" + mod.name.Replace(" ", "_"));
-                }
-            }
         }
 
         private void HandleCategories()

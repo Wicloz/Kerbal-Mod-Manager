@@ -68,7 +68,7 @@ namespace KSP_Mod_Manager
                 modInfo.GetVersion(siteString, true);
             }
 
-            string newModLocation = Main.acces.modInfo.modsPath + "\\" + Path.GetFileNameWithoutExtension(newModFile) + "_v" + modInfo.vnLocal + ".zip";
+            string newModLocation = Main.acces.modInfo.modsPath + "\\" + modInfo.name.Replace(" ", "") + "_v" + modInfo.vnLocal + ".zip";
             File.Delete(newModLocation);
             File.Delete(Main.acces.modInfo.modsPath + "\\" + modInfo.zipfile);
 

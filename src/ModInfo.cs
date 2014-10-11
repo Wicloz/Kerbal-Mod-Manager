@@ -15,7 +15,7 @@ namespace KSP_Mod_Manager
         public string category;
         public string key;
         public string zipfile;
-        public bool canUpdate;
+        private bool CanUpdate;
         public string version;
         public string vnLocal;
         public string vnOnline;
@@ -33,6 +33,43 @@ namespace KSP_Mod_Manager
             version = "none";
             vnLocal = "N/A";
             vnOnline = "N/A";
+        }
+
+        public bool canUpdate
+        {
+            get
+            {
+                return CanUpdate;
+            }
+            set
+            {
+                CanUpdate = value;
+                string downloadFolder = Main.acces.modInfo.modsPath + "\\ModDownloads\\" + this.name.Replace(" ", "_");
+
+                if (value)
+                {
+                    Directory.CreateDirectory(downloadFolder);
+                }
+                else
+                {
+                    try
+                    {
+                        Directory.Delete(downloadFolder);
+                    }
+                    catch
+                    { }
+
+                    if (Directory.GetDirectories(Main.acces.modInfo.modsPath + "\\ModDownloads").Length <= 0)
+                    {
+                        try
+                        {
+                            Directory.Delete(Main.acces.modInfo.modsPath + "\\ModDownloads", true);
+                        }
+                        catch
+                        { }
+                    }
+                }
+            }
         }
 
         public SiteInfo websites
@@ -151,9 +188,7 @@ namespace KSP_Mod_Manager
                 }
 
                 StringReader sr2 = new StringReader(versionLine.Replace(" ", ""));
-                List<char> endCharList = new List<char>();
-                endCharList.Add('<');
-                newVersion = ExtractVersion(sr2, endCharList, '>');
+                newVersion = ExtractVersion(sr2, '<', '>');
             }
 
             else if (site.website.Contains("github.com"))
@@ -164,9 +199,7 @@ namespace KSP_Mod_Manager
                 }
 
                 StringReader sr2 = new StringReader(versionLine.Replace(" ", ""));
-                List<char> endCharList = new List<char>();
-                endCharList.Add('/');
-                newVersion = ExtractVersion(sr2, endCharList, '=');
+                newVersion = ExtractVersion(sr2, '/', '=');
             }
 
             if (postdownload)
@@ -176,6 +209,13 @@ namespace KSP_Mod_Manager
             vnOnline = newVersion;
 
             sr1.Dispose();
+        }
+
+        public string ExtractVersion(StringReader sr, char endChar, char startChar)
+        {
+            List<char> endCharList = new List<char>();
+            endCharList.Add(endChar);
+            return ExtractVersion(sr, endCharList, startChar);
         }
 
         public string ExtractVersion(StringReader sr, List<char> endChars, char startChar)

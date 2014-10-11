@@ -86,11 +86,6 @@ namespace KSP_Mod_Manager
             {
                 Directory.Delete(path + "\\SiteDownload", true);
             }
-
-            if (Directory.Exists(path + "\\ModDownloads"))
-            {
-                Functions.ProcessDirectory(path + "\\ModDownloads", true);
-            }
         }
 
         private void ManageModLists(string path)
