@@ -89,7 +89,7 @@
             this.MaximizeBox = false;
             this.Name = "InstallDeinstallForm";
             this.Text = "InstallDeinstall_Form";
-            this.Shown += new System.EventHandler(this.InstallDeinstall_Form_Shown);
+            this.Shown += new System.EventHandler(this.InstallDeinstallForm_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

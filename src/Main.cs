@@ -343,22 +343,28 @@ namespace KSP_Mod_Manager
 
             if (!isInstalled)
             {
-                List<ModInfo> sendList = new List<ModInfo>();
-                sendList.Add(selectedMod);
+                InstallDeinstallForm form = new InstallDeinstallForm();
 
-                InstallDeinstallForm form = new InstallDeinstallForm(new List<ModInfo>(), new List<ModInfo>(), new List<InstalledInfo>(), sendList);
-                form.ShowDialog();
+                form.AddInstallMod(selectedMod);
+
+                if (form.HasActions())
+                {
+                    form.ShowDialog();
+                    UpdateModList(selectedItem, true);
+                }
             }
             else if (isInstalled)
             {
-                List<InstalledInfo> sendList = new List<InstalledInfo>();
-                sendList.Add(selectedInstalledMod);
+                InstallDeinstallForm form = new InstallDeinstallForm();
 
-                InstallDeinstallForm form = new InstallDeinstallForm(new List<ModInfo>(), new List<ModInfo>(), sendList, new List<ModInfo>());
-                form.ShowDialog();
+                form.AddDeinstallMod(selectedInstalledMod);
+
+                if (form.HasActions())
+                {
+                    form.ShowDialog();
+                    UpdateModList(selectedItem, true);
+                }
             }
-
-            UpdateModList(selectedItem, true);
         }
 
         // Buttons and stuff
@@ -378,8 +384,7 @@ namespace KSP_Mod_Manager
 
         private void reinstallAllButton_Click(object sender, EventArgs e)
         {
-            List<ModInfo> sendListA = new List<ModInfo>();
-            List<InstalledInfo> sendListB = new List<InstalledInfo>();
+            InstallDeinstallForm form = new InstallDeinstallForm();
 
             foreach (ModInfo mod in modInfo.modList)
             {
@@ -387,18 +392,16 @@ namespace KSP_Mod_Manager
                 {
                     if (mod.key == installedMod.key && !mod.zipfile.Contains("Overrides\\"))
                     {
-                        sendListA.Add(mod);
-                        sendListB.Add(installedMod);
+                        form.AddInstallMod(mod);
+                        form.AddDeinstallMod(installedMod);
                         break;
                     }
                 }
             }
 
-            if (sendListA.Count + sendListB.Count > 0 && sendListA.Count == sendListB.Count)
+            if (form.HasActions())
             {
-                InstallDeinstallForm form = new InstallDeinstallForm(new List<ModInfo>(), new List<ModInfo>(), sendListB, sendListA);
                 form.ShowDialog();
-
                 UpdateModList(selectedItem, true);
             }
         }
@@ -425,36 +428,34 @@ namespace KSP_Mod_Manager
 
         private void checkUpdateButton_Click(object sender, EventArgs e)
         {
-            List<ModInfo> sendList = new List<ModInfo>();
+            InstallDeinstallForm form = new InstallDeinstallForm();
 
             foreach (ModInfo mod in modInfo.modList)
             {
                 if (!mod.zipfile.Contains("Overrides\\") && mod.websites.website != "NONE")
                 {
-                    sendList.Add(mod);
+                    form.AddCheckUpdateMod(mod);
                 }
             }
 
-            if (sendList.Count > 0)
+            if (form.HasActions())
             {
-                InstallDeinstallForm form = new InstallDeinstallForm(sendList, new List<ModInfo>(), new List<InstalledInfo>(), new List<ModInfo>());
                 form.ShowDialog();
-
                 UpdateModList(selectedItem, true);
             }
         }
 
         private void downloadModButton_Click(object sender, EventArgs e)
         {
+            InstallDeinstallForm form = new InstallDeinstallForm();
             List<ModInfo> sendList = new List<ModInfo>();
-            List<ModInfo> sendListA = new List<ModInfo>();
-            List<InstalledInfo> sendListB = new List<InstalledInfo>();
 
             foreach (ModInfo mod in modInfo.modList)
             {
                 if (mod.canUpdate && !mod.zipfile.Contains("Overrides\\"))
                 {
                     sendList.Add(mod);
+                    form.AddUpdateMod(mod);
                 }
             }
 
@@ -466,19 +467,17 @@ namespace KSP_Mod_Manager
                     {
                         if (mod.version != installedMod.version)
                         {
-                            sendListA.Add(mod);
-                            sendListB.Add(installedMod);
+                            form.AddInstallMod(mod);
+                            form.AddDeinstallMod(installedMod);
                         }
                         break;
                     }
                 }
             }
 
-            if (sendList.Count + sendListA.Count + sendListB.Count > 0)
+            if (form.HasActions())
             {
-                InstallDeinstallForm form = new InstallDeinstallForm(new List<ModInfo>(), sendList, sendListB, sendListA);
                 form.ShowDialog();
-
                 UpdateModList(selectedItem, true);
             }
         }
@@ -604,28 +603,26 @@ namespace KSP_Mod_Manager
 
         private void topButton1_Click(object sender, EventArgs e)
         {
-            List<InstalledInfo> sendList = new List<InstalledInfo>();
+            InstallDeinstallForm form = new InstallDeinstallForm();
 
             for (int i = 0; i < kspInfo.installedModList.Count; i++)
             {
                 if (!kspInfo.installedModList[i].codeName.Contains("Overrides\\"))
                 {
-                    sendList.Add(kspInfo.installedModList[i]);
+                    form.AddDeinstallMod(kspInfo.installedModList[i]);
                 }
             }
 
-            if (sendList.Count > 0)
+            if (form.HasActions())
             {
-                InstallDeinstallForm form = new InstallDeinstallForm(new List<ModInfo>(), new List<ModInfo>(), sendList, new List<ModInfo>());
                 form.ShowDialog();
-
                 UpdateModList(selectedItem, true);
             }
         }
 
         private void topButton2_Click(object sender, EventArgs e)
         {
-            List<ModInfo> sendList = new List<ModInfo>();
+            InstallDeinstallForm form = new InstallDeinstallForm();
 
             for (int i = modInfo.modList.Count - 1; i >= 0; i--)
             {
@@ -635,7 +632,7 @@ namespace KSP_Mod_Manager
                     {
                         if (fav.isFav && !modInfo.modList[i].isInstalled)
                         {
-                            sendList.Add(modInfo.modList[i]);
+                            form.AddInstallMod(modInfo.modList[i]);
                         }
 
                         break;
@@ -643,11 +640,9 @@ namespace KSP_Mod_Manager
                 }
             }
 
-            if (sendList.Count > 0)
+            if (form.HasActions())
             {
-                InstallDeinstallForm form = new InstallDeinstallForm(new List<ModInfo>(), new List<ModInfo>(), new List<InstalledInfo>(), sendList);
                 form.ShowDialog();
-
                 UpdateModList(selectedItem, true);
             }
         }
@@ -864,27 +859,30 @@ namespace KSP_Mod_Manager
 
         private void opCheckUpdateButton_Click(object sender, EventArgs e)
         {
-            List<ModInfo> sendList = new List<ModInfo>();
-            sendList.Add(selectedMod);
+            InstallDeinstallForm form = new InstallDeinstallForm();
 
-            InstallDeinstallForm form = new InstallDeinstallForm(sendList, new List<ModInfo>(), new List<InstalledInfo>(), new List<ModInfo>());
-            form.ShowDialog();
+            form.AddCheckUpdateMod(selectedMod);
 
-            UpdateModList(selectedItem, true);
+            if (form.HasActions())
+            {
+                form.ShowDialog();
+                UpdateModList(selectedItem, true);
+            }
         }
 
         private void opDownloadButton_Click(object sender, EventArgs e)
         {
-            List<ModInfo> sendList = new List<ModInfo>();
+            InstallDeinstallForm form = new InstallDeinstallForm();
 
             if (selectedMod.websites.dlSite != "NONE")
             {
-                sendList.Add(selectedMod);
+                form.AddUpdateMod(selectedMod);
 
-                InstallDeinstallForm form = new InstallDeinstallForm(new List<ModInfo>(), sendList, new List<InstalledInfo>(), new List<ModInfo>());
-                form.ShowDialog();
-
-                UpdateModList(selectedItem, true);
+                if (form.HasActions())
+                {
+                    form.ShowDialog();
+                    UpdateModList(selectedItem, true);
+                }
             }
 
             else
@@ -895,15 +893,16 @@ namespace KSP_Mod_Manager
 
         private void opReinstallButton_Click(object sender, EventArgs e)
         {
-            List<ModInfo> sendListA = new List<ModInfo>();
-            List<InstalledInfo> sendListB = new List<InstalledInfo>();
-            sendListA.Add(selectedMod);
-            sendListB.Add(selectedInstalledMod);
+            InstallDeinstallForm form = new InstallDeinstallForm();
 
-            InstallDeinstallForm form = new InstallDeinstallForm(new List<ModInfo>(), new List<ModInfo>(), sendListB, sendListA);
-            form.ShowDialog();
+            form.AddInstallMod(selectedMod);
+            form.AddDeinstallMod(selectedInstalledMod);
 
-            UpdateModList(selectedItem, true);
+            if (form.HasActions())
+            {
+                form.ShowDialog();
+                UpdateModList(selectedItem, true);
+            }
         }
 
         private void opAddCategoryButton_Click_1(object sender, EventArgs e)
@@ -1028,15 +1027,15 @@ namespace KSP_Mod_Manager
         {
             checkUpdateButton_Click(null, null);
 
+            InstallDeinstallForm form = new InstallDeinstallForm();
             List<ModInfo> sendList = new List<ModInfo>();
-            List<ModInfo> sendListA = new List<ModInfo>();
-            List<InstalledInfo> sendListB = new List<InstalledInfo>();
 
             foreach (ModInfo mod in modInfo.modList)
             {
                 if (!mod.zipfile.Contains("Overrides\\") && mod.websites.dlSite != "NONE" && !mod.websites.dlSite.Contains("forum.kerbalspaceprogram.com"))
                 {
                     sendList.Add(mod);
+                    form.AddUpdateMod(mod);
                 }
             }
 
@@ -1048,19 +1047,17 @@ namespace KSP_Mod_Manager
                     {
                         if (mod.version != installedMod.version)
                         {
-                            sendListA.Add(mod);
-                            sendListB.Add(installedMod);
+                            form.AddInstallMod(mod);
+                            form.AddDeinstallMod(installedMod);
                         }
                         break;
                     }
                 }
             }
 
-            if (sendList.Count + sendListA.Count + sendListB.Count > 0)
+            if (form.HasActions())
             {
-                InstallDeinstallForm form = new InstallDeinstallForm(new List<ModInfo>(), sendList, sendListB, sendListA);
                 form.ShowDialog();
-
                 UpdateModList(selectedItem, true);
             }
         }

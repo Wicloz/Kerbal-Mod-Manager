@@ -36,18 +36,51 @@ namespace KSP_Mod_Manager
         private void EmptyFunction()
         { }
 
-        public InstallDeinstallForm(List<ModInfo> CheckUpdateModList, List<ModInfo> UpdateModList,  List<InstalledInfo> DeinstallModList, List<ModInfo> InstallModList)
+        public InstallDeinstallForm()
         {
             InitializeComponent();
-
-            checkUpdateList = CheckUpdateModList;
-            updateModList = UpdateModList;
-            deinstallModList = DeinstallModList;
-            installModList = InstallModList;
         }
 
-        private void InstallDeinstall_Form_Shown(object sender, EventArgs e)
+        public void AddInstallMod(ModInfo m)
         {
+            installModList.Add(m);
+        }
+
+        public void AddDeinstallMod(InstalledInfo m)
+        {
+            deinstallModList.Add(m);
+        }
+
+        public void AddCheckUpdateMod(ModInfo m)
+        {
+            checkUpdateList.Add(m);
+        }
+
+        public void AddUpdateMod(ModInfo m)
+        {
+            updateModList.Add(m);
+        }
+
+        public bool HasActions()
+        {
+            if (checkUpdateList.Count + updateModList.Count + deinstallModList.Count + installModList.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void InstallDeinstallForm_Shown(object sender, EventArgs e)
+        {
+            if (checkUpdateList.Count + updateModList.Count + deinstallModList.Count + installModList.Count <= 0)
+            {
+                this.Close();
+                return;
+            }
+
             // Reinstall updating mods
             for (int i = 0; i < updateModList.Count; i++)
             {
