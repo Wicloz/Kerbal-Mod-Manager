@@ -54,12 +54,18 @@ namespace KSP_Mod_Manager
             try
             {
                 newModFile = Directory.GetFiles(downloadFolder, "*.zip")[0];
-                modInfo.GetVersion(true);
             }
             catch
             {
                 Main.acces.LogMessage("Mod failed to download, aborting updating of '" + modInfo.name + "'!");
                 return;
+            }
+
+            if (newModFile != null)
+            {
+                WebClient client = new WebClient();
+                string siteString = client.DownloadString(new Uri(modInfo.websites.website));
+                modInfo.GetVersion(siteString, true);
             }
 
             string newModLocation = Main.acces.modInfo.modsPath + "\\" + Path.GetFileNameWithoutExtension(newModFile) + "_v" + modInfo.vnLocal + ".zip";

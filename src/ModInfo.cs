@@ -121,12 +121,9 @@ namespace KSP_Mod_Manager
             return null;
         }
 
-        public void GetVersion(bool predownload)
+        public void GetVersion(string siteString, bool postdownload)
         {
             SiteInfo site = this.websites;
-
-            WebClient client = new WebClient();
-            string siteString = client.DownloadString(new Uri(site.website));
             StringReader sr1 = new StringReader(siteString);
 
             string versionLine = "";
@@ -134,10 +131,16 @@ namespace KSP_Mod_Manager
 
             if (site.website.Contains("kerbal.curseforge.com"))
             {
-                while (!versionLine.Contains("<li>Last Released File:"))
+                while (!versionLine.Contains("<a class=\"overflow-tip\" href=\"/ksp-mods"))
                 {
                     versionLine = sr1.ReadLine();
                 }
+
+                StringReader sr2 = new StringReader(versionLine.Replace(" ", ""));
+                List<char> endCharList = new List<char>();
+                endCharList.Add('<');
+                endCharList.Add('"');
+                newVersion = ExtractVersion(sr2, endCharList, '>').Replace(".zip", "").Replace("-", ".").Replace("_", ".");
             }
 
             else if (site.website.Contains("kerbalstuff.com"))
@@ -147,8 +150,10 @@ namespace KSP_Mod_Manager
                     versionLine = sr1.ReadLine();
                 }
 
-                StringReader sr2 = new StringReader(versionLine.Replace("<h2>Version", "").Replace(" ", ""));
-                newVersion = ExtractVersion(sr2, '<');
+                StringReader sr2 = new StringReader(versionLine.Replace(" ", ""));
+                List<char> endCharList = new List<char>();
+                endCharList.Add('<');
+                newVersion = ExtractVersion(sr2, endCharList, '>');
             }
 
             else if (site.website.Contains("github.com"))
@@ -159,10 +164,12 @@ namespace KSP_Mod_Manager
                 }
 
                 StringReader sr2 = new StringReader(versionLine.Replace(" ", ""));
-                newVersion = ExtractVersion(sr2, '/');
+                List<char> endCharList = new List<char>();
+                endCharList.Add('/');
+                newVersion = ExtractVersion(sr2, endCharList, '=');
             }
 
-            if (predownload)
+            if (postdownload)
             {
                 vnLocal = newVersion;
             }
@@ -171,22 +178,28 @@ namespace KSP_Mod_Manager
             sr1.Dispose();
         }
 
-        public string ExtractVersion(StringReader sr, char endChar)
+        public string ExtractVersion(StringReader sr, List<char> endChars, char startChar)
         {
             string returnString = "";
             bool start = false;
+            bool foundChar = false;
 
-            for (int i = 0; i < 111; i++)
+            for (int i = 0; i < 333; i++)
             {
                 char[] c = new char[1];
                 sr.Read(c, 0, 1);
 
-                if (c[0] == '0' || c[0] == '1' || c[0] == '2' || c[0] == '3' || c[0] == '4' || c[0] == '5' || c[0] == '6' || c[0] == '7' || c[0] == '8' || c[0] == '9')
+                if (c[0] == startChar)
+                {
+                    foundChar = true;
+                }
+
+                if (foundChar && (c[0] == '0' || c[0] == '1' || c[0] == '2' || c[0] == '3' || c[0] == '4' || c[0] == '5' || c[0] == '6' || c[0] == '7' || c[0] == '8' || c[0] == '9'))
                 {
                     start = true;
                 }
 
-                if (start && c[0] == endChar)
+                if (start && endChars.Contains(c[0]))
                 {
                     break;
                 }

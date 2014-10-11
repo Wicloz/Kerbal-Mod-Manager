@@ -231,7 +231,7 @@ namespace KSP_Mod_Manager
                     {
                         updateStatus = "Mod up to date";
                     }
-                    lvi.SubItems.Add(mod.zipfile);
+                    lvi.SubItems.Add(updateStatus);
 
                     if (mod.favorite.isFav)
                     {
