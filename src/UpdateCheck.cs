@@ -63,6 +63,8 @@ namespace KSP_Mod_Manager
                     {
                         newVersion = sr.ReadLine();
                     }
+
+                    newVersion = oldVersion;
                 }
 
                 if (mode == "forum")

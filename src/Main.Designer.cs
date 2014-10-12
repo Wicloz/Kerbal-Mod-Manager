@@ -35,7 +35,7 @@
             this.selectModFolderButton = new System.Windows.Forms.Button();
             this.opNameBox = new System.Windows.Forms.TextBox();
             this.opSiteBox = new System.Windows.Forms.TextBox();
-            this.opDlSiteBox = new System.Windows.Forms.TextBox();
+            this.opTempBox = new System.Windows.Forms.TextBox();
             this.opInstallButton = new System.Windows.Forms.Button();
             this.opCanDownloadBox = new System.Windows.Forms.CheckBox();
             this.opDownloadButton = new System.Windows.Forms.Button();
@@ -69,6 +69,8 @@
             this.installStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.updateStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.favStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.versionLocal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.versionOnline = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -83,8 +85,6 @@
             this.catButton7 = new System.Windows.Forms.Button();
             this.favAllButton = new System.Windows.Forms.Button();
             this.fdaButton = new System.Windows.Forms.Button();
-            this.versionLocal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.versionOnline = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -143,13 +143,12 @@
             this.opSiteBox.TabIndex = 8;
             this.opSiteBox.TextChanged += new System.EventHandler(this.opSiteBox_TextChanged);
             // 
-            // opDlSiteBox
+            // opTempBox
             // 
-            this.opDlSiteBox.Location = new System.Drawing.Point(107, 98);
-            this.opDlSiteBox.Name = "opDlSiteBox";
-            this.opDlSiteBox.Size = new System.Drawing.Size(546, 20);
-            this.opDlSiteBox.TabIndex = 9;
-            this.opDlSiteBox.TextChanged += new System.EventHandler(this.opDlSiteBox_TextChanged);
+            this.opTempBox.Location = new System.Drawing.Point(107, 98);
+            this.opTempBox.Name = "opTempBox";
+            this.opTempBox.Size = new System.Drawing.Size(546, 20);
+            this.opTempBox.TabIndex = 9;
             // 
             // opInstallButton
             // 
@@ -232,9 +231,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(6, 101);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(81, 13);
+            this.label5.Size = new System.Drawing.Size(76, 13);
             this.label5.TabIndex = 17;
-            this.label5.Text = "Download Link:";
+            this.label5.Text = "An Empty Box:";
             // 
             // groupBox1
             // 
@@ -250,7 +249,7 @@
             this.groupBox1.Controls.Add(this.opCategoryBox);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.opSiteBox);
-            this.groupBox1.Controls.Add(this.opDlSiteBox);
+            this.groupBox1.Controls.Add(this.opTempBox);
             this.groupBox1.Location = new System.Drawing.Point(147, 38);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(659, 150);
@@ -489,6 +488,16 @@
             this.favStatus.Text = "Is Favorite";
             this.favStatus.Width = 79;
             // 
+            // versionLocal
+            // 
+            this.versionLocal.Text = "Local Version";
+            this.versionLocal.Width = 76;
+            // 
+            // versionOnline
+            // 
+            this.versionOnline.Text = "Online Version";
+            this.versionOnline.Width = 80;
+            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -618,16 +627,6 @@
             this.fdaButton.UseVisualStyleBackColor = true;
             this.fdaButton.Click += new System.EventHandler(this.fdaButton_Click);
             // 
-            // versionLocal
-            // 
-            this.versionLocal.Text = "Local Version";
-            this.versionLocal.Width = 76;
-            // 
-            // versionOnline
-            // 
-            this.versionOnline.Text = "Online Version";
-            this.versionOnline.Width = 80;
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -687,7 +686,7 @@
         private System.Windows.Forms.Button selectModFolderButton;
         private System.Windows.Forms.TextBox opNameBox;
         private System.Windows.Forms.TextBox opSiteBox;
-        private System.Windows.Forms.TextBox opDlSiteBox;
+        private System.Windows.Forms.TextBox opTempBox;
         private System.Windows.Forms.Button opInstallButton;
         private System.Windows.Forms.CheckBox opCanDownloadBox;
         private System.Windows.Forms.Button opDownloadButton;

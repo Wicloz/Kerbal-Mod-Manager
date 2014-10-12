@@ -112,8 +112,8 @@ namespace KSP_Mod_Manager
             // Cleanup file list
             for (int i = 0; i < fileList.Count; i++)
             {
-                fileList[i].path.Replace("Gamedata", "GameData");
-                fileList[i].path.Replace("gamedata", "GameData");
+                fileList[i].path = fileList[i].path.Replace("Gamedata", "GameData");
+                fileList[i].path = fileList[i].path.Replace("gamedata", "GameData");
 
                 if (!Path.GetDirectoryName(fileList[i].path).StartsWith("\\GameData") && !Path.GetDirectoryName(fileList[i].path).StartsWith("\\KSP_Data") && !Path.GetDirectoryName(fileList[i].path).StartsWith("\\KSP_x64_Data") && Path.GetExtension(fileList[i].path) != ".exe")
                 {
@@ -156,7 +156,7 @@ namespace KSP_Mod_Manager
                 string newFilePath = Main.acces.kspInfo.kspFolder + fileList[i].path;
 
                 // Backup overridden files
-                if (!modInfo.name.Contains("Override") && File.Exists(newFilePath))
+                if (!modInfo.name.Contains("override") && File.Exists(newFilePath))
                 {
                     FileInfo overriddenFile = new FileInfo();
                     foreach (FileInfo file in Main.acces.kspInfo.installedFileList)

@@ -59,15 +59,15 @@ namespace KSP_Mod_Manager
                     catch
                     { }
 
-                    if (Directory.GetDirectories(Main.acces.modInfo.modsPath + "\\ModDownloads").Length <= 0)
+                    try
                     {
-                        try
+                        if (Directory.GetDirectories(Main.acces.modInfo.modsPath + "\\ModDownloads").Length <= 0)
                         {
                             Directory.Delete(Main.acces.modInfo.modsPath + "\\ModDownloads", true);
                         }
-                        catch
-                        { }
                     }
+                    catch
+                    { }
                 }
             }
         }
@@ -327,6 +327,11 @@ namespace KSP_Mod_Manager
                 {
                     site.dlSite = "NONE";
                 }
+            }
+
+            if (this.zipfile == "none")
+            {
+                this.canUpdate = true;
             }
         }
 

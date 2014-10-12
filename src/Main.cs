@@ -101,6 +101,8 @@ namespace KSP_Mod_Manager
             }
 
             SaveLoad.SaveFileXml(new Settings(modInfo.modsPath, instanceList, installationBox.SelectedIndex, sendList), settingFolder + "\\settings.txt");
+
+            LogMessage("Setting Files Saved");
         }
 
         public List<string> GetCategories()
@@ -235,11 +237,11 @@ namespace KSP_Mod_Manager
 
                     if (mod.favorite.isFav)
                     {
-                        lvi.SubItems.Add("True");
+                        lvi.SubItems.Add("Yes");
                     }
                     else
                     {
-                        lvi.SubItems.Add("False");
+                        lvi.SubItems.Add("No");
                     }
 
                     lvi.SubItems.Add(mod.vnLocal);
@@ -262,11 +264,11 @@ namespace KSP_Mod_Manager
                     string isFav = "";
                     if (mod.favorite.isFav)
                     {
-                        isFav = "True";
+                        isFav = "Yes";
                     }
                     else
                     {
-                        isFav = "False";
+                        isFav = "No";
                     }
                     lvi.SubItems.Add(isFav);
 
@@ -577,6 +579,7 @@ namespace KSP_Mod_Manager
             {
                 if (modInfo.modList[i].key == selectedMod.key)
                 {
+                    modInfo.modList[i].canUpdate = false;
                     modInfo.modList.RemoveAt(i);
                     break;
                 }
@@ -708,7 +711,7 @@ namespace KSP_Mod_Manager
                 opNameBox.Text = selectedMod.name;
                 opCategoryBox.Text = selectedMod.category;
                 opSiteBox.Text = selectedMod.websites.website;
-                opDlSiteBox.Text = selectedMod.websites.dlSite;
+                opTempBox.Text = selectedMod.version;
 
                 opIsFavoriteBox.Checked = selectedFav.isFav;
                 opCanDownloadBox.Checked = selectedMod.canUpdate;
@@ -725,7 +728,7 @@ namespace KSP_Mod_Manager
                 opNameBox.Text = "";
                 opCategoryBox.Text = "";
                 opSiteBox.Text = "";
-                opDlSiteBox.Text = "";
+                opTempBox.Text = "";
 
                 opIsFavoriteBox.Checked = false;
                 opCanDownloadBox.Checked = false;
@@ -812,17 +815,6 @@ namespace KSP_Mod_Manager
             if (!isChangingSelection)
             {
                 selectedMod.websites.website = opSiteBox.Text;
-
-                selectedMod.ManageMod();
-                UpdateOpSettings(selectedMod.name);
-            }
-        }
-
-        private void opDlSiteBox_TextChanged(object sender, EventArgs e)
-        {
-            if (!isChangingSelection)
-            {
-                selectedMod.websites.dlSite = opDlSiteBox.Text;
 
                 selectedMod.ManageMod();
                 UpdateOpSettings(selectedMod.name);
