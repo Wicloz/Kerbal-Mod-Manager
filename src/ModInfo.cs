@@ -54,7 +54,7 @@ namespace KSP_Mod_Manager
                 {
                     try
                     {
-                        Directory.Delete(downloadFolder);
+                        Directory.Delete(downloadFolder, true);
                     }
                     catch
                     { }

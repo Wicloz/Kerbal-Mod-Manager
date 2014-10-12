@@ -61,14 +61,14 @@ namespace KSP_Mod_Manager
                 return;
             }
 
-            if (newModFile != null)
+            if (newModFile != null && modInfo.websites.website != "NONE")
             {
                 WebClient client = new WebClient();
                 string siteString = client.DownloadString(new Uri(modInfo.websites.website));
                 modInfo.GetVersion(siteString, true);
             }
 
-            string newModLocation = Main.acces.modInfo.modsPath + "\\" + modInfo.name.Replace(" ", "") + "_v" + modInfo.vnLocal + ".zip";
+            string newModLocation = Main.acces.modInfo.modsPath + "\\" + modInfo.name.Replace(" ", "") + "_v" + modInfo.vnLocal.Replace("/", "") + ".zip";
             File.Delete(newModLocation);
             File.Delete(Main.acces.modInfo.modsPath + "\\" + modInfo.zipfile);
 
