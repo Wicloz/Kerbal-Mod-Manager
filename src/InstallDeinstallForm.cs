@@ -81,13 +81,21 @@ namespace KSP_Mod_Manager
                 return;
             }
 
-            // Reinstall updating mods
-            for (int i = 0; i < updateModList.Count; i++)
+            // Reinstall ModuleManager
+            if (deinstallModList.Count + installModList.Count > 0)
             {
-                if (updateModList[i].isInstalled)
+                foreach (ModInfo mod in Main.acces.modInfo.modList)
                 {
-                    installModList.Add(updateModList[i]);
-                    deinstallModList.Add(Functions.GetInstalledMod(updateModList[i]));
+                    if (mod.name.Replace(" ", "").ToLower().Contains("modulemanager"))
+                    {
+                        if (mod.isInstalled && !deinstallModList.Contains(Functions.GetInstalledMod(mod)) && !installModList.Contains(mod))
+                        {
+                            deinstallModList.Insert(0, Functions.GetInstalledMod(mod));
+                            installModList.Add(mod);
+                        }
+
+                        break;
+                    }
                 }
             }
 
@@ -96,7 +104,7 @@ namespace KSP_Mod_Manager
             {
                 if (deinstallModList[i].GetOverride() != null)
                 {
-                    deinstallModList.Insert(0, deinstallModList[i].GetOverride());
+                    deinstallModList.Insert(i, deinstallModList[i].GetOverride());
                     i++;
                 }
             }
@@ -106,7 +114,8 @@ namespace KSP_Mod_Manager
             {
                 if (installModList[i].GetOverride() != null)
                 {
-                    installModList.Add(installModList[i].GetOverride());
+                    installModList.Insert(i + 1, installModList[i].GetOverride());
+                    i += 2;
                 }
             }
 

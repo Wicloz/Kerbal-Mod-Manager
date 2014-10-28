@@ -61,11 +61,9 @@ namespace KSP_Mod_Manager
                 return;
             }
 
-            if (newModFile != null && modInfo.websites.website != "NONE")
+            if (newModFile != null)
             {
-                WebClient client = new WebClient();
-                string siteString = client.DownloadString(new Uri(modInfo.websites.website));
-                modInfo.GetVersion(siteString, true);
+                modInfo.vnLocal = modInfo.vnOnline;
             }
 
             string newModLocation = Main.acces.modInfo.modsPath + "\\" + modInfo.name.Replace(" ", "") + "_v" + modInfo.vnLocal.Replace("/", "") + ".zip";

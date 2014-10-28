@@ -449,29 +449,25 @@ namespace KSP_Mod_Manager
         private void downloadModButton_Click(object sender, EventArgs e)
         {
             InstallDeinstallForm form = new InstallDeinstallForm();
-            List<ModInfo> sendList = new List<ModInfo>();
 
             foreach (ModInfo mod in modInfo.modList)
             {
                 if (mod.canUpdate && !mod.zipfile.Contains("Overrides\\"))
                 {
-                    sendList.Add(mod);
                     form.AddUpdateMod(mod);
                 }
             }
 
-            foreach (ModInfo mod in sendList)
+            foreach (ModInfo mod in modInfo.modList)
             {
-                foreach (InstalledInfo installedMod in kspInfo.installedModList)
+                if (mod.isInstalled)
                 {
-                    if (mod.key == installedMod.key)
+                    InstalledInfo installedMod = Functions.GetInstalledMod(mod);
+
+                    if (mod.version != installedMod.version)
                     {
-                        if (mod.version != installedMod.version)
-                        {
-                            form.AddInstallMod(mod);
-                            form.AddDeinstallMod(installedMod);
-                        }
-                        break;
+                        form.AddInstallMod(mod);
+                        form.AddDeinstallMod(installedMod);
                     }
                 }
             }
@@ -664,6 +660,7 @@ namespace KSP_Mod_Manager
         {
             isChangingSelection = true;
             string mode = "";
+            bool hasZip = true;
 
             selectedInstalledMod = Functions.GetInstalledMod(itemName);
             selectedMod = Functions.GetDownloadedMod(itemName);
@@ -679,6 +676,11 @@ namespace KSP_Mod_Manager
             else
             {
                 mode = "missing";
+            }
+
+            if (selectedMod == null || !selectedMod.hasZipfile)
+            {
+                hasZip = false;
             }
 
             if (selectedMod != null)
@@ -718,7 +720,7 @@ namespace KSP_Mod_Manager
 
                 UnlockSettingEditor();
 
-                if (mode == "mssing")
+                if (!hasZip)
                 {
                     opInstallButton.Enabled = false;
                 }
@@ -739,13 +741,14 @@ namespace KSP_Mod_Manager
             if (mode == "installed")
             {
                 opInstallButton.Text = "Deinstall Mod";
+                opInstallButton.Enabled = true;
             }
             else if (selectedMod != null && mode != "installed")
             {
                 opInstallButton.Text = "Install Mod";
             }
 
-            if (mode == "installed")
+            if (mode == "installed" && hasZip)
             {
                 opReinstallButton.Enabled = true;
             }

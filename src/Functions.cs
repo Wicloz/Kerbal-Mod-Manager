@@ -54,6 +54,44 @@ namespace KSP_Mod_Manager
                     .Replace(".", "");
         }
 
+        public static string RemoveLetters(string originalString)
+        {
+            string returnString = "";
+            char[] charArray = originalString.Replace(" ", "").ToLower().ToCharArray();
+            List<char> allowedList = new List<char>();
+
+            allowedList.Add('1');
+            allowedList.Add('2');
+            allowedList.Add('3');
+            allowedList.Add('4');
+            allowedList.Add('5');
+            allowedList.Add('6');
+            allowedList.Add('7');
+            allowedList.Add('8');
+            allowedList.Add('9');
+            allowedList.Add('0');
+
+            returnString += "#";
+            bool pointMade = true;
+
+            foreach (char c in charArray)
+            {
+                if (allowedList.Contains(c))
+                {
+                    returnString += Convert.ToString(c);
+                    pointMade = false;
+                }
+                else if (!pointMade)
+                {
+                    returnString += ".";
+                    pointMade = true;
+                }
+            }
+
+            returnString += "#";
+            return returnString.Replace(".#", "").Replace("#.", "").Replace("#", "").Replace("..", ".").Replace("..", ".").Replace("..", ".");
+        }
+
         public static ModInfo GetDownloadedMod(string name)
         {
             ModInfo returnval = null;

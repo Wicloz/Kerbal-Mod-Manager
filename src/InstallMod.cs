@@ -122,7 +122,7 @@ namespace KSP_Mod_Manager
                     i--;
                 }
 
-                else if (Path.GetDirectoryName(fileList[i].path).Replace("\\", "") == "GameData" && Path.GetExtension(fileList[i].path) != ".dll" && Path.GetExtension(fileList[i].path) != ".cfg")
+                else if (Path.GetDirectoryName(fileList[i].path).Replace("\\", "") == "GameData" && Path.GetExtension(fileList[i].path) != ".dll" && Path.GetExtension(fileList[i].path) != ".dat" && Path.GetExtension(fileList[i].path) != ".cfg")
                 {
                     oldFilePaths.RemoveAt(i);
                     fileList.RemoveAt(i);

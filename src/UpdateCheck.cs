@@ -64,7 +64,7 @@ namespace KSP_Mod_Manager
                         newVersion = sr.ReadLine();
                     }
 
-                    newVersion = oldVersion;
+                    newVersion = Functions.RemoveLetters(newVersion);
                 }
 
                 if (mode == "forum")
@@ -73,6 +73,8 @@ namespace KSP_Mod_Manager
                     {
                         newVersion = sr.ReadLine();
                     }
+
+                    newVersion = Functions.RemoveLetters(newVersion);
                 }
 
                 if (mode == "kstuff")
@@ -91,7 +93,7 @@ namespace KSP_Mod_Manager
                     }
                 }
 
-                modInfo.GetVersion(siteString, false);
+                GetVersion(siteString);
 
                 if (oldVersion != newVersion)
                 {
@@ -137,6 +139,109 @@ namespace KSP_Mod_Manager
         private void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             progress = 10 + Convert.ToInt32(e.ProgressPercentage * 0.8);
+        }
+
+        private void GetVersion(string siteString)
+        {
+            SiteInfo site = modInfo.websites;
+            StringReader sr1 = new StringReader(siteString);
+
+            string versionLine = "";
+            string newVersion = "N/A";
+
+            if (site.website.Contains("forum.kerbalspaceprogram.com"))
+            {
+                while (!versionLine.Contains("<title>"))
+                {
+                    versionLine = sr1.ReadLine();
+                }
+
+                newVersion = Functions.RemoveLetters(versionLine);
+                if (newVersion == "")
+                {
+                    newVersion = "N/A";
+                }
+            }
+
+            if (site.website.Contains("kerbal.curseforge.com"))
+            {
+                while (!versionLine.Contains("<a class=\"overflow-tip\" href=\"/ksp-mods"))
+                {
+                    versionLine = sr1.ReadLine();
+                }
+
+                List<char> endCharList = new List<char>();
+                endCharList.Add('<');
+                endCharList.Add('"');
+                newVersion = ExtractVersion(versionLine, endCharList, '>').Replace(".zip", "").Replace("Inline.Cockpit.", "");
+            }
+
+            else if (site.website.Contains("kerbalstuff.com"))
+            {
+                while (!versionLine.Contains("<h2>Version"))
+                {
+                    versionLine = sr1.ReadLine();
+                }
+
+                newVersion = ExtractVersion(versionLine, '<', '>');
+            }
+
+            else if (site.website.Contains("github.com"))
+            {
+                while (!versionLine.Contains("\" rel=\"nofollow\" class=\"button primary\">"))
+                {
+                    versionLine = sr1.ReadLine();
+                }
+
+                newVersion = ExtractVersion(versionLine, '/', '=');
+            }
+
+            modInfo.vnOnline = newVersion;
+            sr1.Dispose();
+        }
+
+        private string ExtractVersion(string s, char endChar, char startChar)
+        {
+            List<char> endCharList = new List<char>();
+            endCharList.Add(endChar);
+            return ExtractVersion(s, endCharList, startChar);
+        }
+
+        private string ExtractVersion(string s, List<char> endChars, char startChar)
+        {
+            string returnString = "";
+            bool start = false;
+            bool foundChar = false;
+            char[] charArray = s.Replace(" ", "").ToCharArray();
+
+            foreach (char c in charArray)
+            {
+                if (c == startChar)
+                {
+                    foundChar = true;
+                }
+
+                if (foundChar && (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9'))
+                {
+                    start = true;
+                }
+
+                if (start && endChars.Contains(c))
+                {
+                    break;
+                }
+                else if (start)
+                {
+                    returnString += Convert.ToString(c);
+                }
+            }
+
+            if (returnString == "")
+            {
+                returnString = "N/A";
+            }
+
+            return returnString.Replace("-", ".").Replace("_", ".");
         }
     }
 }
