@@ -26,7 +26,7 @@ namespace KSP_Mod_Manager
             Directory.CreateDirectory(downloadFolder);
             progress = 10;
 
-            if (modInfo.websites.dlSite != "NONE")
+            if (modInfo.dlSite != "NONE")
             {
                 Main.acces.LogMessage("Downloading '" + modInfo.name + "'.");
 
@@ -34,7 +34,7 @@ namespace KSP_Mod_Manager
                 client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
                 client.DownloadFileCompleted += new System.ComponentModel.AsyncCompletedEventHandler(client_DownloadFileCompleted);
 
-                client.DownloadFileAsync(new Uri(modInfo.websites.dlSite), downloadFolder + "\\" + modInfo.name.Replace(" ", "") + ".zip");
+                client.DownloadFileAsync(new Uri(modInfo.dlSite), downloadFolder + "\\" + modInfo.name.Replace(" ", "") + ".zip");
             }
             else
             {

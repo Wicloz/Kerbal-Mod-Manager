@@ -19,7 +19,7 @@ namespace KSP_Mod_Manager
         public void CheckForUpdate(ModInfo ModInfo)
         {
             modInfo = ModInfo;
-            string site = modInfo.websites.website;
+            string site = modInfo.website;
 
             if (site.Contains("kerbal.curseforge.com"))
             {
@@ -143,13 +143,12 @@ namespace KSP_Mod_Manager
 
         private void GetVersion(string siteString)
         {
-            SiteInfo site = modInfo.websites;
             StringReader sr1 = new StringReader(siteString);
 
             string versionLine = "";
             string newVersion = "N/A";
 
-            if (site.website.Contains("forum.kerbalspaceprogram.com"))
+            if (modInfo.website.Contains("forum.kerbalspaceprogram.com"))
             {
                 while (!versionLine.Contains("<title>"))
                 {
@@ -163,7 +162,7 @@ namespace KSP_Mod_Manager
                 }
             }
 
-            if (site.website.Contains("kerbal.curseforge.com"))
+            if (modInfo.website.Contains("kerbal.curseforge.com"))
             {
                 while (!versionLine.Contains("<a class=\"overflow-tip\" href=\"/ksp-mods"))
                 {
@@ -176,7 +175,7 @@ namespace KSP_Mod_Manager
                 newVersion = ExtractVersion(versionLine, endCharList, '>').Replace(".zip", "").Replace("Inline.Cockpit.", "");
             }
 
-            else if (site.website.Contains("kerbalstuff.com"))
+            else if (modInfo.website.Contains("kerbalstuff.com"))
             {
                 while (!versionLine.Contains("<h2>Version"))
                 {
@@ -186,7 +185,7 @@ namespace KSP_Mod_Manager
                 newVersion = ExtractVersion(versionLine, '<', '>');
             }
 
-            else if (site.website.Contains("github.com"))
+            else if (modInfo.website.Contains("github.com"))
             {
                 while (!versionLine.Contains("\" rel=\"nofollow\" class=\"button primary\">"))
                 {

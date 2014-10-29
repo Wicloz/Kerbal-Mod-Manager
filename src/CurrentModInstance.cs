@@ -12,7 +12,6 @@ namespace KSP_Mod_Manager
         public string modsPath = "";
 
         public List<ModInfo> modList = new List<ModInfo>();
-        public List<SiteInfo> siteList = new List<SiteInfo>();
 
         public bool loaded = false;
 
@@ -29,6 +28,7 @@ namespace KSP_Mod_Manager
                 SaveFiles(modsPath);
 
                 loaded = true;
+                Main.acces.LogMessage("Mod Folder Loaded");
             }
             else
             {
@@ -46,6 +46,7 @@ namespace KSP_Mod_Manager
             }
 
             modsPath = "";
+            Main.acces.LogMessage("Mod Folder Unloaded");
         }
 
         public void LoadFiles(string path)
@@ -58,15 +59,6 @@ namespace KSP_Mod_Manager
             {
                 modList = new List<ModInfo>();
             }
-
-            if (File.Exists(modsPath + "\\SiteList.txt"))
-            {
-                siteList = SaveLoad.LoadFileBf<List<SiteInfo>>(path + "\\SiteList.txt");
-            }
-            else
-            {
-                siteList = new List<SiteInfo>();
-            }
         }
 
         public void SaveFiles(string path)
@@ -74,7 +66,6 @@ namespace KSP_Mod_Manager
             if (loaded)
             {
                 SaveLoad.SaveFileBf(modList, path + "\\ModList.txt");
-                SaveLoad.SaveFileBf(siteList, path + "\\SiteList.txt");
             }
         }
 
@@ -131,29 +122,6 @@ namespace KSP_Mod_Manager
                     {
                         modList.RemoveAt(i);
                         i--;
-                    }
-                }
-            }
-
-            // Manage Site List
-            foreach (ModInfo mod in modList)
-            {
-                if (!mod.zipfile.Contains("Overrides"))
-                {
-                    bool exists = false;
-
-                    foreach (SiteInfo site in siteList)
-                    {
-                        if (site.key == mod.key)
-                        {
-                            exists = true;
-                            break;
-                        }
-                    }
-
-                    if (!exists)
-                    {
-                        siteList.Add(new SiteInfo(mod.key, "NONE"));
                     }
                 }
             }

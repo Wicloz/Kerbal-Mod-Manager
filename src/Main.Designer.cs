@@ -231,9 +231,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(6, 101);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(75, 13);
+            this.label5.Size = new System.Drawing.Size(72, 13);
             this.label5.TabIndex = 17;
-            this.label5.Text = "Version String:";
+            this.label5.Text = "Debug Value:";
             // 
             // groupBox1
             // 

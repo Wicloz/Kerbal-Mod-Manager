@@ -19,20 +19,26 @@ namespace KSP_Mod_Manager
         public string version;
         public string vnLocal;
         public string vnOnline;
+        public string website;
+        public string dlSite;
+        public bool templated;
 
         public ModInfo()
         { }
 
         public ModInfo(string Zipfile)
         {
-            name = Functions.CleanName(Zipfile);
-            category = "none";
-            key = name;
-            zipfile = Zipfile;
-            canUpdate = false;
-            version = "none";
-            vnLocal = "N/A";
-            vnOnline = "N/A";
+            this.name = Functions.CleanName(Zipfile);
+            this.category = "none";
+            this.key = name;
+            this.zipfile = Zipfile;
+            this.canUpdate = false;
+            this.version = "none";
+            this.vnLocal = "N/A";
+            this.vnOnline = "N/A";
+            this.website = "NONE";
+            this.dlSite = "NONE";
+            this.templated = false;
         }
 
         public bool canUpdate
@@ -69,25 +75,6 @@ namespace KSP_Mod_Manager
                     catch
                     { }
                 }
-            }
-        }
-
-        public SiteInfo websites
-        {
-            get
-            {
-                SiteInfo returnval = null;
-
-                foreach (SiteInfo site in Main.acces.modInfo.siteList)
-                {
-                    if (site.key == this.key)
-                    {
-                        returnval = site;
-                        break;
-                    }
-                }
-
-                return returnval;
             }
         }
 
@@ -160,6 +147,7 @@ namespace KSP_Mod_Manager
 
         public void ManageMod()
         {
+            // Manage key
             if (this.zipfile == "none" && (this.key == "none" || this.key == "" || this.key == null))
             {
                 this.key = Functions.CleanName(this.name);
@@ -169,67 +157,82 @@ namespace KSP_Mod_Manager
                 this.key = Functions.CleanName(this.zipfile);
             }
 
-            SiteInfo site = this.websites;
-
-            if (site != null)
+            // Load template
+            if (!this.templated)
             {
-                if (site.website.Contains("kerbal.curseforge.com"))
+                foreach (TemplateInfo template in Main.acces.tm.templates)
                 {
-                    site.dlSite = site.website + "/files/latest";
-                }
-
-                else if (site.website.Contains("kerbalstuff.com"))
-                {
-                    string newVersion = "";
-                    StringReader sr = new StringReader(this.version.Replace("<h2>Version", "").Replace(" ", ""));
-
-                    for (int i = 0; i < 111; i++)
+                    if (Functions.CleanName(this.zipfile).Replace("v", "") == Functions.CleanName(template.name).Replace("v", "") || Functions.CleanName(this.zipfile) == Functions.CleanName(template.originalZip))
                     {
-                        char[] c = new char[1];
-                        sr.Read(c, 0, 1);
-
-                        if (c[0] == '<')
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            newVersion += Convert.ToString(c[0]);
-                        }
+                        this.name = template.name;
+                        this.category = template.category;
+                        this.website = template.website;
+                        this.dlSite = template.dlSite;
+                        break;
                     }
-
-                    site.dlSite = site.website + "/download/" + newVersion;
                 }
 
-                else if (site.website.Contains("github.com"))
-                {
-                    string newVersion = "";
-                    StringReader sr = new StringReader(this.version.Replace("<a href=\"/", "").Replace(" ", ""));
-
-                    for (int i = 0; i < 111; i++)
-                    {
-                        char[] c = new char[1];
-                        sr.Read(c, 0, 1);
-
-                        if (c[0] == '"')
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            newVersion += Convert.ToString(c[0]);
-                        }
-                    }
-
-                    site.dlSite = "https://github.com/" + newVersion;
-                }
-
-                else
-                {
-                    site.dlSite = "NONE";
-                }
+                this.templated = true;
             }
 
+            // Manage download site
+            if (this.website.Contains("kerbal.curseforge.com"))
+            {
+                this.dlSite = this.website + "/files/latest";
+            }
+
+            else if (this.website.Contains("kerbalstuff.com"))
+            {
+                string newVersion = "";
+                StringReader sr = new StringReader(this.version.Replace("<h2>Version", "").Replace(" ", ""));
+
+                for (int i = 0; i < 111; i++)
+                {
+                    char[] c = new char[1];
+                    sr.Read(c, 0, 1);
+
+                    if (c[0] == '<')
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        newVersion += Convert.ToString(c[0]);
+                    }
+                }
+
+                this.dlSite = this.website + "/download/" + newVersion;
+            }
+
+            else if (this.website.Contains("github.com"))
+            {
+                string newVersion = "";
+                StringReader sr = new StringReader(this.version.Replace("<a href=\"/", "").Replace(" ", ""));
+
+                for (int i = 0; i < 111; i++)
+                {
+                    char[] c = new char[1];
+                    sr.Read(c, 0, 1);
+
+                    if (c[0] == '"')
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        newVersion += Convert.ToString(c[0]);
+                    }
+                }
+
+                this.dlSite = "https://github.com/" + newVersion;
+            }
+
+            else
+            {
+                this.dlSite = "NONE";
+            }
+
+            // Do this thing
             if (this.zipfile == "none")
             {
                 this.canUpdate = true;

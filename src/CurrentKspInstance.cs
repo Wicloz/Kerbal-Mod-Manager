@@ -31,6 +31,7 @@ namespace KSP_Mod_Manager
                 SaveFiles(kspFolder);
 
                 loaded = true;
+                Main.acces.LogMessage("KSP Instance Loaded");
             }
             else
             {
@@ -49,6 +50,7 @@ namespace KSP_Mod_Manager
             }
 
             kspFolder = "";
+            Main.acces.LogMessage("KSP Instance Unloaded");
         }
 
         public void LoadFiles(string path)

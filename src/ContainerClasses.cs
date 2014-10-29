@@ -146,29 +146,6 @@ namespace KSP_Mod_Manager
     }
 
     [Serializable]
-    public class SiteInfo
-    {
-        public string key;
-        public string website;
-        public string dlSite;
-
-        public SiteInfo()
-        { }
-
-        public SiteInfo(string Key, string Website)
-        {
-            key = Key.ToLower();
-            website = Website;
-            dlSite = "NONE";
-
-            if (Website.Contains("curse"))
-            {
-                dlSite = Website + "\\files\\latest";
-            }
-        }
-    }
-
-    [Serializable]
     public class FileInfo
     {
         public string path;

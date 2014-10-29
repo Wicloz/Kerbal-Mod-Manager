@@ -20,6 +20,7 @@ namespace KSP_Mod_Manager
         public CurrentModInstance modInfo = new CurrentModInstance();
         private UpdateMod um = new UpdateMod();
         private UpdateCheck uc = new UpdateCheck();
+        public TemplateManager tm = new TemplateManager();
 
         private string settingFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\KMM\\settings";
         public List<InstallInstance> instanceList = new List<InstallInstance>();
@@ -74,6 +75,8 @@ namespace KSP_Mod_Manager
             HandleCategories();
             filterList.Add("ALL");
 
+            tm.LoadTemplates();
+
             ChangeModFolder(savedModsPath);
             ChangeKspFolder(instanceList[selectedIndex].kspPath);
 
@@ -81,17 +84,19 @@ namespace KSP_Mod_Manager
             UpdateInstallInstanceList(selectedIndex);
             UpdateModList("", true);
 
-            SaveFiles();
+            SaveSettings();
+            tm.SaveTemplates();
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SaveFiles();
+            SaveSettings();
+            tm.SaveTemplates();
             modInfo.UnloadInstance();
             kspInfo.UnloadInstance();
         }
 
-        private void SaveFiles()
+        private void SaveSettings()
         {
             List<string> sendList = new List<string>();
 
@@ -217,7 +222,7 @@ namespace KSP_Mod_Manager
                     }
 
                     string updateStatus = "";
-                    if (mod.websites.website == "NONE")
+                    if (mod.website == "NONE")
                     {
                         updateStatus = "No Website";
                     }
@@ -422,6 +427,7 @@ namespace KSP_Mod_Manager
 
             ChangeModFolder(modFolderBox.Text);
             LoadSelectedKspInstance();
+            tm.SaveTemplates();
 
             initialised = true;
             UpdateModList("", true);
@@ -433,7 +439,7 @@ namespace KSP_Mod_Manager
 
             foreach (ModInfo mod in modInfo.modList)
             {
-                if (!mod.zipfile.Contains("Overrides\\") && mod.websites.website != "NONE")
+                if (!mod.zipfile.Contains("Overrides\\") && mod.website != "NONE")
                 {
                     form.AddCheckUpdateMod(mod);
                 }
@@ -712,8 +718,9 @@ namespace KSP_Mod_Manager
 
                 opNameBox.Text = selectedMod.name;
                 opCategoryBox.Text = selectedMod.category;
-                opSiteBox.Text = selectedMod.websites.website;
-                opTempBox.Text = selectedMod.version;
+                opSiteBox.Text = selectedMod.website;
+
+                opTempBox.Text = selectedMod.zipfile;
 
                 opIsFavoriteBox.Checked = selectedFav.isFav;
                 opCanDownloadBox.Checked = selectedMod.canUpdate;
@@ -757,7 +764,7 @@ namespace KSP_Mod_Manager
                 opReinstallButton.Enabled = false;
             }
 
-            if (selectedMod != null && selectedMod.websites.dlSite == "NONE")
+            if (selectedMod != null && selectedMod.dlSite == "NONE")
             {
                 opDownloadButton.Text = "Open Site";
             }
@@ -817,7 +824,7 @@ namespace KSP_Mod_Manager
         {
             if (!isChangingSelection)
             {
-                selectedMod.websites.website = opSiteBox.Text;
+                selectedMod.website = opSiteBox.Text;
 
                 selectedMod.ManageMod();
                 UpdateOpSettings(selectedMod.name);
@@ -848,7 +855,7 @@ namespace KSP_Mod_Manager
 
         private void opOpenSite_Click(object sender, EventArgs e)
         {
-            Process.Start(selectedMod.websites.website);
+            Process.Start(selectedMod.website);
         }
 
         private void opCheckUpdateButton_Click(object sender, EventArgs e)
@@ -868,7 +875,7 @@ namespace KSP_Mod_Manager
         {
             InstallDeinstallForm form = new InstallDeinstallForm();
 
-            if (selectedMod.websites.dlSite != "NONE")
+            if (selectedMod.dlSite != "NONE")
             {
                 form.AddCheckUpdateMod(selectedMod);
                 form.AddUpdateMod(selectedMod);
@@ -882,7 +889,7 @@ namespace KSP_Mod_Manager
 
             else
             {
-                Process.Start(selectedMod.websites.website);
+                Process.Start(selectedMod.website);
             }
         }
 
@@ -1027,7 +1034,7 @@ namespace KSP_Mod_Manager
 
             foreach (ModInfo mod in modInfo.modList)
             {
-                if (!mod.zipfile.Contains("Overrides\\") && mod.websites.dlSite != "NONE" && !mod.websites.dlSite.Contains("forum.kerbalspaceprogram.com"))
+                if (!mod.zipfile.Contains("Overrides\\") && mod.dlSite != "NONE" && !mod.dlSite.Contains("forum.kerbalspaceprogram.com"))
                 {
                     sendList.Add(mod);
                     form.AddUpdateMod(mod);
