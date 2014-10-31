@@ -38,7 +38,7 @@ namespace KSP_Mod_Manager
         {
             if (File.Exists(templateFilePath))
             {
-                templates = SaveLoad.LoadFileBf<List<TemplateInfo>>(templateFilePath);
+                templates = SaveLoad.LoadFileXml<List<TemplateInfo>>(templateFilePath);
             }
             else
             {
@@ -80,18 +80,14 @@ namespace KSP_Mod_Manager
                     else if (mod.hasZipfile)
                     {
                         sendplate = new TemplateInfo(mod.name, mod.category, mod.website, mod.dlSite);
-
-                        if (mod.hasZipfile && Functions.CleanName(mod.zipfile).Replace("v", "") != Functions.CleanName(mod.name).Replace("v", ""))
-                        {
-                            sendplate.originalZip = mod.zipfile;
-                        }
+                        sendplate.originalZip = mod.zipfile;
 
                         templates.Add(sendplate);
                     }
                 }
             }
 
-            SaveLoad.SaveFileBf(templates, templateFilePath);
+            SaveLoad.SaveFileXml(templates, templateFilePath);
             Main.acces.LogMessage("Templates Saved");
         }
     }

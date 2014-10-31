@@ -160,6 +160,8 @@ namespace KSP_Mod_Manager
             // Load template
             if (!this.templated)
             {
+                bool hasTemplate = false;
+
                 foreach (TemplateInfo template in Main.acces.tm.templates)
                 {
                     if (Functions.CleanName(this.zipfile).Replace("v", "") == Functions.CleanName(template.name).Replace("v", "") || Functions.CleanName(this.zipfile) == Functions.CleanName(template.originalZip))
@@ -168,7 +170,49 @@ namespace KSP_Mod_Manager
                         this.category = template.category;
                         this.website = template.website;
                         this.dlSite = template.dlSite;
+
+                        hasTemplate = true;
                         break;
+                    }
+                }
+
+                // Try to find the values online
+                if (!hasTemplate)
+                {
+                    WebClient client = new WebClient();
+
+                    string site = client.DownloadString(new Uri("https://www.google.nl/?gws_rd=ssl#q=" + "kerbal+curseforge+" + this.name));
+                    StringReader sr = new StringReader(site);
+                    
+                    string s = "";
+                    while (!s.ToLower().Contains("curseforge"))
+                    {
+                        s = sr.ReadLine();
+                        if (s == null)
+                        {
+                            s = "none";
+                            break;
+                        }
+                    }
+
+                    this.category = s;
+                }
+
+                this.vnLocal = Functions.RemoveLetters(this.zipfile);
+
+                if (this.website != "NONE")
+                {
+                    InstallDeinstallForm form = new InstallDeinstallForm();
+                    form.AddCheckUpdateMod(this);
+                    form.ShowDialog();
+
+                    if (this.vnOnline == "N/A" || this.vnLocal == "N/A")
+                    {
+                        this.canUpdate = true;
+                    }
+                    else if (this.vnOnline == this.vnLocal)
+                    {
+                        this.canUpdate = false;
                     }
                 }
 

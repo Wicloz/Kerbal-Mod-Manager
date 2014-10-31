@@ -172,7 +172,7 @@ namespace KSP_Mod_Manager
                 List<char> endCharList = new List<char>();
                 endCharList.Add('<');
                 endCharList.Add('"');
-                newVersion = ExtractVersion(versionLine, endCharList, '>').Replace(".zip", "").Replace("Inline.Cockpit.", "");
+                newVersion = ExtractVersion(versionLine, endCharList, '>').Replace(".zip", "").Replace("1.Inline.Cockpit.", "").Replace("9.Aerospace.Pack.", "").Replace("3.Refit.Nazari.", "");
             }
 
             else if (modInfo.website.Contains("kerbalstuff.com"))

@@ -720,7 +720,7 @@ namespace KSP_Mod_Manager
                 opCategoryBox.Text = selectedMod.category;
                 opSiteBox.Text = selectedMod.website;
 
-                opTempBox.Text = selectedMod.zipfile;
+                opTempBox.Text = selectedMod.dlSite;
 
                 opIsFavoriteBox.Checked = selectedFav.isFav;
                 opCanDownloadBox.Checked = selectedMod.canUpdate;
