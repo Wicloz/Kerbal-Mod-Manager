@@ -19,11 +19,11 @@ namespace KSP_Mod_Manager
             {
                 try
                 {
-                    FileStream fs = File.Create(file);
-                    XmlSerializer xs = new XmlSerializer(typeof(T));
-
-                    xs.Serialize(fs, data);
-                    fs.Close();
+                    using (FileStream fs = File.Create(file))
+                    {
+                        XmlSerializer xs = new XmlSerializer(typeof(T));
+                        xs.Serialize(fs, data);
+                    }
 
                     succeed = true;
                 }
@@ -38,11 +38,11 @@ namespace KSP_Mod_Manager
 
             try
             {
-                FileStream fs = File.Open(file, FileMode.Open);
-                XmlSerializer xs = new XmlSerializer(typeof(T));
-
-                returnValue = (T) xs.Deserialize(fs);
-                fs.Close();
+                using (FileStream fs = File.Open(file, FileMode.Open))
+                {
+                    XmlSerializer xs = new XmlSerializer(typeof(T));
+                    returnValue = (T)xs.Deserialize(fs);
+                }
             }
             catch
             {
@@ -60,11 +60,11 @@ namespace KSP_Mod_Manager
             {
                 try
                 {
-                    FileStream fs = File.Create(file);
-                    BinaryFormatter bf = new BinaryFormatter();
-
-                    bf.Serialize(fs, data);
-                    fs.Close();
+                    using (FileStream fs = File.Create(file))
+                    {
+                        BinaryFormatter bf = new BinaryFormatter();
+                        bf.Serialize(fs, data);
+                    }
 
                     succeed = true;
                 }
@@ -79,11 +79,11 @@ namespace KSP_Mod_Manager
 
             try
             {
-                FileStream fs = File.Open(file, FileMode.Open);
-                BinaryFormatter bf = new BinaryFormatter();
-
-                returnValue = (T)bf.Deserialize(fs);
-                fs.Close();
+                using (FileStream fs = File.Open(file, FileMode.Open))
+                {
+                    BinaryFormatter bf = new BinaryFormatter();
+                    returnValue = (T)bf.Deserialize(fs);
+                }
             }
             catch
             {
