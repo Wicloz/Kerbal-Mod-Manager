@@ -48,28 +48,49 @@ namespace KSP_Mod_Manager
             string savedModsPath = "";
             int selectedIndex = 0;
 
-            if (File.Exists(settingFolder + "\\settings.txt"))
+            string fixedSettingsFile = settingFolder + "\\settings.txt";
+            if (File.Exists(fixedSettingsFile))
             {
-                Settings settings = SaveLoad.LoadFileXml<Settings>(settingFolder + "\\settings.txt");
-
-                instanceList = settings.instances;
-                selectedIndex = settings.selectedInstance;
-                savedModsPath = settings.modsPath;
-
-                if (settings.categoryList.Count > 0)
+                try
                 {
-                    opCategoryBox.Items.Clear();
-                    foreach (string category in settings.categoryList)
-                    {
-                        opCategoryBox.Items.Add(category);
-                    }
+                    SettingsFixed settings = SaveLoad.LoadFileXml<SettingsFixed>(fixedSettingsFile);
+                    instanceList = settings.instances;
+                    selectedIndex = settings.selectedInstance;
+                    savedModsPath = settings.modsPath;
+                }
+                catch
+                {
+                    File.Delete(fixedSettingsFile);
+                    instanceList = new List<InstallInstance>();
+                    instanceList.Add(new InstallInstance("New Instance"));
                 }
             }
-
             else
             {
                 instanceList = new List<InstallInstance>();
                 instanceList.Add(new InstallInstance("New Instance"));
+            }
+
+            string localSettingsFile = Environment.CurrentDirectory + "\\" + "KMM_Settings.txt";
+            if (File.Exists(localSettingsFile))
+            {
+                try
+                {
+                    SettingsLocal savedCategories = SaveLoad.LoadFileXml<SettingsLocal>(localSettingsFile);
+
+                    if (savedCategories.categoryList.Count > 0)
+                    {
+                        opCategoryBox.Items.Clear();
+                        foreach (string category in savedCategories.categoryList)
+                        {
+                            opCategoryBox.Items.Add(category);
+                        }
+                    }
+                }
+                catch
+                {
+                    File.Delete(localSettingsFile);
+                }
             }
 
             HandleCategories();
@@ -105,7 +126,8 @@ namespace KSP_Mod_Manager
                 sendList.Add(category);
             }
 
-            SaveLoad.SaveFileXml(new Settings(modInfo.modsPath, instanceList, installationBox.SelectedIndex, sendList), settingFolder + "\\settings.txt");
+            SaveLoad.SaveFileXml(new SettingsFixed(modInfo.modsPath, instanceList, installationBox.SelectedIndex), settingFolder + "\\settings.txt");
+            SaveLoad.SaveFileXml(new SettingsLocal(sendList), Environment.CurrentDirectory + "\\" + "KMM_Settings.txt");
 
             LogMessage("Setting Files Saved");
         }
@@ -582,22 +604,23 @@ namespace KSP_Mod_Manager
                 }
             }
 
+            if (selectedMod.hasZipfile)
+            {
+                File.Delete(modInfo.modsPath + "\\" + selectedMod.zipfile);
+            }
+
             UpdateModList("", true);
         }
 
         private void deleteZipButton_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < modInfo.modList.Count; i++)
+            if (selectedMod.hasZipfile)
             {
-                if (modInfo.modList[i].key == selectedMod.key)
-                {
-                    File.Delete(modInfo.modsPath + "\\" + modInfo.modList[i].zipfile);
-                    break;
-                }
-            }
+                File.Delete(modInfo.modsPath + "\\" + selectedMod.zipfile);
 
-            ChangeModFolder(modFolderBox.Text);
-            UpdateModList("", true);
+                ChangeModFolder(modFolderBox.Text);
+                UpdateModList("", true);
+            }
         }
 
         private void topButton1_Click(object sender, EventArgs e)

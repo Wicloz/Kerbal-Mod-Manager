@@ -8,21 +8,33 @@ using System.IO;
 namespace KSP_Mod_Manager
 {
     [Serializable]
-    public class Settings
+    public class SettingsFixed
     {
         public string modsPath;
         public List<InstallInstance> instances;
         public int selectedInstance;
-        public List<string> categoryList;
 
-        public Settings()
+        public SettingsFixed()
         { }
 
-        public Settings(string ModsPath, List<InstallInstance> Instances, int SelectedInstance, List<string> CategoryList)
+        public SettingsFixed(string ModsPath, List<InstallInstance> Instances, int SelectedInstance)
         {
             modsPath = ModsPath;
             instances = Instances;
             selectedInstance = SelectedInstance;
+        }
+    }
+
+    [Serializable]
+    public class SettingsLocal
+    {
+        public List<string> categoryList;
+
+        public SettingsLocal()
+        { }
+
+        public SettingsLocal(List<string> CategoryList)
+        {
             categoryList = CategoryList;
         }
     }
