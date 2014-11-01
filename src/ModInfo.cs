@@ -28,7 +28,7 @@ namespace KSP_Mod_Manager
 
         public ModInfo(string Zipfile)
         {
-            this.name = Functions.CleanName(Zipfile);
+            this.name = MiscFunctions.CleanName(Zipfile);
             this.category = "none";
             this.key = name;
             this.zipfile = Zipfile;
@@ -136,7 +136,7 @@ namespace KSP_Mod_Manager
         {
             for (int i = 0; i < Main.acces.modInfo.modList.Count; i++)
             {
-                if (("overrides\\" + Functions.CleanName(this.name)).Replace("x", "").Replace("v", "") == Functions.CleanName(Main.acces.modInfo.modList[i].name).Replace("x", "").Replace("v", ""))
+                if (("overrides\\" + MiscFunctions.CleanName(this.name)).Replace("x", "").Replace("v", "") == MiscFunctions.CleanName(Main.acces.modInfo.modList[i].name).Replace("x", "").Replace("v", ""))
                 {
                     return Main.acces.modInfo.modList[i];
                 }
@@ -150,11 +150,11 @@ namespace KSP_Mod_Manager
             // Manage key
             if (this.zipfile == "none" && (this.key == "none" || this.key == "" || this.key == null))
             {
-                this.key = Functions.CleanName(this.name);
+                this.key = MiscFunctions.CleanName(this.name);
             }
             else if (this.key == "none" || this.key == "" || this.key == null)
             {
-                this.key = Functions.CleanName(this.zipfile);
+                this.key = MiscFunctions.CleanName(this.zipfile);
             }
 
             // Load template
@@ -164,7 +164,7 @@ namespace KSP_Mod_Manager
 
                 foreach (TemplateInfo template in Main.acces.tm.templates)
                 {
-                    if (Functions.CleanName(this.zipfile).Replace("v", "") == Functions.CleanName(template.name).Replace("v", "") || Functions.CleanName(this.zipfile) == Functions.CleanName(template.originalZip))
+                    if (MiscFunctions.CleanName(this.zipfile).Replace("v", "") == MiscFunctions.CleanName(template.name).Replace("v", "") || MiscFunctions.CleanName(this.zipfile) == MiscFunctions.CleanName(template.originalZip))
                     {
                         this.name = template.name;
                         this.category = template.category;
@@ -198,7 +198,7 @@ namespace KSP_Mod_Manager
                     this.category = s;
                 }
 
-                this.vnLocal = Functions.RemoveLetters(this.zipfile);
+                this.vnLocal = MiscFunctions.RemoveLetters(this.zipfile);
 
                 if (this.website != "NONE")
                 {

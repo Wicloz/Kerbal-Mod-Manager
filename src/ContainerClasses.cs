@@ -52,7 +52,7 @@ namespace KSP_Mod_Manager
         {
             for (int i = 0; i < Main.acces.kspInfo.installedModList.Count; i++)
             {
-                if (("overrides\\" + Functions.CleanName(this.modName)).Replace("x", "").Replace("v", "") == Functions.CleanName(Main.acces.kspInfo.installedModList[i].modName).Replace("x", "").Replace("v", ""))
+                if (("overrides\\" + MiscFunctions.CleanName(this.modName)).Replace("x", "").Replace("v", "") == MiscFunctions.CleanName(Main.acces.kspInfo.installedModList[i].modName).Replace("x", "").Replace("v", ""))
                 {
                     return Main.acces.kspInfo.installedModList[i];
                 }

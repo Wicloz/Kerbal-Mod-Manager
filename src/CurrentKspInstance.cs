@@ -47,10 +47,10 @@ namespace KSP_Mod_Manager
                 ManageFileList(kspFolder);
                 ManageFavoriteList();
                 SaveFiles(kspFolder);
+                Main.acces.LogMessage("KSP Instance Unloaded");
             }
 
             kspFolder = "";
-            Main.acces.LogMessage("KSP Instance Unloaded");
         }
 
         public void LoadFiles(string path)

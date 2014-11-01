@@ -8,7 +8,7 @@ using System.Net;
 
 namespace KSP_Mod_Manager
 {
-    class UpdateCheck
+    class UpdateCheckEvents
     {
         public int progress = 0;
         public bool checkDone = false;
@@ -64,7 +64,7 @@ namespace KSP_Mod_Manager
                         newVersion = sr.ReadLine();
                     }
 
-                    newVersion = Functions.RemoveLetters(newVersion);
+                    newVersion = MiscFunctions.RemoveLetters(newVersion);
                 }
 
                 if (mode == "forum")
@@ -74,7 +74,7 @@ namespace KSP_Mod_Manager
                         newVersion = sr.ReadLine();
                     }
 
-                    newVersion = Functions.RemoveLetters(newVersion);
+                    newVersion = MiscFunctions.RemoveLetters(newVersion);
                 }
 
                 if (mode == "kstuff")
@@ -155,7 +155,7 @@ namespace KSP_Mod_Manager
                     versionLine = sr1.ReadLine();
                 }
 
-                newVersion = Functions.RemoveLetters(versionLine);
+                newVersion = MiscFunctions.RemoveLetters(versionLine);
                 if (newVersion == "")
                 {
                     newVersion = "N/A";

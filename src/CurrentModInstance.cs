@@ -43,10 +43,10 @@ namespace KSP_Mod_Manager
                 SetupModFolder(modsPath);
                 ManageModLists(modsPath);
                 SaveFiles(modsPath);
+                Main.acces.LogMessage("Mod Folder Unloaded");
             }
 
             modsPath = "";
-            Main.acces.LogMessage("Mod Folder Unloaded");
         }
 
         public void LoadFiles(string path)

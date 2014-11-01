@@ -18,8 +18,8 @@ namespace KSP_Mod_Manager
 
         public CurrentKspInstance kspInfo = new CurrentKspInstance();
         public CurrentModInstance modInfo = new CurrentModInstance();
-        private UpdateMod um = new UpdateMod();
-        private UpdateCheck uc = new UpdateCheck();
+        private UpdateModEvents um = new UpdateModEvents();
+        private UpdateCheckEvents uc = new UpdateCheckEvents();
         public TemplateManager tm = new TemplateManager();
 
         private string settingFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\KMM\\settings";
@@ -123,11 +123,6 @@ namespace KSP_Mod_Manager
         }
 
         // Updating Mod and KSP folder
-        private void LoadSelectedKspInstance()
-        {
-            ChangeKspFolder(instanceList[installationBox.SelectedIndex].kspPath);
-        }
-
         private void ChangeModFolder(string newPath)
         {
             modFolderBox.Text = newPath;
@@ -207,7 +202,7 @@ namespace KSP_Mod_Manager
             {
                 if (!mod.zipfile.Contains("Overrides\\") && mod.hasZipfile && (filterList.Contains(mod.category) || filterList.Contains("ALL")))
                 {
-                    InstalledInfo installedMod = Functions.GetInstalledMod(mod);
+                    InstalledInfo installedMod = MiscFunctions.GetInstalledMod(mod);
 
                     ListViewItem lvi = new ListViewItem(mod.name);
                     lvi.SubItems.Add(mod.category);
@@ -426,7 +421,7 @@ namespace KSP_Mod_Manager
             initialised = false;
 
             ChangeModFolder(modFolderBox.Text);
-            LoadSelectedKspInstance();
+            ChangeKspFolder(instanceList[installationBox.SelectedIndex].kspPath);
             tm.SaveTemplates();
 
             initialised = true;
@@ -468,7 +463,7 @@ namespace KSP_Mod_Manager
             {
                 if (mod.isInstalled)
                 {
-                    InstalledInfo installedMod = Functions.GetInstalledMod(mod);
+                    InstalledInfo installedMod = MiscFunctions.GetInstalledMod(mod);
 
                     if (mod.version != installedMod.version)
                     {
@@ -502,12 +497,12 @@ namespace KSP_Mod_Manager
             instanceList.RemoveAt(installationBox.SelectedIndex);
             UpdateInstallInstanceList(installationBox.SelectedIndex - 1);
 
-            LoadSelectedKspInstance();
+            ChangeKspFolder(instanceList[installationBox.SelectedIndex].kspPath);
         }
 
         private void installationBox_Click(object sender, EventArgs e)
         {
-            LoadSelectedKspInstance();
+            ChangeKspFolder(instanceList[installationBox.SelectedIndex].kspPath);
         }
 
         private void favAllButton_Click(object sender, EventArgs e)
@@ -567,7 +562,7 @@ namespace KSP_Mod_Manager
             instance.kspPath = editInstanceForm.kspPath;
 
             UpdateInstallInstanceList(installationBox.SelectedIndex);
-            LoadSelectedKspInstance();
+            ChangeKspFolder(instanceList[installationBox.SelectedIndex].kspPath);
         }
 
         private void opInstallButton_Click(object sender, EventArgs e)
@@ -668,8 +663,8 @@ namespace KSP_Mod_Manager
             string mode = "";
             bool hasZip = true;
 
-            selectedInstalledMod = Functions.GetInstalledMod(itemName);
-            selectedMod = Functions.GetDownloadedMod(itemName);
+            selectedInstalledMod = MiscFunctions.GetInstalledMod(itemName);
+            selectedMod = MiscFunctions.GetDownloadedMod(itemName);
 
             if (selectedMod == null || selectedMod.isInstalled)
             {

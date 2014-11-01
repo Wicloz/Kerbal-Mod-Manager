@@ -58,7 +58,7 @@ namespace KSP_Mod_Manager
 
                     foreach (TemplateInfo template in templates)
                     {
-                        if (Functions.CleanName(mod.name).Replace("v", "") == Functions.CleanName(template.name).Replace("v", "") || Functions.CleanName(mod.zipfile) == Functions.CleanName(template.originalZip))
+                        if (MiscFunctions.CleanName(mod.name).Replace("v", "") == MiscFunctions.CleanName(template.name).Replace("v", "") || MiscFunctions.CleanName(mod.zipfile) == MiscFunctions.CleanName(template.originalZip))
                         {
                             sendplate = template;
                             break;
@@ -72,7 +72,7 @@ namespace KSP_Mod_Manager
                         sendplate.website = mod.website;
                         sendplate.dlSite = mod.dlSite;
 
-                        if (mod.hasZipfile && Functions.CleanName(mod.zipfile).Replace("v", "") != Functions.CleanName(mod.name).Replace("v", ""))
+                        if (mod.hasZipfile && MiscFunctions.CleanName(mod.zipfile).Replace("v", "") != MiscFunctions.CleanName(mod.name).Replace("v", ""))
                         {
                             sendplate.originalZip = mod.zipfile;
                         }

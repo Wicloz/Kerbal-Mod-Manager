@@ -11,7 +11,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace KSP_Mod_Manager
 {
-    class DeinstallMod
+    class DeinstallEvents
     {
         public void Deinstall(string zipName)
         {
@@ -91,8 +91,8 @@ namespace KSP_Mod_Manager
             }
 
             // Finalise
-            Functions.ProcessDirectory(Main.acces.kspInfo.kspFolder + "\\GameData", false);
-            Functions.ProcessDirectory(Main.acces.kspInfo.kspFolder + "\\KMM\\overrides", false);
+            MiscFunctions.ProcessDirectory(Main.acces.kspInfo.kspFolder + "\\GameData", false);
+            MiscFunctions.ProcessDirectory(Main.acces.kspInfo.kspFolder + "\\KMM\\overrides", false);
         }
     }
 }

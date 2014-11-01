@@ -13,10 +13,10 @@ namespace KSP_Mod_Manager
 {
     public partial class InstallDeinstallForm : Form
     {
-        private InstallMod im = new InstallMod();
-        private DeinstallMod dm = new DeinstallMod();
-        private UpdateCheck uc = new UpdateCheck();
-        private UpdateMod um = new UpdateMod();
+        private InstallEvents im = new InstallEvents();
+        private DeinstallEvents dm = new DeinstallEvents();
+        private UpdateCheckEvents uc = new UpdateCheckEvents();
+        private UpdateModEvents um = new UpdateModEvents();
 
         private List<ModInfo> installModList = new List<ModInfo>();
         private List<InstalledInfo> deinstallModList = new List<InstalledInfo>();
@@ -88,9 +88,9 @@ namespace KSP_Mod_Manager
                 {
                     if (mod.name.Replace(" ", "").ToLower().Contains("modulemanager"))
                     {
-                        if (mod.isInstalled && !deinstallModList.Contains(Functions.GetInstalledMod(mod)) && !installModList.Contains(mod))
+                        if (mod.isInstalled && !deinstallModList.Contains(MiscFunctions.GetInstalledMod(mod)) && !installModList.Contains(mod))
                         {
-                            deinstallModList.Insert(0, Functions.GetInstalledMod(mod));
+                            deinstallModList.Insert(0, MiscFunctions.GetInstalledMod(mod));
                             installModList.Add(mod);
                         }
 

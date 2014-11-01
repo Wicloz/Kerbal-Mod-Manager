@@ -10,7 +10,7 @@ using System.IO.Compression;
 
 namespace KSP_Mod_Manager
 {
-    class UpdateMod
+    class UpdateModEvents
     {
         public int progress = 0;
         public bool updateDone = false;

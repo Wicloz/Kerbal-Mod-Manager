@@ -8,7 +8,7 @@ using System.Net;
 
 namespace KSP_Mod_Manager
 {
-    class Functions
+    class MiscFunctions
     {
         public static void ProcessDirectory(string startLocation, bool includeFirst)
         {

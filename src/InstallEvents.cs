@@ -13,7 +13,7 @@ using System.Diagnostics;
 
 namespace KSP_Mod_Manager
 {
-    class InstallMod
+    class InstallEvents
     {
         public void Install(ModInfo modInfo)
         {
@@ -40,7 +40,7 @@ namespace KSP_Mod_Manager
                 Main.acces.LogMessage("Extraction failed, aborting installation of '" + modInfo.name + "'!");
 
                 Directory.Delete(tempExtractLocation, true);
-                Functions.ProcessDirectory(Main.acces.kspInfo.kspFolder + "\\KMM\\overrides", false);
+                MiscFunctions.ProcessDirectory(Main.acces.kspInfo.kspFolder + "\\KMM\\overrides", false);
             }
 
             // Checking for GameData mode
@@ -210,7 +210,7 @@ namespace KSP_Mod_Manager
             }
 
             Directory.Delete(tempExtractLocation, true);
-            Functions.ProcessDirectory(Main.acces.kspInfo.kspFolder + "\\KMM\\overrides", false);
+            MiscFunctions.ProcessDirectory(Main.acces.kspInfo.kspFolder + "\\KMM\\overrides", false);
         }
     }
 }
