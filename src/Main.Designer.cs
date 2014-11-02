@@ -66,7 +66,6 @@
             this.modsListView = new System.Windows.Forms.ListView();
             this.modName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.category = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.installStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.updateStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.favStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.versionLocal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -442,10 +441,10 @@
             // 
             // modsListView
             // 
+            this.modsListView.CheckBoxes = true;
             this.modsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.modName,
             this.category,
-            this.installStatus,
             this.updateStatus,
             this.favStatus,
             this.versionLocal,
@@ -459,6 +458,7 @@
             this.modsListView.TabIndex = 31;
             this.modsListView.UseCompatibleStateImageBehavior = false;
             this.modsListView.View = System.Windows.Forms.View.Details;
+            this.modsListView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.modsListView_ItemChecked);
             this.modsListView.SelectedIndexChanged += new System.EventHandler(this.downloadedListView_SelectedIndexChanged);
             this.modsListView.DoubleClick += new System.EventHandler(this.downloadedListView_DoubleClick);
             this.modsListView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.downloadedListView_KeyPress);
@@ -472,11 +472,6 @@
             // 
             this.category.Text = "Category";
             this.category.Width = 148;
-            // 
-            // installStatus
-            // 
-            this.installStatus.Text = "Installed";
-            this.installStatus.Width = 70;
             // 
             // updateStatus
             // 
@@ -722,7 +717,6 @@
         private System.Windows.Forms.Button opGoogleButton;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ColumnHeader installStatus;
         private System.Windows.Forms.Button deleteZipButton;
         private System.Windows.Forms.Button addModButton;
         private System.Windows.Forms.Button catButton1;
