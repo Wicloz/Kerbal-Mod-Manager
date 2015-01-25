@@ -452,6 +452,7 @@
             this.modsListView.ContextMenuStrip = this.contextMenuStrip1;
             this.modsListView.FullRowSelect = true;
             this.modsListView.GridLines = true;
+            this.modsListView.HideSelection = false;
             this.modsListView.Location = new System.Drawing.Point(147, 268);
             this.modsListView.Name = "modsListView";
             this.modsListView.Size = new System.Drawing.Size(807, 484);
