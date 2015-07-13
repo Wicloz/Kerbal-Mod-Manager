@@ -250,13 +250,13 @@ namespace KSP_Mod_Manager
 
             else if (this.website.Contains("github.com"))
             {
-                string newVersion = "";
+               string newVersion = "";
                 StringReader sr = new StringReader(this.version.Replace("<a href=\"/", "").Replace(" ", ""));
 
                 for (int i = 0; i < 111; i++)
                 {
                     char[] c = new char[1];
-                    sr.Read(c, 0, 1);
+                   sr.Read(c, 0, 1);
 
                     if (c[0] == '"')
                     {
@@ -312,6 +312,11 @@ namespace KSP_Mod_Manager
             {
                 char[] charArray1 = (this.name).ToCharArray();
                 char[] charArray2 = (other.name).ToCharArray();
+
+                if (charArray1.Length == 0 || charArray2.Length == 0)
+                {
+                    return 0;
+                }
 
                 for (int i = 0; i < charArray1.Length; i++)
                 {

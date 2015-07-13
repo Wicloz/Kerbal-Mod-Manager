@@ -96,8 +96,6 @@ namespace KSP_Mod_Manager
             string modFolder = "\\ModDownloads\\" + modInfo.name.Replace(" ", "_");
             string downloadFolder = Main.acces.modInfo.modsPath + modFolder;
 
-            Main.acces.LogMessage("'" + modInfo.name + "' has finished downloading.");
-
             try
             {
                 ZipFile.ExtractToDirectory(downloadFolder + "\\" + modInfo.name.Replace(" ", "") + ".zip", downloadFolder + "\\temp");

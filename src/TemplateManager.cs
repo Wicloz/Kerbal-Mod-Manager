@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Windows.Forms;
 
 namespace KSP_Mod_Manager
 {
@@ -38,7 +39,7 @@ namespace KSP_Mod_Manager
         {
             if (File.Exists(templateFilePath))
             {
-                templates = SaveLoad.LoadFileXml<List<TemplateInfo>>(templateFilePath);
+                templates = SaveLoad.LoadFileBf<List<TemplateInfo>>(templateFilePath);
             }
             else
             {
@@ -50,6 +51,14 @@ namespace KSP_Mod_Manager
 
         public void SaveTemplates()
         {
+            if (templates == null)
+            {
+                MessageBox.Show("Templates File corrupted, deleting ...", "ERROR");
+                File.Delete(templateFilePath);
+
+                LoadTemplates();
+            }
+
             foreach (ModInfo mod in Main.acces.modInfo.modList)
             {
                 if (!mod.zipfile.Contains("Overrides\\"))
@@ -87,7 +96,7 @@ namespace KSP_Mod_Manager
                 }
             }
 
-            SaveLoad.SaveFileXml(templates, templateFilePath);
+            SaveLoad.SaveFileBf(templates, templateFilePath);
             Main.acces.LogMessage("Templates Saved");
         }
     }

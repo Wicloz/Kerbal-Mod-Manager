@@ -49,11 +49,9 @@
             this.editCategoryButton = new System.Windows.Forms.Button();
             this.opAddCategoryButton = new System.Windows.Forms.Button();
             this.opOpenSiteButton = new System.Windows.Forms.Button();
-            this.opIsFavoriteBox = new System.Windows.Forms.CheckBox();
             this.updateModFolderButton = new System.Windows.Forms.Button();
             this.checkUpdateButton = new System.Windows.Forms.Button();
             this.topButton1 = new System.Windows.Forms.Button();
-            this.topButton2 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.opCheckUpdateButton = new System.Windows.Forms.Button();
             this.opReinstallButton = new System.Windows.Forms.Button();
@@ -67,7 +65,6 @@
             this.modName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.category = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.updateStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.favStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.versionLocal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.versionOnline = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -82,7 +79,6 @@
             this.catButton6 = new System.Windows.Forms.Button();
             this.catButton5 = new System.Windows.Forms.Button();
             this.catButton7 = new System.Windows.Forms.Button();
-            this.favAllButton = new System.Windows.Forms.Button();
             this.fdaButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -240,7 +236,6 @@
             this.groupBox1.Controls.Add(this.editCategoryButton);
             this.groupBox1.Controls.Add(this.opAddCategoryButton);
             this.groupBox1.Controls.Add(this.opOpenSiteButton);
-            this.groupBox1.Controls.Add(this.opIsFavoriteBox);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.opNameBox);
@@ -251,7 +246,7 @@
             this.groupBox1.Controls.Add(this.opTempBox);
             this.groupBox1.Location = new System.Drawing.Point(147, 38);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(659, 150);
+            this.groupBox1.Size = new System.Drawing.Size(659, 132);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings for Mod";
@@ -296,17 +291,6 @@
             this.opOpenSiteButton.UseVisualStyleBackColor = true;
             this.opOpenSiteButton.Click += new System.EventHandler(this.opOpenSite_Click);
             // 
-            // opIsFavoriteBox
-            // 
-            this.opIsFavoriteBox.AutoSize = true;
-            this.opIsFavoriteBox.Location = new System.Drawing.Point(107, 124);
-            this.opIsFavoriteBox.Name = "opIsFavoriteBox";
-            this.opIsFavoriteBox.Size = new System.Drawing.Size(75, 17);
-            this.opIsFavoriteBox.TabIndex = 18;
-            this.opIsFavoriteBox.Text = "Is Favorite";
-            this.opIsFavoriteBox.UseVisualStyleBackColor = true;
-            this.opIsFavoriteBox.CheckedChanged += new System.EventHandler(this.opIsFavoriteBox_CheckedChanged);
-            // 
             // updateModFolderButton
             // 
             this.updateModFolderButton.Location = new System.Drawing.Point(979, 12);
@@ -319,7 +303,7 @@
             // 
             // checkUpdateButton
             // 
-            this.checkUpdateButton.Location = new System.Drawing.Point(960, 217);
+            this.checkUpdateButton.Location = new System.Drawing.Point(960, 311);
             this.checkUpdateButton.Name = "checkUpdateButton";
             this.checkUpdateButton.Size = new System.Drawing.Size(192, 53);
             this.checkUpdateButton.TabIndex = 20;
@@ -337,16 +321,6 @@
             this.topButton1.UseVisualStyleBackColor = true;
             this.topButton1.Click += new System.EventHandler(this.topButton1_Click);
             // 
-            // topButton2
-            // 
-            this.topButton2.Location = new System.Drawing.Point(960, 78);
-            this.topButton2.Name = "topButton2";
-            this.topButton2.Size = new System.Drawing.Size(192, 34);
-            this.topButton2.TabIndex = 22;
-            this.topButton2.Text = "Install all Favorites";
-            this.topButton2.UseVisualStyleBackColor = true;
-            this.topButton2.Click += new System.EventHandler(this.topButton2_Click);
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.opCheckUpdateButton);
@@ -354,7 +328,7 @@
             this.groupBox2.Controls.Add(this.opCanDownloadBox);
             this.groupBox2.Location = new System.Drawing.Point(812, 38);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(142, 150);
+            this.groupBox2.Size = new System.Drawing.Size(142, 132);
             this.groupBox2.TabIndex = 23;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Updating";
@@ -401,7 +375,7 @@
             // 
             // downloadModButton
             // 
-            this.downloadModButton.Location = new System.Drawing.Point(960, 276);
+            this.downloadModButton.Location = new System.Drawing.Point(960, 370);
             this.downloadModButton.Name = "downloadModButton";
             this.downloadModButton.Size = new System.Drawing.Size(192, 53);
             this.downloadModButton.TabIndex = 26;
@@ -431,9 +405,9 @@
             // 
             // reinstallAllButton
             // 
-            this.reinstallAllButton.Location = new System.Drawing.Point(960, 118);
+            this.reinstallAllButton.Location = new System.Drawing.Point(961, 78);
             this.reinstallAllButton.Name = "reinstallAllButton";
-            this.reinstallAllButton.Size = new System.Drawing.Size(192, 34);
+            this.reinstallAllButton.Size = new System.Drawing.Size(191, 34);
             this.reinstallAllButton.TabIndex = 30;
             this.reinstallAllButton.Text = "Reinstall All Mods";
             this.reinstallAllButton.UseVisualStyleBackColor = true;
@@ -446,7 +420,6 @@
             this.modName,
             this.category,
             this.updateStatus,
-            this.favStatus,
             this.versionLocal,
             this.versionOnline});
             this.modsListView.ContextMenuStrip = this.contextMenuStrip1;
@@ -478,11 +451,6 @@
             // 
             this.updateStatus.Text = "Update Status";
             this.updateStatus.Width = 123;
-            // 
-            // favStatus
-            // 
-            this.favStatus.Text = "Is Favorite";
-            this.favStatus.Width = 79;
             // 
             // versionLocal
             // 
@@ -603,21 +571,11 @@
             this.catButton7.UseVisualStyleBackColor = true;
             this.catButton7.Click += new System.EventHandler(this.catButton7_Click);
             // 
-            // favAllButton
-            // 
-            this.favAllButton.Location = new System.Drawing.Point(960, 158);
-            this.favAllButton.Name = "favAllButton";
-            this.favAllButton.Size = new System.Drawing.Size(192, 53);
-            this.favAllButton.TabIndex = 41;
-            this.favAllButton.Text = "Favorite All Mods";
-            this.favAllButton.UseVisualStyleBackColor = true;
-            this.favAllButton.Click += new System.EventHandler(this.favAllButton_Click);
-            // 
             // fdaButton
             // 
-            this.fdaButton.Location = new System.Drawing.Point(961, 336);
+            this.fdaButton.Location = new System.Drawing.Point(960, 429);
             this.fdaButton.Name = "fdaButton";
-            this.fdaButton.Size = new System.Drawing.Size(191, 41);
+            this.fdaButton.Size = new System.Drawing.Size(193, 41);
             this.fdaButton.TabIndex = 42;
             this.fdaButton.Text = "Force Update All Mods";
             this.fdaButton.UseVisualStyleBackColor = true;
@@ -630,7 +588,6 @@
             this.ClientSize = new System.Drawing.Size(1164, 802);
             this.Controls.Add(this.fdaButton);
             this.Controls.Add(this.opReinstallButton);
-            this.Controls.Add(this.favAllButton);
             this.Controls.Add(this.catButton7);
             this.Controls.Add(this.catButton5);
             this.Controls.Add(this.catButton6);
@@ -648,7 +605,6 @@
             this.Controls.Add(this.removeInstanceButton);
             this.Controls.Add(this.addInstanceButton);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.topButton2);
             this.Controls.Add(this.topButton1);
             this.Controls.Add(this.checkUpdateButton);
             this.Controls.Add(this.updateModFolderButton);
@@ -695,8 +651,6 @@
         private System.Windows.Forms.Button updateModFolderButton;
         private System.Windows.Forms.Button checkUpdateButton;
         private System.Windows.Forms.Button topButton1;
-        private System.Windows.Forms.Button topButton2;
-        private System.Windows.Forms.CheckBox opIsFavoriteBox;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button opCheckUpdateButton;
         private System.Windows.Forms.Button addInstanceButton;
@@ -712,7 +666,6 @@
         private System.Windows.Forms.ListView modsListView;
         private System.Windows.Forms.ColumnHeader modName;
         private System.Windows.Forms.ColumnHeader updateStatus;
-        private System.Windows.Forms.ColumnHeader favStatus;
         private System.Windows.Forms.ColumnHeader category;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Button opGoogleButton;
@@ -727,7 +680,6 @@
         private System.Windows.Forms.Button catButton6;
         private System.Windows.Forms.Button catButton5;
         private System.Windows.Forms.Button catButton7;
-        private System.Windows.Forms.Button favAllButton;
         private System.Windows.Forms.Button fdaButton;
         private System.Windows.Forms.ColumnHeader versionLocal;
         private System.Windows.Forms.ColumnHeader versionOnline;

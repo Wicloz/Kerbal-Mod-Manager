@@ -81,6 +81,16 @@ namespace KSP_Mod_Manager
                 return;
             }
 
+            // Reinstall updated mods
+            foreach (ModInfo mod in updateModList)
+            {
+                if (mod.isInstalled)
+                {
+                    deinstallModList.Add(MiscFunctions.GetInstalledMod(mod));
+                    installModList.Add(mod);
+                }
+            }
+
             // Reinstall ModuleManager
             if (deinstallModList.Count + installModList.Count > 0)
             {
@@ -121,7 +131,7 @@ namespace KSP_Mod_Manager
 
             // Initiate values
             stuff = new Thread(EmptyFunction);
-            stepSize = 1000 / (checkUpdateList.Count + updateModList.Count + deinstallModList.Count + installModList.Count);
+            stepSize = 100000 / (checkUpdateList.Count + updateModList.Count + deinstallModList.Count + installModList.Count);
 
             // Initiate timer
             System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
@@ -167,12 +177,6 @@ namespace KSP_Mod_Manager
                 return;
             }
 
-            thisModProgress.Style = ProgressBarStyle.Marquee;
-            allModProgress.Style = ProgressBarStyle.Continuous;
-            allModProgress.Value = Convert.ToInt32(Math.Max(0, stepSize * currentMod));
-
-            progressLabel2.Text = "(" + currentMod + "/" + (checkUpdateList.Count + updateModList.Count + deinstallModList.Count + installModList.Count) + ")";
-
             if (currentMod == checkUpdateList.Count + updateModList.Count + deinstallModList.Count + installModList.Count)
             {
                 progressLabel1.Text = "Done!";
@@ -184,7 +188,13 @@ namespace KSP_Mod_Manager
                 return;
             }
 
-            else if (currentMod < checkUpdateList.Count)
+            thisModProgress.Style = ProgressBarStyle.Marquee;
+            allModProgress.Style = ProgressBarStyle.Continuous;
+            allModProgress.Value = Convert.ToInt32(Math.Max(0, stepSize * (currentMod + 1)));
+
+            progressLabel2.Text = "(" + (currentMod + 1) + "/" + (checkUpdateList.Count + updateModList.Count + deinstallModList.Count + installModList.Count) + ")";
+
+            if (currentMod < checkUpdateList.Count)
             {
                 currentIndex = currentMod;
 

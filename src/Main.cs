@@ -27,7 +27,6 @@ namespace KSP_Mod_Manager
 
         private ModInfo selectedMod = new ModInfo();
         private InstalledInfo selectedInstalledMod = new InstalledInfo();
-        private FavInfo selectedFav = new FavInfo();
 
         private List<string> filterList = new List<string>();
 
@@ -214,7 +213,6 @@ namespace KSP_Mod_Manager
                         lvi.SubItems.Add("Not Available");
                         lvi.SubItems.Add("N/A");
                         lvi.SubItems.Add("N/A");
-                        lvi.SubItems.Add("N/A");
 
                         modsListView.Items.Add(lvi);
                     }
@@ -251,15 +249,6 @@ namespace KSP_Mod_Manager
                     }
                     lvi.SubItems.Add(updateStatus);
 
-                    if (mod.favorite.isFav)
-                    {
-                        lvi.SubItems.Add("Yes");
-                    }
-                    else
-                    {
-                        lvi.SubItems.Add("No");
-                    }
-
                     lvi.SubItems.Add(mod.vnLocal);
                     lvi.SubItems.Add(mod.vnOnline);
 
@@ -276,17 +265,6 @@ namespace KSP_Mod_Manager
                     lvi.SubItems.Add(mod.category);
 
                     lvi.SubItems.Add("Not Downloaded");
-
-                    string isFav = "";
-                    if (mod.favorite.isFav)
-                    {
-                        isFav = "Yes";
-                    }
-                    else
-                    {
-                        isFav = "No";
-                    }
-                    lvi.SubItems.Add(isFav);
 
                     lvi.SubItems.Add("N/A");
                     lvi.SubItems.Add(mod.vnOnline);
@@ -523,16 +501,6 @@ namespace KSP_Mod_Manager
             ChangeKspFolder(instanceList[installationBox.SelectedIndex].kspPath);
         }
 
-        private void favAllButton_Click(object sender, EventArgs e)
-        {
-            foreach (FavInfo fav in kspInfo.favoritesList)
-            {
-                fav.isFav = true;
-            }
-
-            UpdateModList(selectedItem, true);
-        }
-
         EditCategories editCategories;
         private void opAddCategoryButton_Click(object sender, EventArgs e)
         {
@@ -638,33 +606,6 @@ namespace KSP_Mod_Manager
             }
         }
 
-        private void topButton2_Click(object sender, EventArgs e)
-        {
-            InstallDeinstallForm form = new InstallDeinstallForm();
-
-            for (int i = modInfo.modList.Count - 1; i >= 0; i--)
-            {
-                foreach (FavInfo fav in kspInfo.favoritesList)
-                {
-                    if (modInfo.modList[i].key == fav.key)
-                    {
-                        if (fav.isFav && !modInfo.modList[i].isInstalled)
-                        {
-                            form.AddInstallMod(modInfo.modList[i]);
-                        }
-
-                        break;
-                    }
-                }
-            }
-
-            if (form.HasActions())
-            {
-                form.ShowDialog();
-                UpdateModList(selectedItem, true);
-            }
-        }
-
         private void fdaButton_Click(object sender, EventArgs e)
         {
             checkUpdateButton_Click(null, null);
@@ -753,15 +694,6 @@ namespace KSP_Mod_Manager
                 selectedItem = "";
             }
 
-            if (selectedMod != null)
-            {
-                selectedFav = selectedMod.favorite;
-            }
-            else
-            {
-                selectedFav = null;
-            }
-
             // Managing Option Editor
             if (selectedMod != null)
             {
@@ -773,7 +705,6 @@ namespace KSP_Mod_Manager
 
                 opTempBox.Text = selectedMod.dlSite;
 
-                opIsFavoriteBox.Checked = selectedFav.isFav;
                 opCanDownloadBox.Checked = selectedMod.canUpdate;
 
                 UnlockSettingEditor();
@@ -790,7 +721,6 @@ namespace KSP_Mod_Manager
                 opSiteBox.Text = "";
                 opTempBox.Text = "";
 
-                opIsFavoriteBox.Checked = false;
                 opCanDownloadBox.Checked = false;
 
                 BlockSettingEditor();
@@ -879,17 +809,6 @@ namespace KSP_Mod_Manager
 
                 selectedMod.ManageMod();
                 UpdateOpSettings(selectedMod.name);
-            }
-        }
-
-        private void opIsFavoriteBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!isChangingSelection)
-            {
-                selectedFav.isFav = opIsFavoriteBox.Checked;
-
-                selectedMod.ManageMod();
-                UpdateModList(selectedItem, false);
             }
         }
 
@@ -991,28 +910,7 @@ namespace KSP_Mod_Manager
 
         private void downloadedListView_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == Char.ConvertFromUtf32(32).ToCharArray()[0])
-            {
-                try
-                {
-                    selectedFav.isFav = !selectedFav.isFav;
-                    opIsFavoriteBox.Checked = selectedFav.isFav;
 
-                    string isFav;
-                    if (selectedFav.isFav)
-                    {
-                        isFav = "True";
-                    }
-                    else
-                    {
-                        isFav = "False";
-                    }
-
-                    modsListView.SelectedItems[0].SubItems[4].Text = isFav;
-                }
-                catch
-                { }
-            }
         }
 
         private void catButton1_Click(object sender, EventArgs e)

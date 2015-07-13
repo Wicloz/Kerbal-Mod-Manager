@@ -48,10 +48,10 @@
             // 
             this.allModProgress.Location = new System.Drawing.Point(12, 111);
             this.allModProgress.MarqueeAnimationSpeed = 50;
-            this.allModProgress.Maximum = 1000;
+            this.allModProgress.Maximum = 100000;
             this.allModProgress.Name = "allModProgress";
             this.allModProgress.Size = new System.Drawing.Size(799, 36);
-            this.allModProgress.Step = 100;
+            this.allModProgress.Step = 1;
             this.allModProgress.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.allModProgress.TabIndex = 2;
             // 

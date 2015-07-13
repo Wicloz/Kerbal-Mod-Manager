@@ -37,6 +37,11 @@ namespace KSP_Mod_Manager
             {
                 mode = "github";
             }
+            else
+            {
+                Main.acces.LogMessage("Unsupported website, skipping '" + modInfo.name + "'!");
+                return;
+            }
 
             WebClient client = new WebClient();
             client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
@@ -59,10 +64,11 @@ namespace KSP_Mod_Manager
 
                 if (mode == "curse")
                 {
-                    while (!newVersion.Contains("<li>Last Released File:"))
+                    while (!newVersion.Contains("<div class=\"info-label\">Last Released File</div>"))
                     {
                         newVersion = sr.ReadLine();
                     }
+                    newVersion = sr.ReadLine();
 
                     newVersion = MiscFunctions.RemoveLetters(newVersion);
                 }
@@ -87,7 +93,7 @@ namespace KSP_Mod_Manager
 
                 if (mode == "github")
                 {
-                    while (!newVersion.Contains("\" rel=\"nofollow\" class=\"button primary\">"))
+                    while (!newVersion.Contains("<a href=\"" + modInfo.website.Replace("https://github.com", "").Replace("/latest", "/download/")))
                     {
                         newVersion = sr.ReadLine();
                     }
@@ -164,7 +170,7 @@ namespace KSP_Mod_Manager
 
             if (modInfo.website.Contains("kerbal.curseforge.com"))
             {
-                while (!versionLine.Contains("<a class=\"overflow-tip\" href=\"/ksp-mods"))
+                while (!versionLine.Contains("<a class=\"overflow-tip\" href=\"/ksp-mods/"))
                 {
                     versionLine = sr1.ReadLine();
                 }
@@ -172,7 +178,11 @@ namespace KSP_Mod_Manager
                 List<char> endCharList = new List<char>();
                 endCharList.Add('<');
                 endCharList.Add('"');
-                newVersion = ExtractVersion(versionLine, endCharList, '>').Replace(".zip", "").Replace("1.Inline.Cockpit.", "").Replace("9.Aerospace.Pack.", "").Replace("3.Refit.Nazari.", "");
+
+                List<char> startCharList = new List<char>();
+                startCharList.Add('>');
+
+                newVersion = ExtractVersion(versionLine, endCharList, startCharList).Replace(".zip", "").Replace("1.Inline.Cockpit.", "").Replace("9.Aerospace.Pack.", "").Replace("3.Refit.Nazari.", "");
             }
 
             else if (modInfo.website.Contains("kerbalstuff.com"))
@@ -187,12 +197,22 @@ namespace KSP_Mod_Manager
 
             else if (modInfo.website.Contains("github.com"))
             {
-                while (!versionLine.Contains("\" rel=\"nofollow\" class=\"button primary\">"))
+                while (!versionLine.Contains("aria-label=\"Code\" class=\"selected js-selected-navigation-item sunken-menu-item\""))
                 {
                     versionLine = sr1.ReadLine();
                 }
 
-                newVersion = ExtractVersion(versionLine, '/', '=');
+                List<char> endCharList = new List<char>();
+                endCharList.Add('"');
+
+                List<char> startCharList = new List<char>();
+                startCharList.Add('t');
+                startCharList.Add('r');
+                startCharList.Add('e');
+                startCharList.Add('e');
+                startCharList.Add('/');
+
+                newVersion = ExtractVersion(versionLine, endCharList, startCharList);
             }
 
             modInfo.vnOnline = newVersion;
@@ -203,24 +223,39 @@ namespace KSP_Mod_Manager
         {
             List<char> endCharList = new List<char>();
             endCharList.Add(endChar);
-            return ExtractVersion(s, endCharList, startChar);
+
+            List<char> startCharList = new List<char>();
+            startCharList.Add(startChar);
+
+            return ExtractVersion(s, endCharList, startCharList);
         }
 
-        private string ExtractVersion(string s, List<char> endChars, char startChar)
+        private string ExtractVersion(string s, List<char> endChars, List<char> startChars)
         {
             string returnString = "";
             bool start = false;
-            bool foundChar = false;
+            bool foundChars = false;
             char[] charArray = s.Replace(" ", "").ToCharArray();
+            int checkChar = 0;
 
             foreach (char c in charArray)
             {
-                if (c == startChar)
+                if (startChars[checkChar] == c)
                 {
-                    foundChar = true;
+                    checkChar ++;
+                }
+                else
+                {
+                    checkChar = 0;
                 }
 
-                if (foundChar && (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9'))
+                if (startChars.Count == checkChar)
+                {
+                    foundChars = true;
+                    checkChar = 0;
+                }
+
+                if (foundChars && (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9'))
                 {
                     start = true;
                 }
