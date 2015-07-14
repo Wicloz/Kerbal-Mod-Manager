@@ -250,25 +250,9 @@ namespace KSP_Mod_Manager
 
             else if (this.website.Contains("github.com"))
             {
-               string newVersion = "";
-                StringReader sr = new StringReader(this.version.Replace("<a href=\"/", "").Replace(" ", ""));
-
-                for (int i = 0; i < 111; i++)
-                {
-                    char[] c = new char[1];
-                   sr.Read(c, 0, 1);
-
-                    if (c[0] == '"')
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        newVersion += Convert.ToString(c[0]);
-                    }
-                }
-
-                this.dlSite = "https://github.com/" + newVersion;
+                string bit = this.website.Replace("https://github.com", "").Replace("/latest", "/download");
+                string appendage = this.version.Replace("<a href=\"", "").Replace(bit, "").Replace("\" rel=\"nofollow\">", "");
+                dlSite = this.website.Replace("/latest", "/download") + appendage;
             }
 
             else
