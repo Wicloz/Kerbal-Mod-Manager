@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace KSP_Mod_Manager
+namespace Kerbal_Mod_Manager
 {
     static class Program
     {

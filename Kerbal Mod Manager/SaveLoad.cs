@@ -7,7 +7,7 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace KSP_Mod_Manager
+namespace Kerbal_Mod_Manager
 {
     class SaveLoad
     {
