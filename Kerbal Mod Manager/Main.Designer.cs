@@ -47,7 +47,6 @@
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.checkBoxAllMods = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonUpdateSelected = new System.Windows.Forms.Button();
             this.buttonCheckSelected = new System.Windows.Forms.Button();
@@ -55,8 +54,6 @@
             this.buttonFindSelected = new System.Windows.Forms.Button();
             this.buttonInstallSelected = new System.Windows.Forms.Button();
             this.buttonReinstallSelected = new System.Windows.Forms.Button();
-            this.listViewKspFolders = new System.Windows.Forms.ListView();
-            this.listViewModFolders = new System.Windows.Forms.ListView();
             this.buttonEditCat = new System.Windows.Forms.Button();
             this.buttonDeinstallAll = new System.Windows.Forms.Button();
             this.buttonFindAll = new System.Windows.Forms.Button();
@@ -66,6 +63,13 @@
             this.buttonReinstallAll = new System.Windows.Forms.Button();
             this.buttonDeleteSelected = new System.Windows.Forms.Button();
             this.buttonOpenLog = new System.Windows.Forms.Button();
+            this.buttonDeleteFolder = new System.Windows.Forms.Button();
+            this.buttonDeleteKsp = new System.Windows.Forms.Button();
+            this.buttonAddKsp = new System.Windows.Forms.Button();
+            this.buttonAddFolder = new System.Windows.Forms.Button();
+            this.listBoxModFolders = new System.Windows.Forms.ListBox();
+            this.listBoxKspFolders = new System.Windows.Forms.ListBox();
+            this.buttonSelectAllFolders = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -247,16 +251,6 @@
             this.columnHeader6.Text = "Update Status";
             this.columnHeader6.Width = 142;
             // 
-            // checkBoxAllMods
-            // 
-            this.checkBoxAllMods.AutoSize = true;
-            this.checkBoxAllMods.Location = new System.Drawing.Point(131, 12);
-            this.checkBoxAllMods.Name = "checkBoxAllMods";
-            this.checkBoxAllMods.Size = new System.Drawing.Size(67, 17);
-            this.checkBoxAllMods.TabIndex = 4;
-            this.checkBoxAllMods.Text = "Show All";
-            this.checkBoxAllMods.UseVisualStyleBackColor = true;
-            // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -328,31 +322,6 @@
             this.buttonReinstallSelected.TabIndex = 7;
             this.buttonReinstallSelected.Text = "Reinstall Mod";
             this.buttonReinstallSelected.UseVisualStyleBackColor = true;
-            // 
-            // listViewKspFolders
-            // 
-            this.listViewKspFolders.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.listViewKspFolders.HideSelection = false;
-            this.listViewKspFolders.Location = new System.Drawing.Point(12, 12);
-            this.listViewKspFolders.MultiSelect = false;
-            this.listViewKspFolders.Name = "listViewKspFolders";
-            this.listViewKspFolders.Size = new System.Drawing.Size(113, 614);
-            this.listViewKspFolders.TabIndex = 8;
-            this.listViewKspFolders.UseCompatibleStateImageBehavior = false;
-            this.listViewKspFolders.View = System.Windows.Forms.View.List;
-            // 
-            // listViewModFolders
-            // 
-            this.listViewModFolders.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.listViewModFolders.HideSelection = false;
-            this.listViewModFolders.Location = new System.Drawing.Point(131, 35);
-            this.listViewModFolders.Name = "listViewModFolders";
-            this.listViewModFolders.Size = new System.Drawing.Size(114, 591);
-            this.listViewModFolders.TabIndex = 9;
-            this.listViewModFolders.UseCompatibleStateImageBehavior = false;
-            this.listViewModFolders.View = System.Windows.Forms.View.List;
             // 
             // buttonEditCat
             // 
@@ -445,11 +414,95 @@
             this.buttonOpenLog.Text = "Open Log";
             this.buttonOpenLog.UseVisualStyleBackColor = true;
             // 
+            // buttonDeleteFolder
+            // 
+            this.buttonDeleteFolder.Location = new System.Drawing.Point(131, 588);
+            this.buttonDeleteFolder.Name = "buttonDeleteFolder";
+            this.buttonDeleteFolder.Size = new System.Drawing.Size(113, 38);
+            this.buttonDeleteFolder.TabIndex = 19;
+            this.buttonDeleteFolder.Text = "Remove Folder";
+            this.buttonDeleteFolder.UseVisualStyleBackColor = true;
+            this.buttonDeleteFolder.Click += new System.EventHandler(this.buttonDeleteFolder_Click);
+            // 
+            // buttonDeleteKsp
+            // 
+            this.buttonDeleteKsp.Location = new System.Drawing.Point(13, 588);
+            this.buttonDeleteKsp.Name = "buttonDeleteKsp";
+            this.buttonDeleteKsp.Size = new System.Drawing.Size(112, 37);
+            this.buttonDeleteKsp.TabIndex = 20;
+            this.buttonDeleteKsp.Text = "Remove Instance";
+            this.buttonDeleteKsp.UseVisualStyleBackColor = true;
+            this.buttonDeleteKsp.Click += new System.EventHandler(this.buttonDeleteKsp_Click);
+            // 
+            // buttonAddKsp
+            // 
+            this.buttonAddKsp.Location = new System.Drawing.Point(13, 545);
+            this.buttonAddKsp.Name = "buttonAddKsp";
+            this.buttonAddKsp.Size = new System.Drawing.Size(112, 37);
+            this.buttonAddKsp.TabIndex = 21;
+            this.buttonAddKsp.Text = "Add Instance";
+            this.buttonAddKsp.UseVisualStyleBackColor = true;
+            this.buttonAddKsp.Click += new System.EventHandler(this.buttonAddKsp_Click);
+            // 
+            // buttonAddFolder
+            // 
+            this.buttonAddFolder.Location = new System.Drawing.Point(131, 545);
+            this.buttonAddFolder.Name = "buttonAddFolder";
+            this.buttonAddFolder.Size = new System.Drawing.Size(113, 37);
+            this.buttonAddFolder.TabIndex = 22;
+            this.buttonAddFolder.Text = "Add Folder";
+            this.buttonAddFolder.UseVisualStyleBackColor = true;
+            this.buttonAddFolder.Click += new System.EventHandler(this.buttonAddFolder_Click);
+            // 
+            // listBoxModFolders
+            // 
+            this.listBoxModFolders.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.listBoxModFolders.FormattingEnabled = true;
+            this.listBoxModFolders.IntegralHeight = false;
+            this.listBoxModFolders.Location = new System.Drawing.Point(131, 42);
+            this.listBoxModFolders.Name = "listBoxModFolders";
+            this.listBoxModFolders.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listBoxModFolders.Size = new System.Drawing.Size(113, 497);
+            this.listBoxModFolders.TabIndex = 23;
+            this.listBoxModFolders.SelectedIndexChanged += new System.EventHandler(this.listBoxModFolders_SelectedIndexChanged);
+            this.listBoxModFolders.DoubleClick += new System.EventHandler(this.listBoxModFolders_DoubleClick);
+            // 
+            // listBoxKspFolders
+            // 
+            this.listBoxKspFolders.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.listBoxKspFolders.FormattingEnabled = true;
+            this.listBoxKspFolders.IntegralHeight = false;
+            this.listBoxKspFolders.Location = new System.Drawing.Point(13, 13);
+            this.listBoxKspFolders.Name = "listBoxKspFolders";
+            this.listBoxKspFolders.Size = new System.Drawing.Size(112, 526);
+            this.listBoxKspFolders.TabIndex = 24;
+            this.listBoxKspFolders.SelectedIndexChanged += new System.EventHandler(this.listBoxKspFolders_SelectedIndexChanged);
+            this.listBoxKspFolders.DoubleClick += new System.EventHandler(this.listBoxKspFolders_DoubleClick);
+            // 
+            // buttonSelectAllFolders
+            // 
+            this.buttonSelectAllFolders.Location = new System.Drawing.Point(131, 13);
+            this.buttonSelectAllFolders.Name = "buttonSelectAllFolders";
+            this.buttonSelectAllFolders.Size = new System.Drawing.Size(113, 23);
+            this.buttonSelectAllFolders.TabIndex = 25;
+            this.buttonSelectAllFolders.Text = "Select All";
+            this.buttonSelectAllFolders.UseVisualStyleBackColor = true;
+            this.buttonSelectAllFolders.Click += new System.EventHandler(this.buttonSelectAllFolders_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1150, 638);
+            this.Controls.Add(this.buttonSelectAllFolders);
+            this.Controls.Add(this.listBoxKspFolders);
+            this.Controls.Add(this.listBoxModFolders);
+            this.Controls.Add(this.buttonAddFolder);
+            this.Controls.Add(this.buttonAddKsp);
+            this.Controls.Add(this.buttonDeleteKsp);
+            this.Controls.Add(this.buttonDeleteFolder);
             this.Controls.Add(this.buttonOpenLog);
             this.Controls.Add(this.buttonDeleteSelected);
             this.Controls.Add(this.buttonReinstallAll);
@@ -459,12 +512,9 @@
             this.Controls.Add(this.buttonFindAll);
             this.Controls.Add(this.buttonDeinstallAll);
             this.Controls.Add(this.buttonEditCat);
-            this.Controls.Add(this.listViewModFolders);
-            this.Controls.Add(this.listViewKspFolders);
             this.Controls.Add(this.buttonReinstallSelected);
             this.Controls.Add(this.buttonInstallSelected);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.checkBoxAllMods);
             this.Controls.Add(this.listViewMods);
             this.Controls.Add(this.groupBox1);
             this.Name = "Main";
@@ -476,7 +526,6 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -494,7 +543,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListView listViewMods;
-        private System.Windows.Forms.CheckBox checkBoxAllMods;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button buttonFindSelected;
         private System.Windows.Forms.ComboBox comboBox1;
@@ -503,8 +551,6 @@
         private System.Windows.Forms.CheckBox checkBoxCanUpdate;
         private System.Windows.Forms.Button buttonInstallSelected;
         private System.Windows.Forms.Button buttonReinstallSelected;
-        private System.Windows.Forms.ListView listViewKspFolders;
-        private System.Windows.Forms.ListView listViewModFolders;
         private System.Windows.Forms.Button buttonEditCat;
         private System.Windows.Forms.Button buttonDeinstallAll;
         private System.Windows.Forms.Button buttonFindAll;
@@ -520,6 +566,13 @@
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.Button buttonDeleteSelected;
         private System.Windows.Forms.Button buttonOpenLog;
+        private System.Windows.Forms.Button buttonDeleteFolder;
+        private System.Windows.Forms.Button buttonDeleteKsp;
+        private System.Windows.Forms.Button buttonAddKsp;
+        private System.Windows.Forms.Button buttonAddFolder;
+        private System.Windows.Forms.ListBox listBoxModFolders;
+        private System.Windows.Forms.ListBox listBoxKspFolders;
+        private System.Windows.Forms.Button buttonSelectAllFolders;
     }
 }
 

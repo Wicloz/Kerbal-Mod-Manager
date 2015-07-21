@@ -34,6 +34,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,15 +46,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InstalledModInfo.cs" />
+    <Compile Include="InstanceSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InstanceSettings.Designer.cs">
+      <DependentUpon>InstanceSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KspFolder.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="MiscFunctions.cs" />
+    <Compile Include="ModFolder.cs" />
+    <Compile Include="ModInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveLoad.cs" />
+    <EmbeddedResource Include="InstanceSettings.resx">
+      <DependentUpon>InstanceSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
