@@ -28,7 +28,17 @@ namespace Kerbal_Mod_Manager
 
         public void RemoveMod(string modKey)
         {
-            
+            foreach (ModList modList in modLists)
+            {
+                for (int i = 0; i < modList.modList.Count; i++)
+                {
+                    if (modList.modList[i].modKey == modKey)
+                    {
+                        modList.modList.RemoveAt(i);
+                        break;
+                    }
+                }
+            }
         }
 
         // Loading and saving of folders
