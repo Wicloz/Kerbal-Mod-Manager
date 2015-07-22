@@ -22,6 +22,7 @@ namespace Kerbal_Mod_Manager
                 {
                     retList.AddRange(list.modList);
                 }
+                retList.Sort();
                 return retList;
             }
         }
@@ -34,6 +35,7 @@ namespace Kerbal_Mod_Manager
                 {
                     if (modList.modList[i].modKey == modKey)
                     {
+                        File.Delete(modList.modList[i].modFolder + "\\" + modList.modList[i].currentFileName);
                         modList.modList.RemoveAt(i);
                         break;
                     }
@@ -71,6 +73,7 @@ namespace Kerbal_Mod_Manager
                 }
 
                 InitialiseFolder(list);
+                list.modList.Sort();
                 modLists.Add(list);
             }
             SaveFolders();
@@ -78,10 +81,13 @@ namespace Kerbal_Mod_Manager
 
         private void InitialiseFolder(ModList modList)
         {
-            foreach (string filePath in Directory.GetFiles(modList.folderPath, "*.zip", SearchOption.TopDirectoryOnly))
+            List<string> fileList = new List<string>(Directory.GetFiles(modList.folderPath, "*.zip", SearchOption.TopDirectoryOnly));
+
+            foreach (string filePath in fileList)
             {
                 string file = Path.GetFileName(filePath);
                 bool exists = false;
+
                 foreach (ModInfo mod in modList.modList)
                 {
                     if (mod.currentFileName == file)
@@ -97,14 +103,33 @@ namespace Kerbal_Mod_Manager
                 }
             }
 
-            foreach (ModInfo mod in modList.modList)
+            for (int i = 0; i < modList.modList.Count; i++)
             {
-                mod.modFolder = modList.folderPath;
-                mod.UpdateModValues();
+                bool exists = false;
+                foreach (string filePath in fileList)
+                {
+                    string file = Path.GetFileName(filePath);
+                    if (modList.modList[i].currentFileName == file)
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
+
+                if (!exists)
+                {
+                    modList.modList.RemoveAt(i);
+                    i--;
+                }
+                else
+                {
+                    modList.modList[i].modFolder = modList.folderPath;
+                    modList.modList[i].UpdateModValues();
+                }
             }
         }
 
-        private void SaveFolders()
+        public void SaveFolders()
         {
             foreach (ModList list in modLists)
             {

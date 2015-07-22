@@ -1,4 +1,4 @@
-﻿namespace KSP_Mod_Manager
+﻿namespace Kerbal_Mod_Manager
 {
     partial class EditCategories
     {

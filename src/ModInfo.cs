@@ -17,7 +17,7 @@ namespace Kerbal_Mod_Manager
         {
             get
             {
-                return modFolder + "\\ModDownloads\\" + modName.Replace(" ", "_");
+                return modFolder + "\\ModDownloads\\" + modName.Replace(" ", "_").Replace(":", "");
             }
         }
         private string downloadedFile
@@ -30,13 +30,13 @@ namespace Kerbal_Mod_Manager
         private string kerbstuffIdentifier = "kerbalstuff.com/mod/";
         private string curseIdentifier = "kerbal.curseforge.com/ksp-mods/";
         private string forumIdentifier = "forum.kerbalspaceprogram.com/threads/";
-        private string githubIdentifier = "github.com";
+        private string githubIdentifier = "github.com/";
 
-        public string modFolder = "";
-        public string modName = "";
-        public string modKey = "";
+        public string modFolder;
+        public string modName;
+        public string modKey;
         public string category = "none";
-        public string currentFileName = "";
+        public string currentFileName;
         public string newFileName = "";
 
         public string versionLocalRaw = "";
@@ -202,6 +202,10 @@ namespace Kerbal_Mod_Manager
         public void UpdateModValues()
         {
             //Manage local version
+            if (modName == "")
+            {
+                modName = MiscFunctions.CleanString(currentFileName);
+            }
             versionLocalNumeric = MiscFunctions.RemoveLetters(currentFileName);
 
             //Determine site mode
@@ -251,10 +255,7 @@ namespace Kerbal_Mod_Manager
 
             else if (siteMode == "kerbstuff")
             {
-                char[] endCharList = new char[] { '<' };
-                string appendage = MiscFunctions.ExtractSection(versionLatestRaw.Replace("<h2>Version", ""), endCharList);
-
-                dlSite = website + "/download/" + appendage;
+                dlSite = website + "/download/" + versionLatestNumeric;
             }
 
             else if (siteMode == "github")
@@ -303,12 +304,12 @@ namespace Kerbal_Mod_Manager
                 case 4:
                     website3 = website; //debug
                     website = "NONE"; //debug
-                    client4.DownloadStringAsync(new Uri("https://search.yahoo.com/search?p=" + currentFileName.Replace(" ", "") + "+ksp"));
+                    client4.DownloadStringAsync(new Uri("https://search.yahoo.com/search?p=" + modName.Replace(" ", "+") + "+ksp"));
                     break;
                 case 5:
                     website4 = website; //debug
                     website = "NONE"; //debug
-                    client4.DownloadStringAsync(new Uri("https://search.yahoo.com/search?p=" + modName.Replace(" ", "+") + "+ksp"));
+                    client4.DownloadStringAsync(new Uri("https://search.yahoo.com/search?p=" + modName.Replace(" ", "+") + "+kerbal+github"));
                     break;
 
                 default:
@@ -334,12 +335,13 @@ namespace Kerbal_Mod_Manager
                     {
                         website = website5;
                     }
-                    website1 = website1.Replace(forumIdentifier, "").Replace(curseIdentifier, "").Replace(kerbstuffIdentifier, "").Replace(githubIdentifier, "").Replace("http://", "").Replace("www.", "");
-                    website2 = website2.Replace(forumIdentifier, "").Replace(curseIdentifier, "").Replace(kerbstuffIdentifier, "").Replace(githubIdentifier, "").Replace("http://", "").Replace("www.", "");
-                    website3 = website3.Replace(forumIdentifier, "").Replace(curseIdentifier, "").Replace(kerbstuffIdentifier, "").Replace(githubIdentifier, "").Replace("http://", "").Replace("www.", "");
-                    website4 = website4.Replace(forumIdentifier, "").Replace(curseIdentifier, "").Replace(kerbstuffIdentifier, "").Replace(githubIdentifier, "").Replace("http://", "").Replace("www.", "");
-                    website5 = website5.Replace(forumIdentifier, "").Replace(curseIdentifier, "").Replace(kerbstuffIdentifier, "").Replace(githubIdentifier, "").Replace("http://", "").Replace("www.", "");
+                    website1 = website1.Replace(forumIdentifier, "").Replace(curseIdentifier, "").Replace(kerbstuffIdentifier, "").Replace(githubIdentifier, "").Replace("http://", "").Replace("https://", "").Replace("www.", "");
+                    website2 = website2.Replace(forumIdentifier, "").Replace(curseIdentifier, "").Replace(kerbstuffIdentifier, "").Replace(githubIdentifier, "").Replace("http://", "").Replace("https://", "").Replace("www.", "");
+                    website3 = website3.Replace(forumIdentifier, "").Replace(curseIdentifier, "").Replace(kerbstuffIdentifier, "").Replace(githubIdentifier, "").Replace("http://", "").Replace("https://", "").Replace("www.", "");
+                    website4 = website4.Replace(forumIdentifier, "").Replace(curseIdentifier, "").Replace(kerbstuffIdentifier, "").Replace(githubIdentifier, "").Replace("http://", "").Replace("https://", "").Replace("www.", "");
+                    website5 = website5.Replace(forumIdentifier, "").Replace(curseIdentifier, "").Replace(kerbstuffIdentifier, "").Replace(githubIdentifier, "").Replace("http://", "").Replace("https://", "").Replace("www.", "");
 
+                    UpdateModValues(); //debug
                     progress = 0;
                     findMode = 0;
                     findQueued = false;
@@ -362,7 +364,7 @@ namespace Kerbal_Mod_Manager
                         try
                         {
                             string currentline = sr.ReadLine().Trim();
-                            if (currentline.Contains("<a href=\"/mc-mods/"))
+                            if (currentline.Contains("<a href=\"/mod/"))
                             {
                                 results.Add(currentline);
                             }
@@ -375,16 +377,13 @@ namespace Kerbal_Mod_Manager
 
                     foreach (string result in results)
                     {
-                        char[] startCharList = new char[] { '"', '>' };
-                        char[] endCharList = new char[] { '<' };
-                        string foundModname = MiscFunctions.ExtractSection(result, endCharList, startCharList);
+                        char[] startCharList = new char[] { '"' };
+                        char[] endCharList = new char[] { '"' };
+                        string linkSection = MiscFunctions.ExtractSection(result, endCharList, startCharList);
 
-                        if (MiscFunctions.CleanString(foundModname) == MiscFunctions.CleanString(currentFileName))
+                        if (MiscFunctions.PartialMatch(modName, linkSection))
                         {
-                            startCharList = new char[] { '=', '"' };
-                            endCharList = new char[] { '"' };
-                            string linkSection = MiscFunctions.ExtractSection(result, endCharList, startCharList);
-                            website = ParseCurseUri("http://minecraft.curseforge.com" + linkSection);
+                            website = ParseKerbstuffUri("https://kerbalstuff.com" + linkSection);
                             break;
                         }
                     }
@@ -426,7 +425,7 @@ namespace Kerbal_Mod_Manager
                         try
                         {
                             string currentline = sr.ReadLine().Trim();
-                            if (currentline.Contains("<a href=\"/mc-mods/"))
+                            if (currentline.Contains("<a href=\"/ksp-mods/"))
                             {
                                 results.Add(currentline);
                             }
@@ -448,7 +447,7 @@ namespace Kerbal_Mod_Manager
                             startCharList = new char[] { '=', '"' };
                             endCharList = new char[] { '"' };
                             string linkSection = MiscFunctions.ExtractSection(result, endCharList, startCharList);
-                            website = ParseCurseUri("http://minecraft.curseforge.com" + linkSection);
+                            website = ParseCurseUri("http://kerbal.curseforge.com" + linkSection);
                             break;
                         }
                     }
@@ -563,30 +562,48 @@ namespace Kerbal_Mod_Manager
                     }
                 }
 
+                string kerbstuffLink = "NONE";
                 string curseLink = "NONE";
+                string gitLink = "NONE";
                 string forumLink = "NONE";
 
                 for (int i = 1; i < results.Count; i++)
                 {
                     results[i] = MiscFunctions.ExtractSection(results[i], endChars, startChars).Replace("%2f", "/").Replace("%3a", ":");
 
-                    char[] startCharList = new char[] { 'm', 'o', 'd', 's', '/' };
-                    char[] endCharList = new char[] { };
-                    string foundModname = MiscFunctions.ExtractSection(results[i], endCharList, startCharList);
+                    //char[] startCharList = new char[] { 'm', 'o', 'd', 's', '/' };
+                    //char[] endCharList = new char[] { };
+                    //string foundModname = MiscFunctions.ExtractSection(results[i], endCharList, startCharList);
 
-                    if (curseLink == "NONE" && results[i].Contains(curseIdentifier) && MiscFunctions.PartialMatch(currentFileName, foundModname))
+                    if (kerbstuffLink == "NONE" && results[i].Contains(kerbstuffIdentifier) && MiscFunctions.PartialMatch(modName, results[i]))
+                    {
+                        kerbstuffLink = ParseKerbstuffUri(results[i]);
+                    }
+                    if (curseLink == "NONE" && results[i].Contains(curseIdentifier) && MiscFunctions.PartialMatch(modName, results[i]))
                     {
                         curseLink = ParseCurseUri(results[i]);
                     }
-                    if (forumLink == "NONE" && results[i].Contains(forumIdentifier) && MiscFunctions.PartialMatch(currentFileName, foundModname))
+                    if (gitLink == "NONE" && results[i].Contains(githubIdentifier) && results.Contains("/releases/latest"))
+                    {
+                        gitLink = ParseGithubUri(results[i]);
+                    }
+                    if (forumLink == "NONE" && results[i].Contains(forumIdentifier) && MiscFunctions.PartialMatch(modName, results[i]))
                     {
                         forumLink = ParseForumUri(results[i]);
                     }
                 }
 
-                if (curseLink != "NONE")
+                if (kerbstuffLink != "NONE")
+                {
+                    return kerbstuffLink;
+                }
+                else if (curseLink != "NONE")
                 {
                     return curseLink;
+                }
+                else if (gitLink != "NONE")
+                {
+                    return gitLink;
                 }
                 else
                 {
@@ -634,12 +651,11 @@ namespace Kerbal_Mod_Manager
                             newVersion = sr.ReadLine().Trim();
                         }
 
-                        char[] startCharList = new char[] { '>' };
                         char[] endCharList = new char[] { '<' };
-                        versionLatestNumeric = MiscFunctions.CleanString(MiscFunctions.ExtractSection(newVersion, endCharList, startCharList));
+                        versionLatestNumeric = MiscFunctions.ExtractSection(newVersion.Replace("<h2>Version", "").Trim(), endCharList).Trim();
 
                         string dateLine = sr.ReadLine().Trim();
-                        startCharList = new char[] { '"', '>' };
+                        char[] startCharList = new char[] { '"', '>' };
                         endCharList = new char[] { '<' };
                         releaseDate = MiscFunctions.ExtractSection(dateLine, endCharList, startCharList).Replace("Released on ", "");
                     }
@@ -653,7 +669,7 @@ namespace Kerbal_Mod_Manager
 
                         char[] startCharList = new char[] { '"', '>' };
                         char[] endCharList = new char[] { '<' };
-                        versionLatestNumeric = MiscFunctions.CleanString(MiscFunctions.ExtractSection(newVersion, endCharList, startCharList));
+                        versionLatestNumeric = MiscFunctions.RemoveLetters(MiscFunctions.ExtractSection(newVersion, endCharList, startCharList));
 
                         string dateLine = sr.ReadLine().Trim();
                         startCharList = new char[] { '"', '>' };
@@ -672,14 +688,15 @@ namespace Kerbal_Mod_Manager
 
                     if (siteMode == "github")
                     {
-                        while (!newVersion.Contains("<a href=\"" + website.Replace("https://github.com", "").Replace("/latest", "/download/")))
+                        string identiefier = "<a href=\"" + website.Replace("https://github.com", "").Replace("/latest", "/download/");
+
+                        while (!newVersion.Contains(identiefier))
                         {
                             newVersion = sr.ReadLine().Trim();
                         }
 
-                        char[] startCharList = new char[] { '/' };
-                        char[] endCharList = new char[] { '"' };
-                        versionLatestNumeric = MiscFunctions.ExtractSection(newVersion, endCharList, startCharList).Replace(" ", "");
+                        char[] endCharList = new char[] { '/' };
+                        versionLatestNumeric = MiscFunctions.ExtractSection(newVersion.Replace(identiefier, ""), endCharList);
                     }
 
                     versionLatestRaw = newVersion;
@@ -710,7 +727,7 @@ namespace Kerbal_Mod_Manager
 
         public void UpdateMod()
         {
-            newFileName = modName.Replace(" ", "_") + "-" + versionLatestNumeric + ".zip";
+            newFileName = modName.Replace(" ", "_").Replace(":", "") + "-" + versionLatestNumeric + ".zip";
 
             if (Directory.Exists(downloadFolder) && Directory.GetFiles(downloadFolder).Length > 0)
             {
@@ -774,12 +791,12 @@ namespace Kerbal_Mod_Manager
 
         private void MoveDownloadedMod()
         {
-            string newModLocation = modFolder + newFileName;
-            string oldModLocation = modFolder + currentFileName;
+            string newModLocation = modFolder + "\\" + newFileName;
+            string oldModLocation = modFolder + "\\" + currentFileName;
 
             File.Delete(newModLocation);
             File.Delete(oldModLocation);
-            File.Move(downloadedFile, newModLocation);
+            File.Move(Directory.GetFiles(downloadFolder, "*.zip", SearchOption.TopDirectoryOnly)[0], newModLocation);
 
             currentFileName = newFileName;
             versionLocalRaw = versionLatestRaw;
@@ -804,6 +821,11 @@ namespace Kerbal_Mod_Manager
                 uri = "NONE";
             }
 
+            if (uri.Contains("%20"))
+            {
+                uri = uri.Replace("%20", " ").Replace(" / ", "/");
+            }
+
             return uri;
         }
 
@@ -813,7 +835,8 @@ namespace Kerbal_Mod_Manager
             {
                 uri = "NONE";
             }
-            else if (uri.EndsWith("/files"))
+
+            if (uri.EndsWith("/files"))
             {
                 uri = uri.Replace("/files", "");
             }
@@ -834,7 +857,8 @@ namespace Kerbal_Mod_Manager
             {
                 uri = "NONE";
             }
-            else if (uri.Contains("?page="))
+
+            if (uri.Contains("?page="))
             {
                 char[] endCharList = new char[] { '?' };
                 uri = MiscFunctions.ExtractSection(uri, endCharList);
@@ -859,6 +883,10 @@ namespace Kerbal_Mod_Manager
             int otherCat = 999;
 
             if (other == null)
+            {
+                return 1;
+            }
+            if (this.modKey == other.modKey)
             {
                 return 1;
             }

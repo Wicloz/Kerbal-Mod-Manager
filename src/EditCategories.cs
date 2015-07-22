@@ -8,80 +8,106 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace KSP_Mod_Manager
+namespace Kerbal_Mod_Manager
 {
     public partial class EditCategories : Form
     {
-        public List<string> categoryList = new List<string>();
+        public List<string> categoryList;
 
-        public EditCategories(List<string> CategoryList)
+        public EditCategories()
         {
             InitializeComponent();
-            categoryList = CategoryList;
+        }
+
+        public void SetCategoryList(List<string> categoryList)
+        {
+            this.categoryList = categoryList;
             RefreshList(0);
         }
 
         private void RefreshList(int index)
         {
             categoryBox.Items.Clear();
+            categoryBox.SelectedIndices.Clear();
+            categoryBox.SelectedItems.Clear();
 
             foreach (string category in categoryList)
             {
                 categoryBox.Items.Add(category);
             }
 
-            categoryBox.SelectedIndex = index;
+            if (index < 0)
+            {
+                index = 0;
+            }
+            if (categoryBox.Items.Count > 0)
+            {
+                categoryBox.SelectedIndices.Add(index);
+            }
         }
 
         private void categoryBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            editNameBox.Text = categoryList[categoryBox.SelectedIndex];
-
-            if (categoryBox.SelectedIndex == 0)
+            if (categoryBox.SelectedIndices.Count == 1)
             {
+                editNameBox.Enabled = true;
+                deleteCatButton.Enabled = true;
+                editNameBox.Text = categoryList[categoryBox.SelectedIndices[0]];
+
+                if (categoryBox.SelectedIndices[0] == 0)
+                {
+                    upButton.Enabled = false;
+                }
+                else
+                {
+                    upButton.Enabled = true;
+                }
+
+                if (categoryBox.SelectedIndices[0] == categoryList.Count - 1)
+                {
+                    downButton.Enabled = false;
+                }
+                else
+                {
+                    downButton.Enabled = true;
+                }
+            }
+            else
+            {
+                editNameBox.Text = "";
+                editNameBox.Enabled = false;
+                deleteCatButton.Enabled = false;
                 upButton.Enabled = false;
-            }
-            else
-            {
-                upButton.Enabled = true;
-            }
-
-            if (categoryBox.SelectedIndex == categoryList.Count - 1)
-            {
                 downButton.Enabled = false;
-            }
-            else
-            {
-                downButton.Enabled = true;
             }
         }
 
         private void editNameBox_TextChanged(object sender, EventArgs e)
         {
-            categoryList[categoryBox.SelectedIndex] = editNameBox.Text;
-            RefreshList(categoryBox.SelectedIndex);
+            categoryList[categoryBox.SelectedIndices[0]] = editNameBox.Text;
+            RefreshList(categoryBox.SelectedIndices[0]);
         }
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            if (addBox.Text != "")
+            if (addBox.Text != "" && !categoryList.Contains(addBox.Text))
             {
                 categoryList.Add(addBox.Text);
                 addBox.Text = "";
-                RefreshList(categoryBox.SelectedIndex);
+                RefreshList(categoryBox.SelectedIndices[0]);
             }
         }
 
         private void deleteCatButton_Click(object sender, EventArgs e)
         {
-            categoryList.RemoveAt(categoryBox.SelectedIndex);
-            RefreshList(categoryBox.SelectedIndex - 1);
+            categoryList.RemoveAt(categoryBox.SelectedIndices[0]);
+            RefreshList(categoryBox.SelectedIndices[0] - 1);
         }
 
         private void upButton_Click(object sender, EventArgs e)
         {
-            string category = categoryList[categoryBox.SelectedIndex];
-            int index = categoryBox.SelectedIndex;
+            string category = categoryList[categoryBox.SelectedIndices[0]];
+            int index = categoryBox.SelectedIndices[0];
 
             categoryList.RemoveAt(index);
             categoryList.Insert(index - 1, category);
@@ -91,8 +117,8 @@ namespace KSP_Mod_Manager
 
         private void downButton_Click(object sender, EventArgs e)
         {
-            string category = categoryList[categoryBox.SelectedIndex];
-            int index = categoryBox.SelectedIndex;
+            string category = categoryList[categoryBox.SelectedIndices[0]];
+            int index = categoryBox.SelectedIndices[0];
 
             categoryList.RemoveAt(index);
             categoryList.Insert(index + 1, category);

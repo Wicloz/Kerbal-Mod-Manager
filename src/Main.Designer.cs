@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBoxCategory = new System.Windows.Forms.ComboBox();
             this.buttonOpenSite = new System.Windows.Forms.Button();
             this.buttonAddCat = new System.Windows.Forms.Button();
             this.buttonGoogle = new System.Windows.Forms.Button();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxSelDebug = new System.Windows.Forms.TextBox();
+            this.textBoxSelWebsite = new System.Windows.Forms.TextBox();
+            this.textBoxSelName = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -47,6 +47,11 @@
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.buttonUpdateSelected = new System.Windows.Forms.Button();
             this.buttonCheckSelected = new System.Windows.Forms.Button();
@@ -78,91 +83,100 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.comboBoxCategory);
             this.groupBox1.Controls.Add(this.buttonOpenSite);
             this.groupBox1.Controls.Add(this.buttonAddCat);
             this.groupBox1.Controls.Add(this.buttonGoogle);
-            this.groupBox1.Controls.Add(this.textBox4);
-            this.groupBox1.Controls.Add(this.textBox3);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.textBoxSelDebug);
+            this.groupBox1.Controls.Add(this.textBoxSelWebsite);
+            this.groupBox1.Controls.Add(this.textBoxSelName);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(251, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(577, 128);
+            this.groupBox1.Size = new System.Drawing.Size(1089, 128);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Mod Settings";
             // 
-            // comboBox1
+            // comboBoxCategory
             // 
-            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.comboBoxCategory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(97, 44);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(393, 21);
-            this.comboBox1.TabIndex = 11;
+            this.comboBoxCategory.FormattingEnabled = true;
+            this.comboBoxCategory.Location = new System.Drawing.Point(97, 44);
+            this.comboBoxCategory.Name = "comboBoxCategory";
+            this.comboBoxCategory.Size = new System.Drawing.Size(905, 21);
+            this.comboBoxCategory.TabIndex = 11;
+            this.comboBoxCategory.SelectedIndexChanged += new System.EventHandler(this.comboBoxCategory_SelectedIndexChanged);
+            this.comboBoxCategory.TextUpdate += new System.EventHandler(this.comboBoxCategory_TextUpdate);
+            this.comboBoxCategory.Leave += new System.EventHandler(this.comboBoxCategory_Leave);
             // 
             // buttonOpenSite
             // 
             this.buttonOpenSite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOpenSite.Location = new System.Drawing.Point(496, 71);
+            this.buttonOpenSite.Location = new System.Drawing.Point(1008, 71);
             this.buttonOpenSite.Name = "buttonOpenSite";
             this.buttonOpenSite.Size = new System.Drawing.Size(75, 20);
             this.buttonOpenSite.TabIndex = 10;
             this.buttonOpenSite.Text = "Open";
             this.buttonOpenSite.UseVisualStyleBackColor = true;
+            this.buttonOpenSite.Click += new System.EventHandler(this.buttonOpenSite_Click);
             // 
             // buttonAddCat
             // 
             this.buttonAddCat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddCat.Location = new System.Drawing.Point(496, 44);
+            this.buttonAddCat.Location = new System.Drawing.Point(1008, 44);
             this.buttonAddCat.Name = "buttonAddCat";
             this.buttonAddCat.Size = new System.Drawing.Size(75, 21);
             this.buttonAddCat.TabIndex = 9;
             this.buttonAddCat.Text = "Add";
             this.buttonAddCat.UseVisualStyleBackColor = true;
+            this.buttonAddCat.Click += new System.EventHandler(this.buttonAddCat_Click);
             // 
             // buttonGoogle
             // 
             this.buttonGoogle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonGoogle.Location = new System.Drawing.Point(496, 19);
+            this.buttonGoogle.Location = new System.Drawing.Point(1008, 19);
             this.buttonGoogle.Name = "buttonGoogle";
             this.buttonGoogle.Size = new System.Drawing.Size(75, 20);
             this.buttonGoogle.TabIndex = 8;
             this.buttonGoogle.Text = "Google";
             this.buttonGoogle.UseVisualStyleBackColor = true;
+            this.buttonGoogle.Click += new System.EventHandler(this.buttonGoogle_Click);
             // 
-            // textBox4
+            // textBoxSelDebug
             // 
-            this.textBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxSelDebug.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox4.Location = new System.Drawing.Point(97, 97);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.ReadOnly = true;
-            this.textBox4.Size = new System.Drawing.Size(474, 20);
-            this.textBox4.TabIndex = 7;
+            this.textBoxSelDebug.Location = new System.Drawing.Point(97, 97);
+            this.textBoxSelDebug.Name = "textBoxSelDebug";
+            this.textBoxSelDebug.ReadOnly = true;
+            this.textBoxSelDebug.Size = new System.Drawing.Size(986, 20);
+            this.textBoxSelDebug.TabIndex = 7;
             // 
-            // textBox3
+            // textBoxSelWebsite
             // 
-            this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxSelWebsite.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox3.Location = new System.Drawing.Point(97, 71);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(393, 20);
-            this.textBox3.TabIndex = 6;
+            this.textBoxSelWebsite.Location = new System.Drawing.Point(97, 71);
+            this.textBoxSelWebsite.Name = "textBoxSelWebsite";
+            this.textBoxSelWebsite.Size = new System.Drawing.Size(905, 20);
+            this.textBoxSelWebsite.TabIndex = 6;
+            this.textBoxSelWebsite.TextChanged += new System.EventHandler(this.textBoxSelWebsite_TextChanged);
             // 
-            // textBox1
+            // textBoxSelName
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxSelName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(97, 19);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(393, 20);
-            this.textBox1.TabIndex = 4;
+            this.textBoxSelName.Location = new System.Drawing.Point(97, 19);
+            this.textBoxSelName.Name = "textBoxSelName";
+            this.textBoxSelName.Size = new System.Drawing.Size(905, 20);
+            this.textBoxSelName.TabIndex = 4;
+            this.textBoxSelName.TextChanged += new System.EventHandler(this.textBoxSelName_TextChanged);
+            this.textBoxSelName.Leave += new System.EventHandler(this.textBoxSelName_Leave);
             // 
             // label4
             // 
@@ -205,21 +219,31 @@
             this.listViewMods.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewMods.CheckBoxes = true;
             this.listViewMods.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4,
             this.columnHeader5,
-            this.columnHeader6});
+            this.columnHeader6,
+            this.columnHeader7,
+            this.columnHeader8,
+            this.columnHeader9,
+            this.columnHeader10,
+            this.columnHeader11});
+            this.listViewMods.FullRowSelect = true;
+            this.listViewMods.GridLines = true;
             this.listViewMods.HideSelection = false;
             this.listViewMods.Location = new System.Drawing.Point(251, 191);
             this.listViewMods.MultiSelect = false;
             this.listViewMods.Name = "listViewMods";
-            this.listViewMods.Size = new System.Drawing.Size(723, 391);
+            this.listViewMods.Size = new System.Drawing.Size(1235, 391);
             this.listViewMods.TabIndex = 3;
             this.listViewMods.UseCompatibleStateImageBehavior = false;
             this.listViewMods.View = System.Windows.Forms.View.Details;
+            this.listViewMods.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listViewMods_ItemChecked);
+            this.listViewMods.SelectedIndexChanged += new System.EventHandler(this.listViewMods_SelectedIndexChanged);
             // 
             // columnHeader1
             // 
@@ -251,6 +275,26 @@
             this.columnHeader6.Text = "Update Status";
             this.columnHeader6.Width = 142;
             // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Width = 96;
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.Width = 107;
+            // 
+            // columnHeader9
+            // 
+            this.columnHeader9.Width = 98;
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Width = 99;
+            // 
+            // columnHeader11
+            // 
+            this.columnHeader11.Width = 101;
+            // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -258,7 +302,7 @@
             this.groupBox2.Controls.Add(this.buttonCheckSelected);
             this.groupBox2.Controls.Add(this.checkBoxCanUpdate);
             this.groupBox2.Controls.Add(this.buttonFindSelected);
-            this.groupBox2.Location = new System.Drawing.Point(834, 13);
+            this.groupBox2.Location = new System.Drawing.Point(1346, 13);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(140, 128);
             this.groupBox2.TabIndex = 5;
@@ -273,6 +317,7 @@
             this.buttonUpdateSelected.TabIndex = 6;
             this.buttonUpdateSelected.Text = "Update Mod";
             this.buttonUpdateSelected.UseVisualStyleBackColor = true;
+            this.buttonUpdateSelected.Click += new System.EventHandler(this.buttonUpdateSelected_Click);
             // 
             // buttonCheckSelected
             // 
@@ -282,6 +327,7 @@
             this.buttonCheckSelected.TabIndex = 2;
             this.buttonCheckSelected.Text = "Check For Updates";
             this.buttonCheckSelected.UseVisualStyleBackColor = true;
+            this.buttonCheckSelected.Click += new System.EventHandler(this.buttonCheckSelected_Click);
             // 
             // checkBoxCanUpdate
             // 
@@ -292,6 +338,7 @@
             this.checkBoxCanUpdate.TabIndex = 1;
             this.checkBoxCanUpdate.Text = "Can Update";
             this.checkBoxCanUpdate.UseVisualStyleBackColor = true;
+            this.checkBoxCanUpdate.CheckedChanged += new System.EventHandler(this.checkBoxCanUpdate_CheckedChanged);
             // 
             // buttonFindSelected
             // 
@@ -301,6 +348,7 @@
             this.buttonFindSelected.TabIndex = 0;
             this.buttonFindSelected.Text = "Find Website";
             this.buttonFindSelected.UseVisualStyleBackColor = true;
+            this.buttonFindSelected.Click += new System.EventHandler(this.buttonFindSelected_Click);
             // 
             // buttonInstallSelected
             // 
@@ -308,7 +356,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonInstallSelected.Location = new System.Drawing.Point(251, 147);
             this.buttonInstallSelected.Name = "buttonInstallSelected";
-            this.buttonInstallSelected.Size = new System.Drawing.Size(470, 38);
+            this.buttonInstallSelected.Size = new System.Drawing.Size(982, 38);
             this.buttonInstallSelected.TabIndex = 6;
             this.buttonInstallSelected.Text = "Install/Deinstall Mod";
             this.buttonInstallSelected.UseVisualStyleBackColor = true;
@@ -316,7 +364,7 @@
             // buttonReinstallSelected
             // 
             this.buttonReinstallSelected.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonReinstallSelected.Location = new System.Drawing.Point(727, 147);
+            this.buttonReinstallSelected.Location = new System.Drawing.Point(1239, 147);
             this.buttonReinstallSelected.Name = "buttonReinstallSelected";
             this.buttonReinstallSelected.Size = new System.Drawing.Size(247, 38);
             this.buttonReinstallSelected.TabIndex = 7;
@@ -326,17 +374,18 @@
             // buttonEditCat
             // 
             this.buttonEditCat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonEditCat.Location = new System.Drawing.Point(980, 12);
+            this.buttonEditCat.Location = new System.Drawing.Point(1492, 12);
             this.buttonEditCat.Name = "buttonEditCat";
             this.buttonEditCat.Size = new System.Drawing.Size(158, 39);
             this.buttonEditCat.TabIndex = 10;
             this.buttonEditCat.Text = "Edit Categories";
             this.buttonEditCat.UseVisualStyleBackColor = true;
+            this.buttonEditCat.Click += new System.EventHandler(this.buttonEditCat_Click);
             // 
             // buttonDeinstallAll
             // 
             this.buttonDeinstallAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonDeinstallAll.Location = new System.Drawing.Point(980, 57);
+            this.buttonDeinstallAll.Location = new System.Drawing.Point(1492, 57);
             this.buttonDeinstallAll.Name = "buttonDeinstallAll";
             this.buttonDeinstallAll.Size = new System.Drawing.Size(158, 39);
             this.buttonDeinstallAll.TabIndex = 11;
@@ -346,47 +395,51 @@
             // buttonFindAll
             // 
             this.buttonFindAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonFindAll.Location = new System.Drawing.Point(980, 145);
+            this.buttonFindAll.Location = new System.Drawing.Point(1492, 145);
             this.buttonFindAll.Name = "buttonFindAll";
             this.buttonFindAll.Size = new System.Drawing.Size(158, 38);
             this.buttonFindAll.TabIndex = 12;
             this.buttonFindAll.Text = "Find All Websites";
             this.buttonFindAll.UseVisualStyleBackColor = true;
+            this.buttonFindAll.Click += new System.EventHandler(this.buttonFindAll_Click);
             // 
             // buttonCheckAll
             // 
             this.buttonCheckAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCheckAll.Location = new System.Drawing.Point(980, 189);
+            this.buttonCheckAll.Location = new System.Drawing.Point(1492, 189);
             this.buttonCheckAll.Name = "buttonCheckAll";
             this.buttonCheckAll.Size = new System.Drawing.Size(158, 39);
             this.buttonCheckAll.TabIndex = 13;
             this.buttonCheckAll.Text = "Check All Updates";
             this.buttonCheckAll.UseVisualStyleBackColor = true;
+            this.buttonCheckAll.Click += new System.EventHandler(this.buttonCheckAll_Click);
             // 
             // buttonUpdateAll
             // 
             this.buttonUpdateAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonUpdateAll.Location = new System.Drawing.Point(980, 234);
+            this.buttonUpdateAll.Location = new System.Drawing.Point(1492, 234);
             this.buttonUpdateAll.Name = "buttonUpdateAll";
             this.buttonUpdateAll.Size = new System.Drawing.Size(158, 39);
             this.buttonUpdateAll.TabIndex = 14;
             this.buttonUpdateAll.Text = "Update All Mods";
             this.buttonUpdateAll.UseVisualStyleBackColor = true;
+            this.buttonUpdateAll.Click += new System.EventHandler(this.buttonUpdateAll_Click);
             // 
             // buttonUpdateAllForce
             // 
             this.buttonUpdateAllForce.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonUpdateAllForce.Location = new System.Drawing.Point(980, 279);
+            this.buttonUpdateAllForce.Location = new System.Drawing.Point(1492, 279);
             this.buttonUpdateAllForce.Name = "buttonUpdateAllForce";
             this.buttonUpdateAllForce.Size = new System.Drawing.Size(158, 39);
             this.buttonUpdateAllForce.TabIndex = 15;
             this.buttonUpdateAllForce.Text = "Force-Update All Mods";
             this.buttonUpdateAllForce.UseVisualStyleBackColor = true;
+            this.buttonUpdateAllForce.Click += new System.EventHandler(this.buttonUpdateAllForce_Click);
             // 
             // buttonReinstallAll
             // 
             this.buttonReinstallAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonReinstallAll.Location = new System.Drawing.Point(980, 102);
+            this.buttonReinstallAll.Location = new System.Drawing.Point(1492, 102);
             this.buttonReinstallAll.Name = "buttonReinstallAll";
             this.buttonReinstallAll.Size = new System.Drawing.Size(158, 37);
             this.buttonReinstallAll.TabIndex = 16;
@@ -399,15 +452,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDeleteSelected.Location = new System.Drawing.Point(251, 588);
             this.buttonDeleteSelected.Name = "buttonDeleteSelected";
-            this.buttonDeleteSelected.Size = new System.Drawing.Size(723, 38);
+            this.buttonDeleteSelected.Size = new System.Drawing.Size(1235, 38);
             this.buttonDeleteSelected.TabIndex = 17;
             this.buttonDeleteSelected.Text = "Delete Mod";
             this.buttonDeleteSelected.UseVisualStyleBackColor = true;
+            this.buttonDeleteSelected.Click += new System.EventHandler(this.buttonDeleteSelected_Click);
             // 
             // buttonOpenLog
             // 
             this.buttonOpenLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOpenLog.Location = new System.Drawing.Point(980, 560);
+            this.buttonOpenLog.Location = new System.Drawing.Point(1492, 560);
             this.buttonOpenLog.Name = "buttonOpenLog";
             this.buttonOpenLog.Size = new System.Drawing.Size(158, 66);
             this.buttonOpenLog.TabIndex = 18;
@@ -416,6 +470,7 @@
             // 
             // buttonDeleteFolder
             // 
+            this.buttonDeleteFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonDeleteFolder.Location = new System.Drawing.Point(131, 588);
             this.buttonDeleteFolder.Name = "buttonDeleteFolder";
             this.buttonDeleteFolder.Size = new System.Drawing.Size(113, 38);
@@ -426,6 +481,7 @@
             // 
             // buttonDeleteKsp
             // 
+            this.buttonDeleteKsp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonDeleteKsp.Location = new System.Drawing.Point(13, 588);
             this.buttonDeleteKsp.Name = "buttonDeleteKsp";
             this.buttonDeleteKsp.Size = new System.Drawing.Size(112, 37);
@@ -436,6 +492,7 @@
             // 
             // buttonAddKsp
             // 
+            this.buttonAddKsp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonAddKsp.Location = new System.Drawing.Point(13, 545);
             this.buttonAddKsp.Name = "buttonAddKsp";
             this.buttonAddKsp.Size = new System.Drawing.Size(112, 37);
@@ -446,6 +503,7 @@
             // 
             // buttonAddFolder
             // 
+            this.buttonAddFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonAddFolder.Location = new System.Drawing.Point(131, 545);
             this.buttonAddFolder.Name = "buttonAddFolder";
             this.buttonAddFolder.Size = new System.Drawing.Size(113, 37);
@@ -495,7 +553,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1150, 638);
+            this.ClientSize = new System.Drawing.Size(1662, 638);
             this.Controls.Add(this.buttonSelectAllFolders);
             this.Controls.Add(this.listBoxKspFolders);
             this.Controls.Add(this.listBoxModFolders);
@@ -535,9 +593,9 @@
         private System.Windows.Forms.Button buttonOpenSite;
         private System.Windows.Forms.Button buttonAddCat;
         private System.Windows.Forms.Button buttonGoogle;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxSelDebug;
+        private System.Windows.Forms.TextBox textBoxSelWebsite;
+        private System.Windows.Forms.TextBox textBoxSelName;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
@@ -545,7 +603,7 @@
         private System.Windows.Forms.ListView listViewMods;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button buttonFindSelected;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBoxCategory;
         private System.Windows.Forms.Button buttonUpdateSelected;
         private System.Windows.Forms.Button buttonCheckSelected;
         private System.Windows.Forms.CheckBox checkBoxCanUpdate;
@@ -573,6 +631,11 @@
         private System.Windows.Forms.ListBox listBoxModFolders;
         private System.Windows.Forms.ListBox listBoxKspFolders;
         private System.Windows.Forms.Button buttonSelectAllFolders;
+        private System.Windows.Forms.ColumnHeader columnHeader7;
+        private System.Windows.Forms.ColumnHeader columnHeader8;
+        private System.Windows.Forms.ColumnHeader columnHeader9;
+        private System.Windows.Forms.ColumnHeader columnHeader10;
+        private System.Windows.Forms.ColumnHeader columnHeader11;
     }
 }
 

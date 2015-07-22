@@ -7,7 +7,20 @@ using System.Threading.Tasks;
 namespace Kerbal_Mod_Manager
 {
     [Serializable]
-    class InstalledModInfo
+    public class InstalledModInfo
     {
+        public string modName;
+        public string modKey;
+        public string versionInstalledRaw = "";
+        public string versionInstalledNumeric = "N/A";
+
+        public InstalledModInfo()
+        { }
+
+        public InstalledModInfo(string modName, string modKey)
+        {
+            this.modName = modName;
+            this.modKey = modKey;
+        }
     }
 }

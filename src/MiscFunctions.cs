@@ -76,6 +76,7 @@ namespace Kerbal_Mod_Manager
                     .Replace("]", "")
                     .Replace("(", "")
                     .Replace("}", "")
+                    .Replace("%", "")
                     .Replace("&#x27;", "");
         }
 
