@@ -141,7 +141,7 @@ namespace Kerbal_Mod_Manager
 
             foreach (FileInfo installedFile in files)
             {
-                if (installedFile.relativeFilePath == file.relativeFilePath)
+                if (installedFile.relativeFilePath.ToLower() == file.relativeFilePath.ToLower())
                 {
                     installedFile.OverWriteWith(file.currentMod);
                     return;
@@ -180,6 +180,18 @@ namespace Kerbal_Mod_Manager
                 }
             }
 
+            if (Directory.Exists(kmmFolder + "\\Overrides"))
+            {
+                foreach (string folder in Directory.GetDirectories(kmmFolder + "\\Overrides"))
+                {
+                    if (folder.ToLower().EndsWith(modKey))
+                    {
+                        Directory.Delete(folder, true);
+                    }
+                }
+                MiscFunctions.ProcessDirectory(kmmFolder + "\\Overrides", true);
+            }
+
             MiscFunctions.ProcessDirectory(kspFolder + "\\GameData", false);
         }
     }
@@ -199,11 +211,11 @@ namespace Kerbal_Mod_Manager
         }
         private string GetOverwriteFile(string modKey)
         {
-            return kspFolder + "KMM\\Overrides\\" + modKey + "\\" + relativeFilePath;
+            return kspFolder + "\\KMM\\Overrides\\" + modKey + "\\" + relativeFilePath;
         }
 
         public string currentMod;
-        List<string> otherMods = new List<string>();
+        public List<string> otherMods = new List<string>();
 
         public FileInfo()
         { }

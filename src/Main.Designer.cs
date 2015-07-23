@@ -75,6 +75,7 @@
             this.listBoxModFolders = new System.Windows.Forms.ListBox();
             this.listBoxKspFolders = new System.Windows.Forms.ListBox();
             this.buttonSelectAllFolders = new System.Windows.Forms.Button();
+            this.buttonInstallAll = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -371,13 +372,14 @@
             this.buttonReinstallSelected.TabIndex = 7;
             this.buttonReinstallSelected.Text = "Reinstall Mod";
             this.buttonReinstallSelected.UseVisualStyleBackColor = true;
+            this.buttonReinstallSelected.Click += new System.EventHandler(this.buttonReinstallSelected_Click);
             // 
             // buttonEditCat
             // 
-            this.buttonEditCat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonEditCat.Location = new System.Drawing.Point(1492, 12);
+            this.buttonEditCat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonEditCat.Location = new System.Drawing.Point(1492, 488);
             this.buttonEditCat.Name = "buttonEditCat";
-            this.buttonEditCat.Size = new System.Drawing.Size(158, 39);
+            this.buttonEditCat.Size = new System.Drawing.Size(158, 66);
             this.buttonEditCat.TabIndex = 10;
             this.buttonEditCat.Text = "Edit Categories";
             this.buttonEditCat.UseVisualStyleBackColor = true;
@@ -392,13 +394,14 @@
             this.buttonDeinstallAll.TabIndex = 11;
             this.buttonDeinstallAll.Text = "Deinstall All Mods";
             this.buttonDeinstallAll.UseVisualStyleBackColor = true;
+            this.buttonDeinstallAll.Click += new System.EventHandler(this.buttonDeinstallAll_Click);
             // 
             // buttonFindAll
             // 
             this.buttonFindAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonFindAll.Location = new System.Drawing.Point(1492, 145);
+            this.buttonFindAll.Location = new System.Drawing.Point(1492, 147);
             this.buttonFindAll.Name = "buttonFindAll";
-            this.buttonFindAll.Size = new System.Drawing.Size(158, 38);
+            this.buttonFindAll.Size = new System.Drawing.Size(158, 39);
             this.buttonFindAll.TabIndex = 12;
             this.buttonFindAll.Text = "Find All Websites";
             this.buttonFindAll.UseVisualStyleBackColor = true;
@@ -407,7 +410,7 @@
             // buttonCheckAll
             // 
             this.buttonCheckAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCheckAll.Location = new System.Drawing.Point(1492, 189);
+            this.buttonCheckAll.Location = new System.Drawing.Point(1492, 192);
             this.buttonCheckAll.Name = "buttonCheckAll";
             this.buttonCheckAll.Size = new System.Drawing.Size(158, 39);
             this.buttonCheckAll.TabIndex = 13;
@@ -418,7 +421,7 @@
             // buttonUpdateAll
             // 
             this.buttonUpdateAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonUpdateAll.Location = new System.Drawing.Point(1492, 234);
+            this.buttonUpdateAll.Location = new System.Drawing.Point(1492, 237);
             this.buttonUpdateAll.Name = "buttonUpdateAll";
             this.buttonUpdateAll.Size = new System.Drawing.Size(158, 39);
             this.buttonUpdateAll.TabIndex = 14;
@@ -429,7 +432,7 @@
             // buttonUpdateAllForce
             // 
             this.buttonUpdateAllForce.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonUpdateAllForce.Location = new System.Drawing.Point(1492, 279);
+            this.buttonUpdateAllForce.Location = new System.Drawing.Point(1492, 282);
             this.buttonUpdateAllForce.Name = "buttonUpdateAllForce";
             this.buttonUpdateAllForce.Size = new System.Drawing.Size(158, 39);
             this.buttonUpdateAllForce.TabIndex = 15;
@@ -442,10 +445,11 @@
             this.buttonReinstallAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonReinstallAll.Location = new System.Drawing.Point(1492, 102);
             this.buttonReinstallAll.Name = "buttonReinstallAll";
-            this.buttonReinstallAll.Size = new System.Drawing.Size(158, 37);
+            this.buttonReinstallAll.Size = new System.Drawing.Size(158, 39);
             this.buttonReinstallAll.TabIndex = 16;
             this.buttonReinstallAll.Text = "Reinstall All Mods";
             this.buttonReinstallAll.UseVisualStyleBackColor = true;
+            this.buttonReinstallAll.Click += new System.EventHandler(this.buttonReinstallAll_Click);
             // 
             // buttonDeleteSelected
             // 
@@ -550,11 +554,23 @@
             this.buttonSelectAllFolders.UseVisualStyleBackColor = true;
             this.buttonSelectAllFolders.Click += new System.EventHandler(this.buttonSelectAllFolders_Click);
             // 
+            // buttonInstallAll
+            // 
+            this.buttonInstallAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonInstallAll.Location = new System.Drawing.Point(1492, 12);
+            this.buttonInstallAll.Name = "buttonInstallAll";
+            this.buttonInstallAll.Size = new System.Drawing.Size(158, 39);
+            this.buttonInstallAll.TabIndex = 26;
+            this.buttonInstallAll.Text = "Install All Mods";
+            this.buttonInstallAll.UseVisualStyleBackColor = true;
+            this.buttonInstallAll.Click += new System.EventHandler(this.buttonInstallAll_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1662, 638);
+            this.Controls.Add(this.buttonInstallAll);
             this.Controls.Add(this.buttonSelectAllFolders);
             this.Controls.Add(this.listBoxKspFolders);
             this.Controls.Add(this.listBoxModFolders);
@@ -637,6 +653,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader9;
         private System.Windows.Forms.ColumnHeader columnHeader10;
         private System.Windows.Forms.ColumnHeader columnHeader11;
+        private System.Windows.Forms.Button buttonInstallAll;
     }
 }
 

@@ -376,6 +376,8 @@ namespace Kerbal_Mod_Manager
             buttonGoogle.Enabled = false;
             buttonAddCat.Enabled = false;
             buttonOpenSite.Enabled = false;
+
+            buttonInstallSelected.Text = "Install/Deinstall Mod";
         }
         private void UnlockModFields()
         {
@@ -389,10 +391,19 @@ namespace Kerbal_Mod_Manager
             buttonCheckSelected.Enabled = true;
             buttonUpdateSelected.Enabled = selectedMod.canUpdate;
             buttonInstallSelected.Enabled = true;
-            buttonReinstallSelected.Enabled = true;
+            buttonReinstallSelected.Enabled = selectedMod.isInstalled;
             buttonGoogle.Enabled = true;
             buttonAddCat.Enabled = true;
             buttonOpenSite.Enabled = true;
+
+            if (selectedMod.isInstalled)
+            {
+                buttonInstallSelected.Text = "Deinstall Mod";
+            }
+            else
+            {
+                buttonInstallSelected.Text = "Install Mod";
+            }
         }
 
         private void textBoxSelName_TextChanged(object sender, EventArgs e)
@@ -700,7 +711,57 @@ namespace Kerbal_Mod_Manager
 
         private void buttonInstallSelected_Click(object sender, EventArgs e)
         {
-            
+            if (selectedMod.isInstalled)
+            {
+                selectedMod.deinstallQueued = true;
+            }
+            else
+            {
+                selectedMod.installQueued = true;
+            }
+        }
+
+        private void buttonReinstallSelected_Click(object sender, EventArgs e)
+        {
+            if (selectedMod.isInstalled)
+            {
+                selectedMod.deinstallQueued = true;
+                selectedMod.installQueued = true;
+            }
+        }
+
+        private void buttonDeinstallAll_Click(object sender, EventArgs e)
+        {
+            foreach (ModInfo mod in modFolders.mods)
+            {
+                if (mod.isInstalled)
+                {
+                    mod.deinstallQueued = true;
+                }
+            }
+        }
+
+        private void buttonReinstallAll_Click(object sender, EventArgs e)
+        {
+            foreach (ModInfo mod in modFolders.mods)
+            {
+                if (mod.isInstalled)
+                {
+                    mod.deinstallQueued = true;
+                    mod.installQueued = true;
+                }
+            }
+        }
+
+        private void buttonInstallAll_Click(object sender, EventArgs e)
+        {
+            foreach (ModInfo mod in modFolders.mods)
+            {
+                if (!mod.isInstalled)
+                {
+                    mod.installQueued = true;
+                }
+            }
         }
     }
 

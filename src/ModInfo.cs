@@ -192,6 +192,10 @@ namespace Kerbal_Mod_Manager
                 {
                     return "Awaiting Download ...";
                 }
+                else if (deinstallQueued)
+                {
+                    return "Uninstalling Mod ...";
+                }
                 else if (installQueued)
                 {
                     return "Installing Mod ...";
@@ -928,7 +932,7 @@ namespace Kerbal_Mod_Manager
             for (int i = 0; i < relFiles.Count; i++)
             {
                 relFiles[i] = relFiles[i].Replace("Gamedata\\", "GameData\\").Replace("gamedata\\", "GameData\\");
-                if (Path.GetExtension(relFiles[i]) == ".cs")
+                if (Path.GetExtension(relFiles[i]) == ".cs" || !relFiles[i].StartsWith("GameData\\"))
                 {
                     relFiles.RemoveAt(i);
                     absFiles.RemoveAt(i);
@@ -1114,7 +1118,7 @@ namespace Kerbal_Mod_Manager
             }
             else
             {
-                return thisCat - otherCat;
+                return otherCat - thisCat;
             }
 
             return 0;
