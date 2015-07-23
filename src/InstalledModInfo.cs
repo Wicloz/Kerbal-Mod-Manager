@@ -22,5 +22,18 @@ namespace Kerbal_Mod_Manager
             this.modName = modName;
             this.modKey = modKey;
         }
+
+        public ModInfo ToModInfo()
+        {
+            ModInfo modInfo = new ModInfo();
+            modInfo.installedOnly = true;
+
+            modInfo.modName = modName;
+            modInfo.modKey = modKey;
+            modInfo.versionLocalNumeric = versionInstalledNumeric;
+            modInfo.versionLocalRaw = versionInstalledRaw;
+
+            return modInfo;
+        }
     }
 }

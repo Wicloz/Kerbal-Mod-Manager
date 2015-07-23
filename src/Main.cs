@@ -18,8 +18,8 @@ namespace Kerbal_Mod_Manager
         private string cd = Directory.GetCurrentDirectory();
         private Settings settings = new Settings();
 
-        private KspFolder kspFolder = new KspFolder();
-        private ModFolder modFolders = new ModFolder();
+        public KspFolder kspFolder = new KspFolder();
+        public ModFolder modFolders = new ModFolder();
         private InstanceSettings editInstanceSettings = new InstanceSettings();
         private EditCategories editCategories = new EditCategories();
 
@@ -27,6 +27,8 @@ namespace Kerbal_Mod_Manager
         private ModInfo selectedMod;
         private bool updatingFields = false;
         private bool modDownloadBusy = false;
+        private bool modInstallBusy = false;
+        private bool modDeinstallBusy = false;
         private bool action = false;
 
         public List<string> GetCategories()
@@ -57,7 +59,7 @@ namespace Kerbal_Mod_Manager
             SaveSettings();
             SetCategories();
             ReloadFolderUi();
-            UnlockButtons();
+            ReloadModlistview();
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
@@ -271,6 +273,11 @@ namespace Kerbal_Mod_Manager
                 lvi.SubItems.Add(mod.website4);
                 lvi.SubItems.Add(mod.website5);
 
+                if (mod.isInstalled)
+                {
+                    lvi.Checked = true;
+                }
+
                 listViewMods.Items.Add(lvi);
             }
 
@@ -307,7 +314,25 @@ namespace Kerbal_Mod_Manager
 
         private void listViewMods_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
+            ModInfo mod = modFolders.mods[e.Item.Index];
+            
+            if (e.Item.Checked && !mod.isInstalled)
+            {
+                mod.installQueued = true;
+            }
+            else
+            {
+                mod.installQueued = false;
+            }
 
+            if (!e.Item.Checked && mod.isInstalled)
+            {
+                mod.deinstallQueued = true;
+            }
+            else
+            {
+                mod.deinstallQueued = false;
+            }
         }
 
         // Modlist fields UI
@@ -444,6 +469,8 @@ namespace Kerbal_Mod_Manager
         {
             bool allWorkDone = true;
             bool allDownloadDone = true;
+            bool allInstallDone = true;
+            bool allDeinstallDone = true;
 
             for (int i = 0; i < modFolders.mods.Count; i++)
             {
@@ -470,12 +497,32 @@ namespace Kerbal_Mod_Manager
                     modDownloadBusy = true;
                     mod.UpdateMod();
                 }
+                else if (mod.deinstallQueued && !mod.isWorking && !modDeinstallBusy)
+                {
+                    LockButtons();
+                    modDeinstallBusy = true;
+                    mod.DeinstallMod();
+                }
+                else if (mod.installQueued && !mod.isWorking && !modInstallBusy)
+                {
+                    LockButtons();
+                    modInstallBusy = true;
+                    mod.InstallMod();
+                }
 
                 if (mod.downloadBusy)
                 {
                     allDownloadDone = false;
                 }
-                if (mod.checkQueued || mod.downloadQueued || mod.findQueued)
+                if (mod.installBusy)
+                {
+                    allInstallDone = false;
+                }
+                if (mod.deinstallBusy)
+                {
+                    allDeinstallDone = false;
+                }
+                if (mod.checkQueued || mod.downloadQueued || mod.findQueued || mod.installQueued || mod.deinstallQueued)
                 {
                     allWorkDone = false;
                 }
@@ -505,6 +552,14 @@ namespace Kerbal_Mod_Manager
             if (allDownloadDone)
             {
                 modDownloadBusy = false;
+            }
+            if (allInstallDone)
+            {
+                modInstallBusy = false;
+            }
+            if (allDeinstallDone)
+            {
+                modDeinstallBusy = false;
             }
             if (allWorkDone && action)
             {
@@ -641,6 +696,11 @@ namespace Kerbal_Mod_Manager
                 { }
             }
             ReloadModlistview();
+        }
+
+        private void buttonInstallSelected_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 

@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Kerbal_Mod_Manager
 {
-    class ModFolder
+    public class ModFolder
     {
         private List<string> folders = new List<string>();
         private List<ModList> modLists = new List<ModList>();

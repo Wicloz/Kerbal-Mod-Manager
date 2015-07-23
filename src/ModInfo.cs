@@ -11,13 +11,13 @@ using System.Diagnostics;
 namespace Kerbal_Mod_Manager
 {
     [Serializable]
-    class ModInfo : System.IComparable<ModInfo>
+    public class ModInfo : System.IComparable<ModInfo>
     {
         private string downloadFolder
         {
             get
             {
-                return modFolder + "\\ModDownloads\\" + modName.Replace(" ", "_").Replace(":", "");
+                return modFolder + "\\ModDownloads\\" + windowsModName;
             }
         }
         private string downloadedFile
@@ -34,10 +34,26 @@ namespace Kerbal_Mod_Manager
 
         public string modFolder;
         public string modName;
+        public string windowsModName
+        {
+            get
+            {
+                return modName.Replace(" ", "_").Replace(":", "");
+            }
+        }
         public string modKey;
         public string category = "none";
         public string currentFileName;
         public string newFileName = "";
+
+        public bool installedOnly = false;
+        public bool isInstalled
+        {
+            get
+            {
+                return Main.acces.kspFolder.IsModInstalled(modKey);
+            }
+        }
 
         public string versionLocalRaw = "";
         public string versionLatestRaw = "";
@@ -63,9 +79,13 @@ namespace Kerbal_Mod_Manager
         public bool findQueued = false;
         public bool checkQueued = false;
         public bool downloadQueued = false;
+        public bool installQueued = false;
+        public bool deinstallQueued = false;
         private bool _findBusy = false;
         private bool _checkBusy = false;
         private bool _downloadBusy = false;
+        private bool _installBusy = false;
+        private bool _deinstallBusy = false;
 
         public bool findBusy
         {
@@ -100,11 +120,33 @@ namespace Kerbal_Mod_Manager
                 _downloadBusy = value;
             }
         }
+        public bool installBusy
+        {
+            get
+            {
+                return _installBusy;
+            }
+            set
+            {
+                _installBusy = value;
+            }
+        }
+        public bool deinstallBusy
+        {
+            get
+            {
+                return _deinstallBusy;
+            }
+            set
+            {
+                _deinstallBusy = value;
+            }
+        }
         public bool isWorking
         {
             get
             {
-                return (findBusy || checkBusy || downloadBusy);
+                return (findBusy || checkBusy || downloadBusy || installBusy || deinstallBusy);
             }
         }
 
@@ -149,6 +191,10 @@ namespace Kerbal_Mod_Manager
                 else if (downloadQueued)
                 {
                     return "Awaiting Download ...";
+                }
+                else if (installQueued)
+                {
+                    return "Installing Mod ...";
                 }
                 else if (canUpdate)
                 {
@@ -201,73 +247,76 @@ namespace Kerbal_Mod_Manager
 
         public void UpdateModValues()
         {
-            //Manage local version
-            if (modName == "")
+            if (!installedOnly)
             {
-                modName = MiscFunctions.CleanString(currentFileName);
-            }
-            versionLocalNumeric = MiscFunctions.RemoveLetters(currentFileName);
+                //Manage local version
+                if (modName == "")
+                {
+                    modName = MiscFunctions.CleanString(currentFileName);
+                }
+                versionLocalNumeric = MiscFunctions.RemoveLetters(currentFileName);
 
-            //Determine site mode
-            if (website == "")
-            {
-                website = "NONE";
-            }
+                //Determine site mode
+                if (website == "")
+                {
+                    website = "NONE";
+                }
 
-            if (website.Contains(kerbstuffIdentifier))
-            {
-                siteMode = "kerbstuff";
-                website = ParseKerbstuffUri(website);
-            }
-            else if (website.Contains(curseIdentifier))
-            {
-                siteMode = "curse";
-                website = ParseCurseUri(website);
-            }
-            else if (website.Contains(forumIdentifier))
-            {
-                siteMode = "forum";
-                website = ParseForumUri(website);
-            }
-            else if (website.Contains(githubIdentifier))
-            {
-                siteMode = "github";
-                website = ParseGithubUri(website);
-            }
-            else
-            {
-                siteMode = "NONE";
-            }
+                if (website.Contains(kerbstuffIdentifier))
+                {
+                    siteMode = "kerbstuff";
+                    website = ParseKerbstuffUri(website);
+                }
+                else if (website.Contains(curseIdentifier))
+                {
+                    siteMode = "curse";
+                    website = ParseCurseUri(website);
+                }
+                else if (website.Contains(forumIdentifier))
+                {
+                    siteMode = "forum";
+                    website = ParseForumUri(website);
+                }
+                else if (website.Contains(githubIdentifier))
+                {
+                    siteMode = "github";
+                    website = ParseGithubUri(website);
+                }
+                else
+                {
+                    siteMode = "NONE";
+                }
 
-            //Manage download site
-            if (siteMode == "curse")
-            {
-                char[] startCharList = new char[] { 'k', 's', 'p', '-', 'm', 'o', 'd', 's', '/' };
-                char[] endCharList = new char[] { };
-                string modBit = MiscFunctions.ExtractSection(website, endCharList, startCharList) + "/";
+                //Manage download site
+                if (siteMode == "curse")
+                {
+                    char[] startCharList = new char[] { 'k', 's', 'p', '-', 'm', 'o', 'd', 's', '/' };
+                    char[] endCharList = new char[] { };
+                    string modBit = MiscFunctions.ExtractSection(website, endCharList, startCharList) + "/";
 
-                startCharList = modBit.ToCharArray();
-                endCharList = new char[] { '"' };
-                string appendage = MiscFunctions.ExtractSection(versionLatestRaw, endCharList, startCharList);
+                    startCharList = modBit.ToCharArray();
+                    endCharList = new char[] { '"' };
+                    string appendage = MiscFunctions.ExtractSection(versionLatestRaw, endCharList, startCharList);
 
-                dlSite = website + "/" + appendage;
-            }
+                    dlSite = website + "/" + appendage;
+                }
 
-            else if (siteMode == "kerbstuff")
-            {
-                dlSite = website + "/download/" + versionLatestNumeric;
-            }
+                else if (siteMode == "kerbstuff")
+                {
+                    dlSite = website + "/download/" + versionLatestNumeric;
+                }
 
-            else if (siteMode == "github")
-            {
-                string bit = website.Replace("https://github.com", "").Replace("/latest", "/download");
-                string appendage = versionLatestRaw.Replace("<a href=\"", "").Replace(bit, "").Replace("\" rel=\"nofollow\">", "");
-                dlSite = website.Replace("/latest", "/download") + appendage;
-            }
+                else if (siteMode == "github")
+                {
+                    string bit = website.Replace("https://github.com", "").Replace("/latest", "/download");
+                    string appendage = versionLatestRaw.Replace("<a href=\"", "").Replace(bit, "").Replace("\" rel=\"nofollow\">", "");
+                    dlSite = website.Replace("/latest", "/download") + appendage;
+                }
 
-            else
-            {
-                dlSite = "NONE";
+                else
+                {
+                    dlSite = "NONE";
+                }
             }
         }
 
@@ -727,7 +776,7 @@ namespace Kerbal_Mod_Manager
 
         public void UpdateMod()
         {
-            newFileName = modName.Replace(" ", "_").Replace(":", "") + "-" + versionLatestNumeric + ".zip";
+            newFileName = windowsModName + "-" + versionLatestNumeric + ".zip";
 
             if (Directory.Exists(downloadFolder) && Directory.GetFiles(downloadFolder).Length > 0)
             {
@@ -809,6 +858,124 @@ namespace Kerbal_Mod_Manager
             canUpdate = false;
         }
 
+        public void InstallMod()
+        {
+            installBusy = true;
+
+            // Extract
+            string extractLocation = Main.acces.kspFolder.kmmFolder + "\\temp\\" + windowsModName;
+            if (Directory.Exists(extractLocation))
+            {
+                Directory.Delete(extractLocation, true);
+            }
+
+            try
+            {
+                ZipFile.ExtractToDirectory(modFolder + "\\" + currentFileName, extractLocation);
+            }
+            catch
+            {
+                Directory.Delete(extractLocation, true);
+                MiscFunctions.ProcessDirectory(Main.acces.kspFolder.kmmFolder + "\\temp", true);
+                installQueued = false;
+                installBusy = false;
+                return;
+            }
+
+            // Find GameData folder
+            string copyRoot = "";
+            foreach (string folder1 in Directory.GetDirectories(extractLocation))
+            {
+                if (folder1.ToLower().EndsWith("gamedata"))
+                {
+                    copyRoot = extractLocation;
+                    break;
+                }
+                else if (copyRoot == "")
+                {
+                    foreach (string folder2 in Directory.GetDirectories(folder1))
+                    {
+                        if (folder2.ToLower().EndsWith("gamedata"))
+                        {
+                            copyRoot = folder1;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Create file list
+            List<string> relFiles = new List<string>();
+            List<string> absFiles = new List<string>();
+            if (copyRoot == "")
+            {
+                foreach (string file in Directory.GetFiles(extractLocation, "*.*", SearchOption.AllDirectories))
+                {
+                    relFiles.Add("GameData\\" + file.Replace(extractLocation + "\\", ""));
+                    absFiles.Add(file);
+                }
+            }
+            else
+            {
+                foreach (string file in Directory.GetFiles(copyRoot, "*.*", SearchOption.AllDirectories))
+                {
+                    relFiles.Add(file.Replace(copyRoot + "\\", ""));
+                    absFiles.Add(file);
+                }
+            }
+
+            // Copy files
+            for (int i = 0; i < relFiles.Count; i++)
+            {
+                relFiles[i] = relFiles[i].Replace("Gamedata\\", "GameData\\").Replace("gamedata\\", "GameData\\");
+                if (Path.GetExtension(relFiles[i]) == ".cs")
+                {
+                    relFiles.RemoveAt(i);
+                    absFiles.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+
+                Main.acces.kspFolder.AddFile(relFiles[i], modKey, modName);
+                string newPath = Main.acces.kspFolder.kspFolder + "\\" + relFiles[i];
+                Directory.CreateDirectory(Path.GetDirectoryName(newPath));
+                File.Move(absFiles[i], newPath);
+            }
+
+            // Finalise
+            Main.acces.kspFolder.AddMod(this);
+            Main.acces.kspFolder.SaveInstance();
+
+            if (Directory.Exists(extractLocation))
+            {
+                Directory.Delete(extractLocation, true);
+            }
+            MiscFunctions.ProcessDirectory(Main.acces.kspFolder.kmmFolder + "\\temp", true);
+
+            // Done
+            UpdateModValues();
+            installQueued = false;
+            installBusy = false;
+            updateList = true;
+        }
+
+        public void DeinstallMod()
+        {
+            if (installedOnly || isInstalled)
+            {
+                deinstallBusy = true;
+                Main.acces.kspFolder.DeinstallMod(modKey);
+                UpdateModValues();
+                deinstallQueued = false;
+                deinstallBusy = false;
+                updateList = true;
+            }
+            else
+            {
+                deinstallQueued = false;
+            }
+        }
+
         private void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             progress = 10 + Convert.ToInt32(e.ProgressPercentage * 0.8);
@@ -824,6 +991,22 @@ namespace Kerbal_Mod_Manager
             if (uri.Contains("%20"))
             {
                 uri = uri.Replace("%20", " ").Replace(" / ", "/");
+            }
+            if (uri.Contains("%21"))
+            {
+                uri = uri.Replace("%21", " ");
+            }
+            if (uri.Contains("beta.kerbalstuff.com"))
+            {
+                uri = uri.Replace("beta.kerbalstuff.com", "kerbalstuff.com");
+            }
+            if (uri.Contains("http://www.kerbalstuff.com"))
+            {
+                uri = uri.Replace("http://www.kerbalstuff.com", "https://kerbalstuff.com");
+            }
+            else if (uri.Contains("http://kerbalstuff.com"))
+            {
+                uri = uri.Replace("http://kerbalstuff.com", "https://kerbalstuff.com");
             }
 
             return uri;

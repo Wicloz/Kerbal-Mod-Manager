@@ -360,6 +360,7 @@
             this.buttonInstallSelected.TabIndex = 6;
             this.buttonInstallSelected.Text = "Install/Deinstall Mod";
             this.buttonInstallSelected.UseVisualStyleBackColor = true;
+            this.buttonInstallSelected.Click += new System.EventHandler(this.buttonInstallSelected_Click);
             // 
             // buttonReinstallSelected
             // 

@@ -7,12 +7,12 @@ using System.IO;
 
 namespace Kerbal_Mod_Manager
 {
-    class KspFolder
+    public class KspFolder
     {
         private List<InstalledModInfo> installedMods = new List<InstalledModInfo>();
         private List<FileInfo> files = new List<FileInfo>();
-        private string kspFolder;
-        private string kmmFolder
+        public string kspFolder;
+        public string kmmFolder
         {
             get
             {
@@ -30,6 +30,17 @@ namespace Kerbal_Mod_Manager
                 }
             }
             return null;
+        }
+        public bool IsModInstalled(string modKey)
+        {
+            foreach (InstalledModInfo mod in installedMods)
+            {
+                if (modKey == mod.modKey)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         // Loading and saving of instances
@@ -122,6 +133,55 @@ namespace Kerbal_Mod_Manager
                 SaveLoad.SaveFileXml(installedMods, kmmFolder + "\\mods.dat");
             }
         }
+
+        // Installing and deinstalling
+        public void AddFile(string relFilePath, string modKey, string modName)
+        {
+            FileInfo file = new FileInfo(kspFolder, relFilePath, modKey, modName);
+
+            foreach (FileInfo installedFile in files)
+            {
+                if (installedFile.relativeFilePath == file.relativeFilePath)
+                {
+                    installedFile.OverWriteWith(file.currentMod);
+                    return;
+                }
+            }
+
+            files.Add(file);
+        }
+
+        public void AddMod(ModInfo mod)
+        {
+            InstalledModInfo installMod = new InstalledModInfo(mod.modName, mod.modKey);
+            installMod.versionInstalledNumeric = mod.versionLocalNumeric;
+            installMod.versionInstalledRaw = mod.versionLocalRaw;
+
+            installedMods.Add(installMod);
+        }
+
+        public void DeinstallMod(string modKey)
+        {
+            for (int i = 0; i < files.Count; i++)
+            {
+                if (files[i].RemoveMod(modKey))
+                {
+                    files.RemoveAt(i);
+                    i--;
+                }
+            }
+
+            for (int i = 0; i < installedMods.Count; i++)
+            {
+                if (installedMods[i].modKey == modKey)
+                {
+                    installedMods.RemoveAt(i);
+                    i--;
+                }
+            }
+
+            MiscFunctions.ProcessDirectory(kspFolder + "\\GameData", false);
+        }
     }
 
     [Serializable]
@@ -154,13 +214,6 @@ namespace Kerbal_Mod_Manager
             relativeFilePath = relFilePath;
             currentMod = modKey;
             initValue = modName;
-        }
-
-        public FileInfo(string kspFolder, string relFilePath, string modKey)
-        {
-            this.kspFolder = kspFolder;
-            relativeFilePath = relFilePath;
-            currentMod = modKey;
         }
 
         public void OverWriteWith(string modKey)
