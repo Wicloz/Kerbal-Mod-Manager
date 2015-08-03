@@ -860,6 +860,12 @@ namespace Kerbal_Mod_Manager
             downloadBusy = false;
             updateList = true;
             canUpdate = false;
+
+            if (isInstalled)
+            {
+                deinstallQueued = true;
+                installQueued = true;
+            }
         }
 
         public void InstallMod()

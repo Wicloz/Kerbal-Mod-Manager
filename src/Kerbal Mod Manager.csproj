@@ -102,8 +102,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del "D:\Dropbox\KSP Multiplayer Mods\Kerbal Mod Manager.exe"
-copy "G:\Projects\Kerbal Mod Manager\src\bin\Release\Kerbal Mod Manager.exe" "D:\Dropbox\KSP Multiplayer Mods\Kerbal Mod Manager.exe"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
