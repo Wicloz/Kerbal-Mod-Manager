@@ -54,6 +54,13 @@ namespace Kerbal_Mod_Manager
                 return Main.acces.kspFolder.IsModInstalled(modKey);
             }
         }
+        public InstalledModInfo installedMod
+        {
+            get
+            {
+                return Main.acces.kspFolder.GetInstalledMod(modKey);
+            }
+        }
 
         public string versionLocalRaw = "";
         public string versionLatestRaw = "";
@@ -946,9 +953,18 @@ namespace Kerbal_Mod_Manager
                     continue;
                 }
 
-                Main.acces.kspFolder.AddFile(relFiles[i], modKey, modName);
                 string newPath = Main.acces.kspFolder.kspFolder + "\\" + relFiles[i];
                 Directory.CreateDirectory(Path.GetDirectoryName(newPath));
+
+                if (File.Exists(newPath))
+                {
+                    Main.acces.kspFolder.OverwriteFile(relFiles[i], modKey, modName);
+                }
+                else
+                {
+                    Main.acces.kspFolder.AddFile(relFiles[i], modKey, modName);
+                }
+  
                 File.Move(absFiles[i], newPath);
             }
 

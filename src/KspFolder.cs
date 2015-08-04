@@ -111,13 +111,19 @@ namespace Kerbal_Mod_Manager
                 {
                     files.RemoveAt(i);
                     i--;
+                    continue;
                 }
-                else
+                else if (!modKeys.Contains(files[i].currentMod))
                 {
-                    if (!modKeys.Contains(files[i].currentMod))
+                    installedMods.Add(new InstalledModInfo(files[i].initValue, files[i].currentMod));
+                    modKeys.Add(files[i].currentMod);
+                }
+
+                foreach (InstalledModInfo mod in installedMods)
+                {
+                    if (mod.modKey == files[i].currentMod || files[i].otherMods.Contains(mod.modKey))
                     {
-                        installedMods.Add(new InstalledModInfo(files[i].initValue, files[i].currentMod));
-                        modKeys.Add(files[i].currentMod);
+                        mod.AddFileRef(files[i]);
                     }
                 }
             }
@@ -136,6 +142,12 @@ namespace Kerbal_Mod_Manager
 
         // Installing and deinstalling
         public void AddFile(string relFilePath, string modKey, string modName)
+        {
+            FileInfo file = new FileInfo(kspFolder, relFilePath, modKey, modName);
+            files.Add(file);
+        }
+
+        public void OverwriteFile(string relFilePath, string modKey, string modName)
         {
             FileInfo file = new FileInfo(kspFolder, relFilePath, modKey, modName);
 
@@ -162,12 +174,20 @@ namespace Kerbal_Mod_Manager
 
         public void DeinstallMod(string modKey)
         {
-            for (int i = 0; i < files.Count; i++)
+//            for (int i = 0; i < files.Count; i++)
+//            {
+//                if (files[i].RemoveMod(modKey))
+//                {
+//                    files.RemoveAt(i);
+//                    i--;
+//                }
+//            }
+
+            foreach (FileInfo file in GetInstalledMod(modKey).GetTamperedFiles())
             {
-                if (files[i].RemoveMod(modKey))
+                if (file.RemoveMod(modKey))
                 {
-                    files.RemoveAt(i);
-                    i--;
+                    files.Remove(file);
                 }
             }
 

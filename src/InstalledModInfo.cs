@@ -13,6 +13,7 @@ namespace Kerbal_Mod_Manager
         public string modKey;
         public string versionInstalledRaw = "";
         public string versionInstalledNumeric = "N/A";
+        private List<FileInfo> files = new List<FileInfo>();
 
         public InstalledModInfo()
         { }
@@ -21,6 +22,16 @@ namespace Kerbal_Mod_Manager
         {
             this.modName = modName;
             this.modKey = modKey;
+        }
+
+        public void AddFileRef(FileInfo fileRef)
+        {
+            files.Add(fileRef);
+        }
+
+        public List<FileInfo> GetTamperedFiles()
+        {
+            return files;
         }
 
         public ModInfo ToModInfo()
