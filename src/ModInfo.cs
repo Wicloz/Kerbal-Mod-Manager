@@ -941,6 +941,12 @@ namespace Kerbal_Mod_Manager
                 }
             }
 
+            // Remove Duplicate ModuleManager
+            if (modKey == "modulemanagerv")
+            {
+                Main.acces.kspFolder.DeleteModuleManager();
+            }
+
             // Copy files
             for (int i = 0; i < relFiles.Count; i++)
             {

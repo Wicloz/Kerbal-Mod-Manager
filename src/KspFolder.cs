@@ -214,6 +214,18 @@ namespace Kerbal_Mod_Manager
 
             MiscFunctions.ProcessDirectory(kspFolder + "\\GameData", false);
         }
+
+        public void DeleteModuleManager()
+        {
+            for (int i = 0; i < files.Count; i++)
+            {
+                if (files[i].RemoveFile("modulemanager"))
+                {
+                    files.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
     }
 
     [Serializable]
@@ -254,6 +266,19 @@ namespace Kerbal_Mod_Manager
             File.Move(absoluteFilePath, GetOverwriteFile(currentMod));
             otherMods.Insert(0, currentMod);
             currentMod = modKey;
+        }
+
+        public bool RemoveFile(string fileContains)
+        {
+            if (Path.GetFileName(relativeFilePath).ToLower().Contains(fileContains.ToLower()))
+            {
+                File.Delete(absoluteFilePath);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public bool RemoveMod(string modKey)
